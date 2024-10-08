@@ -7,7 +7,7 @@ Kelompok FO3 :
 4. 2306203583	- Yosia Joseph Chandra
 5. 2306245522	- Khairul Bintang
 
-SoundNest 🎧
+ # SoundNest 🎧
 
 Selamat datang di SoundNest, platform pilihan Anda untuk menemukan produk audio berkualitas tinggi yang dirancang khusus untuk gaya hidup dinamis di Jakarta. Apakah Anda sedang dalam perjalanan menggunakan transportasi umum, menuju kantor, sekolah, atau sekadar menjelajahi kota, SoundNest menyediakan perangkat audio terbaik untuk meningkatkan pengalaman sehari-hari Anda.
 
