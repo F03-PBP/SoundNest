@@ -7,7 +7,7 @@
 
 Deskripsi Aplikasi 
 
-- SoundNest - 
+SoundNest
 Selamat datang di SoundNest, platform pilihan Anda untuk menemukan produk audio berkualitas tinggi yang dirancang khusus untuk gaya hidup dinamis di Jakarta. Apakah Anda sedang dalam perjalanan menggunakan transportasi umum, menuju kantor, sekolah, atau sekadar menjelajahi kota, SoundNest menyediakan perangkat audio terbaik untuk meningkatkan pengalaman sehari-hari Anda.
 
 Jakarta, sebuah kota di mana warganya selalu bergerak, terkenal dengan budaya musik dan podcast yang menemani perjalanan harian. Ini bukan hanya sekadar tren—ini adalah bagian dari gaya hidup. Ketika orang-orang melihat penduduk Jakarta dengan nyaman menggunakan earphone, headphone, dan earbud nirkabel berkualitas premium di bus, kereta, atau saat berjalan, mereka pun tertarik dengan kualitas suara yang superior dan desain canggih dari produk-produk tersebut.
