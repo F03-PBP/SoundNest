@@ -26,6 +26,25 @@ Baik Anda seorang audiophile berpengalaman atau sekadar mencari peningkatan untu
 </div>
 
 # Modul⚙️
+1. Products: 
+- Models: Product, Category, Tags, ProductImages
+- Views: Add product (admin-only), Product details, Product listing (search, filter)
+
+2. Reviews:  
+- Models: Review, Rating
+- Views: Add review, Edit review, List product reviews
+
+3. Discussions: 
+- Models: DiscussionThread, DiscussionComment
+- Views: Create thread, Add comment, View discussion threads for a product
+
+4. Wishlist: 
+- Models: Wishlist, WishlistItem
+- Views: Add to wishlist, Remove from wishlist, View wishlist
+
+5. Best Deals:
+- Models : Deals, DealssItem
+- Views : Add to deals, remove from deals, view deals
 
 # Dataset📑
 [Dataset Link](https://docs.google.com/spreadsheets/u/0/d/1KXDCrMErS1ZjjJhxjTYqNax1bjWWl4peXv0eaLMlxVc/htmlview?fbclid=PAZXh0bgNhZW0CMTEAAaY-wsOUAKIrqofQd6ot9P9ruLU4NP5gV-258U_7mL0FY38rBQwpFIrSkeM_aem_Ac_27HwY5toQf9PNoAuKuulzB22XAXuQe_rm-4uWKM1N7qDNVFgS3Gr0LBuDOb-Vqorodyis3sNWUQfO_cCUHrm4%23gid%3D0#)
