@@ -30,18 +30,22 @@ Baik Anda seorang audiophile berpengalaman atau sekadar mencari peningkatan untu
 <b>1. Products: </b>
 - Models: Product, Category, Tags, ProductImages
 - Views: Add product (admin-only), Product details, Product listing (search, filter)
+Pada modul "Products", semua pengguna situs dapat melihat produk audio yang tersedia beserta atributnya seperti harga, merk, deskripsi, dll.
 
 <b>2. Reviews:  </b>
 - Models: Review, Rating
 - Views: Add review, Edit review, List product reviews
+Pengguna yang telah login dapat membuat review bagi setiap produk audio yang ada. Namun, pengguna yang belum login hanya bisa melihat review-review yang sudah ada, tidak dapat ikut menulis review. Admin dapat menghapus review yang dirasa kurang berkenan, seperti misalnya mengandung unsur SARA, tidak relevan dengan produk, dll.
 
 <b>3. Discussions: </b>
 - Models: DiscussionThread, DiscussionComment
 - Views: Create thread, Add comment, View discussion threads for a product
+Pengguna dapat melakukan diskusi tentang berbagai hal tentang produk, seperti misalnya rekomendasi produk, produk yang paling layak untuk dibeli dengan budget tertentu, atau sekedar berbagi cerita tentang pengalaman pribadi terkait produk yang pernah dipakai. Diskusi hanya bisa dimulai oleh seorang yang sudah login. Pengguna yang belum login hanya bisa melihat-lihat diskusi yang ada saja. 
 
 <b>4. Wishlist: </b>
 - Models: Wishlist, WishlistItem
 - Views: Add to wishlist, Remove from wishlist, View wishlist
+
 
 <b>5. Best Deals:</b>
 - Models : Deals, DealssItem
