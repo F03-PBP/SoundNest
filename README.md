@@ -1,4 +1,5 @@
 # 💻PROYEK TENGAH SEMESTER PBP F💻
+<img src="https://st2.depositphotos.com/1026266/8677/i/450/depositphotos_86776490-stock-photo-turntable-playing-classical-music-with.jpg" style="display: block; margin: 0 auto, width: 50%; height: 50%;">
 
 # WEBSITE URL🌐
 
@@ -67,7 +68,6 @@ Baik Anda seorang audiophile berpengalaman atau sekadar mencari peningkatan untu
         <li>Hak Akses yang Lebih Tinggi: Admin memiliki akses untuk mengelola struktur website, mengatur modul atau plugin, memperbarui versi website, atau bahkan melakukan backup dan restore database.</li>
     </ul>
 <div>
-
 
 
 
