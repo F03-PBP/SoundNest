@@ -55,6 +55,8 @@ Baik Anda seorang audiophile berpengalaman atau sekadar mencari peningkatan untu
 - Siapa orang yang tidak suka promo? Di modul ini, para pengguna bisa mengetahui promo apa yang sedang berlaku pada saat ini. Pengguna dapat mengetahui produk audio mana yang merupakan best deal untuk rentang budget tertentu.   
 
 # Dataset📑
+Berikut adalah sumber dataset yang kami gunakan:
+
 [Dataset Link](https://docs.google.com/spreadsheets/u/0/d/1KXDCrMErS1ZjjJhxjTYqNax1bjWWl4peXv0eaLMlxVc/htmlview?fbclid=PAZXh0bgNhZW0CMTEAAaY-wsOUAKIrqofQd6ot9P9ruLU4NP5gV-258U_7mL0FY38rBQwpFIrSkeM_aem_Ac_27HwY5toQf9PNoAuKuulzB22XAXuQe_rm-4uWKM1N7qDNVFgS3Gr0LBuDOb-Vqorodyis3sNWUQfO_cCUHrm4%23gid%3D0#)
 
 # Role Pengguna🤖
@@ -76,7 +78,7 @@ Baik Anda seorang audiophile berpengalaman atau sekadar mencari peningkatan untu
         <li>Manajemen User: Admin dapat melihat, menambah, mengubah, atau menghapus akun pengguna. Mereka juga bisa mengelola status akun user (misalnya, memblokir atau mengaktifkan akun).</li>
         <li>Manajemen Konten: Admin dapat membuat, mengedit, dan menghapus produk di website.</li>
         <li>Hak Akses yang Lebih Tinggi: Admin memiliki akses untuk mengelola struktur website, mengatur modul atau plugin, memperbarui versi website, atau bahkan melakukan backup dan restore database.</li>
-        <li>Menghapus Review&Diskusi: Admin dapat menghapus review dan diskusi yang tidak relevan dengan produk atau mengandung unsur SARA atau hal lainnya yang kurang berkenan.</li>
+        <li>Menghapus Review & Diskusi: Admin dapat menghapus review dan diskusi yang tidak relevan dengan produk atau mengandung unsur SARA atau hal lainnya yang kurang berkenan.</li>
         <li>Manajemen Promo: Admin dapat menambahkan atau menarik produk dari tampilan Best Deals</li>
     </ul>
 <div>
