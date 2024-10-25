@@ -2,6 +2,8 @@
 <img src="https://st2.depositphotos.com/1026266/8677/i/450/depositphotos_86776490-stock-photo-turntable-playing-classical-music-with.jpg" style="display: block; margin: 0 auto, width: 50%; height: 50%;">
 
 # WEBSITE URL🌐
+### CHECK OUR WEBSITE!
+[SoundNest](https://khairul-bintang-soundnest.pbp.cs.ui.ac.id/)
 
 # Anggota Kelompok👨‍💻👩‍💻
 <b>Kelompok FO3:</b>
@@ -30,24 +32,31 @@ Baik Anda seorang audiophile berpengalaman atau sekadar mencari peningkatan untu
 <b>1. Products: </b>
 - Models: Product, Category, Tags, ProductImages
 - Views: Add product (admin-only), Product details, Product listing (search, filter)
+- Pada modul "Products", semua pengguna situs SoundNest dapat melihat produk audio yang tersedia beserta atributnya seperti harga, merk, deskripsi, dll.
 
 <b>2. Reviews:  </b>
 - Models: Review, Rating
 - Views: Add review, Edit review, List product reviews
+- Pengguna SoundNest dapat memberikan review dari produk audio yang ada serta memberi rating produk tersebut. Pengguna yang telah login di SoundNest dapat membuat review bagi setiap produk audio yang ada. Namun, pengguna yang belum login hanya bisa melihat review-review yang sudah ada, tidak dapat ikut menulis review. Admin dapat menghapus review yang dirasa kurang berkenan, seperti misalnya mengandung unsur SARA, tidak relevan dengan produk, dll.
 
 <b>3. Discussions: </b>
 - Models: DiscussionThread, DiscussionComment
 - Views: Create thread, Add comment, View discussion threads for a product
+- Pengguna dapat melakukan diskusi dengan pengguna lainnya tentang berbagai hal tentang produk yang ada di SoundNest, seperti misalnya merekomendasikan produk, membuat list produk yang paling layak untuk dibeli dengan budget tertentu, atau sekedar berbagi cerita tentang pengalaman pribadi terkait produk yang pernah dipakai. Diskusi hanya bisa dimulai dan ditulis oleh seseorang yang sudah login. Pengguna yang belum login hanya bisa melihat-lihat diskusi yang ada saja. 
 
 <b>4. Wishlist: </b>
 - Models: Wishlist, WishlistItem
 - Views: Add to wishlist, Remove from wishlist, View wishlist
+- Jika pengguna melihat produk audio yang menarik di SoundNest, dia bisa menambahkannya ke wishlist miliknya. Wishlist ini berfungsi sebagai penanda suatu produk agar di kemudian hari pengguna tidak kerepotan jika ingin mencari produk yang sama. Pengguna bisa melihat kembali produk audio apa saja yang pernah ditambahkan ke wishlist-nya. Pengguna yang belum login tidak bisa menambahkan wishlist.
 
 <b>5. Best Deals:</b>
 - Models : Deals, DealssItem
 - Views : Add to deals, remove from deals, view deals
+- Siapa orang yang tidak suka promo? Di modul ini, para pengguna bisa mengetahui promo apa yang sedang berlaku pada saat ini. Pengguna dapat mengetahui produk audio mana yang merupakan best deal untuk rentang budget tertentu.   
 
 # Dataset📑
+Berikut adalah sumber dataset yang kami gunakan:
+
 [Dataset Link](https://docs.google.com/spreadsheets/u/0/d/1KXDCrMErS1ZjjJhxjTYqNax1bjWWl4peXv0eaLMlxVc/htmlview?fbclid=PAZXh0bgNhZW0CMTEAAaY-wsOUAKIrqofQd6ot9P9ruLU4NP5gV-258U_7mL0FY38rBQwpFIrSkeM_aem_Ac_27HwY5toQf9PNoAuKuulzB22XAXuQe_rm-4uWKM1N7qDNVFgS3Gr0LBuDOb-Vqorodyis3sNWUQfO_cCUHrm4%23gid%3D0#)
 
 # Role Pengguna🤖
@@ -58,6 +67,9 @@ Baik Anda seorang audiophile berpengalaman atau sekadar mencari peningkatan untu
         <li>Melihat Konten Publik: User dapat melihat produk atau konten yang tersedia untuk umum di website.</li>
         <li>Mengelola Profil: User dapat memperbarui informasi akun mereka (nama, email, password, dll.).</li>
         <li>Mengirim Ulasan: User bisa menulis ulasan atau memberikan feedback terhadap produk.</li>
+        <li>Memulai Diskusi: User bisa berinteraksi dengan user lainnya dengan melakukan diskusi terhadap produk.</li>
+        <li>Menyimpan Wishlist: User bisa menyimpan produk menarik ke dalam wishlist pribadi.</li>
+        <li>Melihat Promo: User bisa melihat promo produk apa yang sedang berlaku saat ini</li>
     </ul>
 </div>
 <div>
@@ -66,6 +78,8 @@ Baik Anda seorang audiophile berpengalaman atau sekadar mencari peningkatan untu
         <li>Manajemen User: Admin dapat melihat, menambah, mengubah, atau menghapus akun pengguna. Mereka juga bisa mengelola status akun user (misalnya, memblokir atau mengaktifkan akun).</li>
         <li>Manajemen Konten: Admin dapat membuat, mengedit, dan menghapus produk di website.</li>
         <li>Hak Akses yang Lebih Tinggi: Admin memiliki akses untuk mengelola struktur website, mengatur modul atau plugin, memperbarui versi website, atau bahkan melakukan backup dan restore database.</li>
+        <li>Menghapus Review & Diskusi: Admin dapat menghapus review dan diskusi yang tidak relevan dengan produk atau mengandung unsur SARA atau hal lainnya yang kurang berkenan.</li>
+        <li>Manajemen Promo: Admin dapat menambahkan atau menarik produk dari tampilan Best Deals</li>
     </ul>
 <div>
 
