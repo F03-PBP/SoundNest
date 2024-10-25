@@ -7,6 +7,17 @@
 {% endblock meta %}
 
 {% block content %}
+{% include 'navbar.html' %}
+
+    <div class="relative h-[316px] w-full bg-cover bg-center" style="background-image: url('{% static 'images/header-image.webp' %}');">
+        <div class="absolute inset-0 bg-white opacity-20"></div>
+        <div class="absolute inset-0 backdrop-blur-sm"></div>
+        <div class="relative flex flex-col items-center justify-center h-full text-white">
+            <h1 class="text-[48px] font-semibold text-black">Products</h1>
+            <p class="text-[16px] text-black"><b>Home &gt;</b> Products</p>
+        </div>
+    </div>
+
     <div class="container mx-auto max-w-screen-xl">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 justify-items-center">
             {% for product in products %}
