@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-
+from products.models import Product
 # Sale Model
 class Sale(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='sales')
@@ -29,14 +29,14 @@ class Sale(models.Model):
     def __str__(self):
         return f'{self.product.name} - {self.discount_percentage}% off'
 
-# User Interaction Model (optional)
-class UserInteraction(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    reminder_time = models.DateTimeField(null=True, blank=True)
-    notified = models.BooleanField(default=False)
+# # User Interaction Model (optional)
+# class UserInteraction(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     reminder_time = models.DateTimeField(null=True, blank=True)
+#     notified = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f'{self.user.username} - {self.product.name} interaction'
+#     def __str__(self):
+#         return f'{self.user.username} - {self.product.name} interaction'
 
 

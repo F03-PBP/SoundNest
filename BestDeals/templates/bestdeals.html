@@ -1,61 +1,64 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="container">
     <h1>Best Deals</h1>
 
-    {% if is_admin %}
+    <!-- {% if is_admin %} -->
     <!-- Button for admin to open the modal to add products to deals -->
     <div class="admin-controls mb-4">
         <button id="addToDealsBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Add to Deals
         </button>
     </div>
-    {% endif %}
+    <!-- {% endif %} -->
 
     <!-- No ongoing sales display -->
     {% if not sales %}
     <div class="no-sales">
-        <img src="{% static 'images/no-sales.png' %}" alt="No sales">
+        <img src="{% static 'images/sorry.png' %}" alt="No sales">
         <p>No current deals. Check back later!</p>
     </div>
     {% else %}
     <!-- Display Top Picks (sorted by highest rated) -->
     <h2 class="text-2xl font-semibold mb-4">Top Picks (sorted by highest rated)</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {% for product in top_picks %}
+        {% for product_sale in top_picks %}
         <div class="bg-white shadow-md rounded-lg p-4 product-card">
-            <h3 class="text-xl font-bold">{{ product.name }}</h3>
-            <p>{{ product.description }}</p>
+            <h3 class="text-xl font-bold">{{ product_sale.product.product_name }}</h3>
+            <p>Original Price: {{ product_sale.product.price}}</p>
+            <p>Rating: {{ product_sale.product.rating }}</p>
             <p>Discount: {{ product.discount_percentage }}%</p>
-            <p>Price: ${{ product.discounted_price }}</p>
+            <p>Price: {{ product.discounted_price }}</p>
             
             <!-- Admin delete button -->
-            {% if is_admin %}
-            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded flex items-center delete-product" data-product-id="{{ product.id }}">
+            <!-- {% if is_admin %} -->
+            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded flex items-center delete-product" data-product-id="{{ product_sale.id }}">
                 <!-- SVG icon for delete -->
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
                 Delete
             </button>
-            {% endif %}
+            <!-- {% endif %} -->
         </div>
         {% endfor %}
     </div>
 
-    <!-- Display Latest Deals (sorted by time added) -->
-    <h2 class="text-2xl font-semibold mt-8 mb-4">Latest Deals (sorted by time added)</h2>
+    <!-- Display Latest Deals -->
+    <h2 class="text-2xl font-semibold mt-8 mb-4">Latest Deals</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {% for product in latest_deals %}
+        {% for product in sales %}
         <div class="bg-white shadow-md rounded-lg p-4 product-card">
-            <h3 class="text-xl font-bold">{{ product.name }}</h3>
-            <p>{{ product.description }}</p>
+            <h3 class="text-xl font-bold">{{ product_sale.product.product_name }}</h3>
+            <p>Original Price: {{ product_sale.product.price}}</p>
+            <p>Rating: {{ product_sale.product.rating }}</p>
             <p>Discount: {{ product.discount_percentage }}%</p>
-            <p>Price: ${{ product.discounted_price }}</p>
+            <p>Price: {{ product.discounted_price }}</p>
             
             <!-- Admin delete button -->
-            {% if is_admin %}
+            <!-- {% if is_admin %} -->
             <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded flex items-center delete-product" data-product-id="{{ product.id }}">
                 <!-- SVG icon for delete -->
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -63,17 +66,17 @@
                 </svg>
                 Delete
             </button>
-            {% endif %}
+            <!-- {% endif %} -->
         </div>
         {% endfor %}
     </div>
 
     <!-- Show only first 5 products for non-logged in users -->
-    {% if not user.is_authenticated %}
+    <!-- {% if not user.is_authenticated %}
     <div class="mt-8 text-center fadeout">
         <p>You must log in to see more products.</p>
     </div>
-    {% endif %}
+    {% endif %} -->
     {% endif %}
 
     <!-- Modal structure -->
@@ -116,7 +119,7 @@
 
 <script>
     // JavaScript for handling the delete button using AJAX
-    
+
     document.addEventListener("DOMContentLoaded", function() {
         // Attach event listener to all delete buttons
         document.querySelectorAll('.delete-product').forEach(button => {

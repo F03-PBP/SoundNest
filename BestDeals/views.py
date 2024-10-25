@@ -9,8 +9,22 @@ from .forms import AddToDealsForm
 
 
 def best_deals(request):
-    sales = Sale.objects.filter(sale_end_time__gt=timezone.now()).order_by('-sale_start_time')
-    return render(request, 'bestdeals.html', {'sales': sales})
+    sales = Sale.objects.filter(sale_end_time__gt=timezone.now()) # produk yang sekarang sedang promo
+    top_picks = sales.order_by('-product__rating')  # sales sorted berdasarkan rating
+    top_picks_guest = top_picks[:5] # 5 produk pertama di top picks
+    least_countdown = sales.order_by('-sale_start_time')  # sales sorted berdasarkan countdown
+    available_products = Product.objects.exclude(sales__isnull=False)  # produk yang tidak sedang promo
+    #is_admin = request.user.is_staff  # Check if user is admin
+
+    context = {
+        'sales': sales,
+        'top_picks': top_picks,
+        'least_countdown': least_countdown,
+        'available_products': available_products,
+        'top_picks_guest': top_picks_guest,
+        #'is_admin': is_admin
+    }
+    return render(request, 'bestdeals.html', context)
 
 @require_http_methods(["DELETE"])
 def delete_product(request, product_id):
