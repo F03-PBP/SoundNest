@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from WishList.models import WishlistItem, Produk
+from WishList.models import WishlistItem
 from .forms import WishlistItemForm
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from WishList.models import Produk, WishlistItem
+from products.models import Product
 from django.http import HttpResponse
 from django.urls import reverse
 from django.core import serializers
@@ -18,7 +18,7 @@ def view_wishlist(request):
     return render(request, "main.html", context)
 
 def get_product_json(request):
-    data = Produk.objects.all()
+    data = Product.objects.all() # for now .all karena belum ada login loginan segala
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 @csrf_exempt
@@ -36,7 +36,7 @@ def tambah_wishlist_ajax(request):
 
 
 def delete_wish(request, id):
-    product = Produk.objects.get(pk = id)
+    product = Product.objects.get(pk = id)
     product.delete()
     return HttpResponseRedirect(reverse('main:view_wishlist'))
 

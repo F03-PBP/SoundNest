@@ -151,9 +151,12 @@
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const totalHarga = document.getElementById('total-product-price');
+
+    let product_length = 0;
     async function renderProducts(page) {
-      // Clear existing products
       const products = await getProductEntries();
+      console.log(products.length);
+      product_length = products.length;
       productContainer.innerHTML = '';
       // Calculate start and end indices for the current page
       const start = (page - 1) * productsPerPage;
@@ -161,15 +164,15 @@
       const productsToDisplay = products.slice(start, end);
       let total_price = 0;
       products.forEach(produk => {
-        total_price += produk.price;
+        total_price += produk.fields.price;
       })
       // Insert products into the container
       productsToDisplay.forEach(product => {
         const productCard = `
           <div class="bg-white p-4 rounded-lg shadow-lg text-center">
-            <img src="{% static 'image/tws.png' %}" alt="${product.name}" class="mb-4" style="width:150px; height: 150px;">
-            <h2 class="text-lg font-bold">${product.name}</h2>
-            <p class="text-gray-600">${product.price}</p>
+            <img src="{% static 'image/tws.png' %}" alt="${product.fields.product_name}" class="mb-4" style="width:150px; height: 150px;">
+            <h2 class="text-lg font-bold">${product.fields.product_name}</h2>
+            <p class="text-gray-600">${product.fields.price}</p>
         `;
         productContainer.innerHTML += productCard;
         
@@ -193,7 +196,7 @@
     });
 
     nextBtn.addEventListener('click', () => {
-      if (currentPage < Math.ceil(products.length / productsPerPage)) {
+      if (currentPage < Math.ceil(product_length / productsPerPage)) {
         currentPage++;
         renderProducts(currentPage);
       }

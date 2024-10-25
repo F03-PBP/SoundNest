@@ -1,5 +1,6 @@
 from django import forms
-from .models import Produk, WishlistItem
+from WishList.models import WishlistItem
+from products.models import Product as Produk
 
 class WishlistItemForm(forms.ModelForm):
     produk = forms.ModelChoiceField(queryset=Produk.objects.all(), label="Select A Product")
