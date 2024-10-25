@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Product List</title>
+{% endblock meta %}
+
+{% block content %}
+    <h1>Products</h1>
+    <ul>
+        {% load humanize %}
+        {% for product in products %}
+        <li>
+            <strong>{{ product.product_name }}</strong><br>
+            Price: Rp{{ product.price|intcomma }}<br>
+            Rating: {{ product.rating }}<br>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
