@@ -1,0 +1,947 @@
+[
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Mangird Tea Pro Holographic imaging & Stage",
+            "price": 5988000,
+            "rating": 9.52,
+            "reviews": 813
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "LetShuoer EJ07M Superb Clarity",
+            "price": 7875000,
+            "rating": 9.29,
+            "reviews": 810
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Thieaudio Hype 4",
+            "price": 6299000,
+            "rating": 9.27,
+            "reviews": 688
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Juzear 61t",
+            "price": 3299000,
+            "rating": 9.05,
+            "reviews": 860
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Xenns Mangird Tea 2",
+            "price": 4700000,
+            "rating": 9.03,
+            "reviews": 809
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Sennheiser IE600",
+            "price": 12900000,
+            "rating": 8.36,
+            "reviews": 716
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Moondrop Blessing 3 Tenz Valorant Gaming",
+            "price": 4769000,
+            "rating": 8.41,
+            "reviews": 783
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Kiwi Ears Quintet",
+            "price": 3290000,
+            "rating": 8.32,
+            "reviews": 895
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Juzear 41t",
+            "price": 2399000,
+            "rating": 8.02,
+            "reviews": 518
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Pula Pa02",
+            "price": 2349000,
+            "rating": 8.05,
+            "reviews": 888
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Sound Rhyme SR5",
+            "price": 2349000,
+            "rating": 7.98,
+            "reviews": 547
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Gizaudio Chopin",
+            "price": 3100000,
+            "rating": 7.91,
+            "reviews": 817
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tangzu Heyday",
+            "price": 3000000,
+            "rating": 8,
+            "reviews": 544
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Truthear Nova",
+            "price": 2450000,
+            "rating": 7.99,
+            "reviews": 748
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Simgot EW300",
+            "price": 1119000,
+            "rating": 7.85,
+            "reviews": 890
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tangzu Xuan NV",
+            "price": 3000000,
+            "rating": 7.85,
+            "reviews": 837
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Thieaudio Elixir",
+            "price": 2450000,
+            "rating": 7.82,
+            "reviews": 819
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Etymotic ER4XR",
+            "price": 1600000,
+            "rating": 7.59,
+            "reviews": 665
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Raptgo Hook X",
+            "price": 740000,
+            "rating": 7.73,
+            "reviews": 607
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Simgot Supermix 4",
+            "price": 1010000,
+            "rating": 7.41,
+            "reviews": 776
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Simgot EM6L",
+            "price": 2050000,
+            "rating": 7.45,
+            "reviews": 645
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "7hz Sonus",
+            "price": 1800000,
+            "rating": 7.52,
+            "reviews": 841
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Moondrop May",
+            "price": 1450000,
+            "rating": 7.55,
+            "reviews": 524
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tangzu Zetian Wu",
+            "price": 1150000,
+            "rating": 7.64,
+            "reviews": 665
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Shuoer s12",
+            "price": 1305000,
+            "rating": 7.41,
+            "reviews": 820
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Moondrop Aria 2",
+            "price": 1699000,
+            "rating": 7.36,
+            "reviews": 637
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tanchjim 4u",
+            "price": 825000,
+            "rating": 7.41,
+            "reviews": 534
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tin Hifi Dudu Good Planar",
+            "price": 2599000,
+            "rating": 7.46,
+            "reviews": 765
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Letshuoer S08",
+            "price": 649000,
+            "rating": 7.22,
+            "reviews": 896
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Inawaken Dawn MS The Jansen",
+            "price": 499000,
+            "rating": 7.35,
+            "reviews": 537
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Sennheiser IE200",
+            "price": 450000,
+            "rating": 7.32,
+            "reviews": 600
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tin Hifi C3",
+            "price": 638000,
+            "rating": 7.28,
+            "reviews": 877
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tin C2",
+            "price": 449000,
+            "rating": 7.17,
+            "reviews": 573
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "EPZ Q1 Pro",
+            "price": 699000,
+            "rating": 7.01,
+            "reviews": 570
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "ISN Audio Neo 1",
+            "price": 1279000,
+            "rating": 7.15,
+            "reviews": 785
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "CCA Rhapsody",
+            "price": 1150000,
+            "rating": 7,
+            "reviews": 630
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "EPZ Q5",
+            "price": 3500000,
+            "rating": 7.18,
+            "reviews": 798
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Letshuoer DZ4",
+            "price": 3060000,
+            "rating": 7.21,
+            "reviews": 660
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Simgot EA500LM",
+            "price": 2240000,
+            "rating": 7.33,
+            "reviews": 768
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Simgot EA1000",
+            "price": 880000,
+            "rating": 7.32,
+            "reviews": 732
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tanchjim Oxygen",
+            "price": 1280000,
+            "rating": 7.21,
+            "reviews": 727
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tanchjim Hana 2021",
+            "price": 359000,
+            "rating": 7,
+            "reviews": 727
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Truthear Zero Red",
+            "price": 379000,
+            "rating": 7.35,
+            "reviews": 714
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Truthear Hexa",
+            "price": 605000,
+            "rating": 7.27,
+            "reviews": 538
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Kinera Wyvern",
+            "price": 649000,
+            "rating": 6.18,
+            "reviews": 900
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Salnotes Zero 2",
+            "price": 844000,
+            "rating": 6.77,
+            "reviews": 610
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Simgot EW200",
+            "price": 525000,
+            "rating": 7.25,
+            "reviews": 577
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "KZ PR2 x HBB",
+            "price": 525000,
+            "rating": 7.34,
+            "reviews": 691
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tin Hifi T3+",
+            "price": 579000,
+            "rating": 6.95,
+            "reviews": 555
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tripowin Piccolo",
+            "price": 379000,
+            "rating": 7.05,
+            "reviews": 646
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Blon Z300 HBB",
+            "price": 179000,
+            "rating": 7.08,
+            "reviews": 822
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "TRN Conch",
+            "price": 390000,
+            "rating": 7.03,
+            "reviews": 799
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tin Hifi C2",
+            "price": 174000,
+            "rating": 7.1,
+            "reviews": 614
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "CCA Polaris",
+            "price": 249000,
+            "rating": 6.85,
+            "reviews": 567
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tanchjim One DSP",
+            "price": 1000000,
+            "rating": 7.11,
+            "reviews": 588
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tin Hifi Elf C0 DSP",
+            "price": 980000,
+            "rating": 6.79,
+            "reviews": 834
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "KZ DFI",
+            "price": 1650000,
+            "rating": 6.86,
+            "reviews": 723
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Moondrop Aria",
+            "price": 3350000,
+            "rating": 6.91,
+            "reviews": 772
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Sound Rhyme SR1",
+            "price": 1338000,
+            "rating": 7.07,
+            "reviews": 540
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "7hz Legato",
+            "price": 620000,
+            "rating": 6.14,
+            "reviews": 721
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Aful Performer 5",
+            "price": 345000,
+            "rating": 7.14,
+            "reviews": 886
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tangzu Fu Du",
+            "price": 289000,
+            "rating": 6.18,
+            "reviews": 876
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Moondrop Lan",
+            "price": 226000,
+            "rating": 6.64,
+            "reviews": 759
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Truthear Gate",
+            "price": 450000,
+            "rating": 6.36,
+            "reviews": 503
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Moondrop Chu 2",
+            "price": 349000,
+            "rating": 6.45,
+            "reviews": 842
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Simgot EW100p",
+            "price": 279000,
+            "rating": 6.41,
+            "reviews": 837
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Kiwi Ears Cadenza",
+            "price": 169000,
+            "rating": 5.93,
+            "reviews": 639
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tangzu Wan Er Studio",
+            "price": 305000,
+            "rating": 6.5,
+            "reviews": 512
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tangzu Wan Er",
+            "price": 299000,
+            "rating": 6.5,
+            "reviews": 753
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "KZ Castor",
+            "price": 2700000,
+            "rating": 6.32,
+            "reviews": 791
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Truthear Hola",
+            "price": 169000,
+            "rating": 6.32,
+            "reviews": 839
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "7hz Salnotes Zero",
+            "price": 371000,
+            "rating": 6.14,
+            "reviews": 822
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tanchjim Kara",
+            "price": 460000,
+            "rating": 6.73,
+            "reviews": 739
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Moondrop Quarks DSP",
+            "price": 640000,
+            "rating": 6.23,
+            "reviews": 608
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Moondrop Jiu",
+            "price": 149000,
+            "rating": 6,
+            "reviews": 665
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Lafitear LF3",
+            "price": 139000,
+            "rating": 5.68,
+            "reviews": 578
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Phi Audio 3.14",
+            "price": 158000,
+            "rating": 5.5,
+            "reviews": 507
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Trn MT1 Max",
+            "price": 225000,
+            "rating": 5.91,
+            "reviews": 516
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "QKZ x HBB",
+            "price": 240000,
+            "rating": 6.11,
+            "reviews": 585
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "KZ Ling Long",
+            "price": 300000,
+            "rating": 6.23,
+            "reviews": 886
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tangzu Chang Le",
+            "price": 229000,
+            "rating": 5.27,
+            "reviews": 552
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Sgor Adonis",
+            "price": 219000,
+            "rating": 5.95,
+            "reviews": 548
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Tripowin Lea",
+            "price": 320000,
+            "rating": 5.64,
+            "reviews": 528
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "KZ ZVX",
+            "price": 256000,
+            "rating": 6.18,
+            "reviews": 889
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Blon BL01",
+            "price": 120000,
+            "rating": 6.36,
+            "reviews": 604
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Blon BL03",
+            "price": 100000,
+            "rating": 6.27,
+            "reviews": 521
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "KZ DQ6s",
+            "price": 177000,
+            "rating": 5.86,
+            "reviews": 634
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "TRN MT1 Pro",
+            "price": 139000,
+            "rating": 3.14,
+            "reviews": 654
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "TRN CS2",
+            "price": 209000,
+            "rating": 3.09,
+            "reviews": 757
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "SGOR Venus",
+            "price": 369000,
+            "rating": 3,
+            "reviews": 661
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "CCA CRA+",
+            "price": 139000,
+            "rating": 2.68,
+            "reviews": 788
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "CCA CRA",
+            "price": 1700000,
+            "rating": 3.09,
+            "reviews": 777
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Kiwi Ears Dolce",
+            "price": 1400000,
+            "rating": 3.09,
+            "reviews": 872
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "CCA CST",
+            "price": 87000,
+            "rating": 3.09,
+            "reviews": 846
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Moondrop Stellaris",
+            "price": 349000,
+            "rating": 2.73,
+            "reviews": 569
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "7hz Salnotes Dioko x Crinacle",
+            "price": 400000,
+            "rating": 6.32,
+            "reviews": 755
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "TRN MT1",
+            "price": 284000,
+            "rating": 2.55,
+            "reviews": 547
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Kinera Wyvern Abyss",
+            "price": 219000,
+            "rating": 5.91,
+            "reviews": 608
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Nicehck DB2",
+            "price": 119000,
+            "rating": 1.82,
+            "reviews": 573
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "KZ ZEX Pro",
+            "price": 219000,
+            "rating": 1.64,
+            "reviews": 896
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Kz ZEX",
+            "price": 290000,
+            "rating": 1.64,
+            "reviews": 692
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "QKZ ZX2",
+            "price": 58900,
+            "rating": 2.91,
+            "reviews": 629
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Kbear KS1",
+            "price": 219000,
+            "rating": 3.05,
+            "reviews": 530
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Kbear KS2",
+            "price": 290000,
+            "rating": 2.91,
+            "reviews": 625
+        }
+    },
+    {
+        "model": "products.product",
+        "fields": {
+            "product_name": "Ak6 Pro",
+            "price": 58900,
+            "rating": 2.36,
+            "reviews": 712
+        }
+    }
+]
