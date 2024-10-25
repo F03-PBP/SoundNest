@@ -1,20 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block meta %}
 <title>Product List</title>
 {% endblock meta %}
 
 {% block content %}
-    <h1>Products</h1>
-    <ul>
-        {% load humanize %}
-        {% for product in products %}
-        <li>
-            <strong>{{ product.product_name }}</strong><br>
-            Price: Rp{{ product.price|intcomma }}<br>
-            Rating: {{ product.rating }}<br>
-        </li>
-        {% endfor %}
-    </ul>
+    <div class="container mx-auto max-w-screen-xl">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 justify-items-center">
+            {% for product in products %}
+            <div class="bg-[#F4F5F7] overflow-hidden relative w-[285px] h-[446px]">
+                <img src="{% static 'images/templateimage.webp' %}" alt="{{ product.product_name }}" class="w-full h-2/3 object-cover">
+                <div class="p-4 h-1/3 flex flex-col justify-start space-y-2">
+                    <h2 class="text-xl font-semibold truncate" style="max-width: 100%;">{{ product.product_name }}</h2>
+                    <p class="text-xl font-bold text-black mt-1">Rp{{ product.price|intcomma }}</p>
+                    <!-- rating dan ada gambar bintang nantinya -->
+                    <p class="text-lg mt-1">{{ product.rating }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
 {% endblock content %}
