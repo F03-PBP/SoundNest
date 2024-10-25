@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-fhm1@hd9mggd#fn5))(4_gwo2ovgc%-cwp)z^$y7#r+5@$hzuu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "khairul-bintang-soundnest.pbp.cs.ui.ac.id"]
 
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'BestDeals',
+    'products',
 ]
 
 MIDDLEWARE = [
