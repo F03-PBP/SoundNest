@@ -16,11 +16,10 @@ def view_wishlist(request):
         'class': 'PBP E'
     }
     return render(request, "main.html", context)
-# Create your views here.
 
-def get_produk_list(request):
-    produk_list = WishlistItem.objects.all()
-    return render(request, 'main.html', {'produk': produk_list})
+def get_product_json(request):
+    data = Produk.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 @csrf_exempt
 @login_required
@@ -35,10 +34,7 @@ def tambah_wishlist_ajax(request):
         return JsonResponse({'status': 'error', 'message': 'Form tidak valid.'}, status=400)
     return JsonResponse({'status': 'error', 'message': 'Invalid request.'}, status=400)
 
-# @login_required
-# def wishlist_view(request):
-#     wishlist_items = request.user.wishlist.all()
-#     return render(request, 'main.html', {'wishlist_items': wishlist_items})
+
 def delete_wish(request, id):
     product = Produk.objects.get(pk = id)
     product.delete()

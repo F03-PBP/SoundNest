@@ -106,8 +106,8 @@
       <div id="product-container" class="grid grid-cols-3 gap-6 mb-6">
         <!-- Product cards will be dynamically inserted here -->
       </div>
-      <div class="grid grid-cols-1 gap-6 mb-6" style="height: 100%; border-radius: 10px; background-color:#F9F1E7;">
-        <!-- Product cards will be dynamically inserted here -->
+      <div id="total-product-price" class="grid grid-cols-1 gap-6 mb-6" style="height: 100%; border-radius: 10px; background-color:#F9F1E7;">
+
       </div>
     </div>
 
@@ -120,29 +120,14 @@
   </div>
   <script>
 
-
-    const products = [
-      { id: 1, name: 'Product 1', price: '$10', image: 'static/image/tws.png' },
-      { id: 2, name: 'Product 2', price: '$20', image: 'static/image/earbuds.jpg' },
-      { id: 3, name: 'Product 3', price: '$30', image: 'https://via.placeholder.com/150' },
-      { id: 4, name: 'Product 4', price: '$40', image: 'https://via.placeholder.com/150' },
-      { id: 5, name: 'Product 5', price: '$50', image: 'https://via.placeholder.com/150' },
-      { id: 6, name: 'Product 6', price: '$60', image: 'https://via.placeholder.com/150' },
-      { id: 7, name: 'Product 7', price: '$70', image: 'https://via.placeholder.com/150' },
-      { id: 8, name: 'Product 8', price: '$80', image: 'https://via.placeholder.com/150' },
-      { id: 9, name: 'Product 9', price: '$90', image: 'https://via.placeholder.com/150' },
-      { id: 10, name: 'Product 10', price: '$100', image: 'https://via.placeholder.com/150' },
-      { id: 11, name: 'Product 11', price: '$100', image: 'https://via.placeholder.com/150' },
-      { id: 12, name: 'Product 12', price: '$100', image: 'https://via.placeholder.com/150' }
-    ];
-
+    async function getProductEntries(){
+            return fetch("{% url 'WishList:get_product_json' %}").then((res) => res.json())
+    }
     let currentPage = 1;
     const productsPerPage = 6;
-    
     function showModal() {
         const modal = document.getElementById('crudModal');
         const modalContent = document.getElementById('crudModalContent');
-  
         modal.classList.remove('hidden'); 
         setTimeout(() => {
           modalContent.classList.remove('opacity-0', 'scale-95');
@@ -165,16 +150,19 @@
     const productContainer = document.getElementById('product-container');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
-
-    function renderProducts(page) {
+    const totalHarga = document.getElementById('total-product-price');
+    async function renderProducts(page) {
       // Clear existing products
+      const products = await getProductEntries();
       productContainer.innerHTML = '';
-
       // Calculate start and end indices for the current page
       const start = (page - 1) * productsPerPage;
       const end = start + productsPerPage;
       const productsToDisplay = products.slice(start, end);
-
+      let total_price = 0;
+      products.forEach(produk => {
+        total_price += produk.price;
+      })
       // Insert products into the container
       productsToDisplay.forEach(product => {
         const productCard = `
@@ -184,8 +172,13 @@
             <p class="text-gray-600">${product.price}</p>
         `;
         productContainer.innerHTML += productCard;
+        
       });
-
+      const productPrice = `
+      <p>Wishlist Total</p>
+      <p>Total harga adalah: ${total_price}</p>
+      `
+      totalHarga.innerHTML = productPrice;
       // Handle pagination button states
       prevBtn.disabled = page === 1;
       nextBtn.disabled = page === Math.ceil(products.length / productsPerPage);
