@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Best Deals</h1>
+
+    {% if is_admin %}
+    <!-- Button for admin to open the modal to add products to deals -->
+    <div class="admin-controls mb-4">
+        <button id="addToDealsBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Add to Deals
+        </button>
+    </div>
+    {% endif %}
+
+    <!-- No ongoing sales display -->
+    {% if not sales %}
+    <div class="no-sales">
+        <img src="{% static 'images/no-sales.png' %}" alt="No sales">
+        <p>No current deals. Check back later!</p>
+    </div>
+    {% else %}
+    <!-- Display Top Picks (sorted by highest rated) -->
+    <h2 class="text-2xl font-semibold mb-4">Top Picks (sorted by highest rated)</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {% for product in top_picks %}
+        <div class="bg-white shadow-md rounded-lg p-4 product-card">
+            <h3 class="text-xl font-bold">{{ product.name }}</h3>
+            <p>{{ product.description }}</p>
+            <p>Discount: {{ product.discount_percentage }}%</p>
+            <p>Price: ${{ product.discounted_price }}</p>
+            
+            <!-- Admin delete button -->
+            {% if is_admin %}
+            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded flex items-center delete-product" data-product-id="{{ product.id }}">
+                <!-- SVG icon for delete -->
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                Delete
+            </button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Display Latest Deals (sorted by time added) -->
+    <h2 class="text-2xl font-semibold mt-8 mb-4">Latest Deals (sorted by time added)</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {% for product in latest_deals %}
+        <div class="bg-white shadow-md rounded-lg p-4 product-card">
+            <h3 class="text-xl font-bold">{{ product.name }}</h3>
+            <p>{{ product.description }}</p>
+            <p>Discount: {{ product.discount_percentage }}%</p>
+            <p>Price: ${{ product.discounted_price }}</p>
+            
+            <!-- Admin delete button -->
+            {% if is_admin %}
+            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded flex items-center delete-product" data-product-id="{{ product.id }}">
+                <!-- SVG icon for delete -->
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                Delete
+            </button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Show only first 5 products for non-logged in users -->
+    {% if not user.is_authenticated %}
+    <div class="mt-8 text-center fadeout">
+        <p>You must log in to see more products.</p>
+    </div>
+    {% endif %}
+    {% endif %}
+
+    <!-- Modal structure -->
+    <div id="addToDealsModal" class="fixed inset-0 hidden z-50 flex items-center justify-center bg-gray-900 bg-opacity-75">
+        <div class="bg-white p-6 rounded shadow-lg w-96">
+            <h2 class="text-lg font-bold mb-4">Add Product to Deals</h2>
+            <form id="addToDealsForm">
+                <div class="mb-4">
+                    <label for="product" class="block font-bold mb-2">Select Product:</label>
+                    <select id="product" class="w-full p-2 border rounded">
+                        {% for product in available_products %}
+                        <option value="{{ product.id }}">{{ product.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="discount" class="block font-bold mb-2">Discount Percentage:</label>
+                    <input type="number" id="discount" min="0" max="100" step="0.01" class="w-full p-2 border rounded" required>
+                </div>
+                <div class="mb-4">
+                    <label for="start-date" class="block font-bold mb-2">Sale Start Date:</label>
+                    <input type="datetime-local" id="start-date" class="w-full p-2 border rounded">
+                    <div class="flex items-center mt-2">
+                        <input type="checkbox" id="start-now" class="mr-2">
+                        <label for="start-now">Start Now</label>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="end-date" class="block font-bold mb-2">Sale End Date:</label>
+                    <input type="datetime-local" id="end-date" class="w-full p-2 border rounded" required>
+                </div>
+                <div class="flex justify-end">
+                    <button type="button" id="submitDealBtn" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+                    <button type="button" id="closeModalBtn" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // JavaScript for handling the delete button using AJAX
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        // Attach event listener to all delete buttons
+        document.querySelectorAll('.delete-product').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product-id');
+                
+                // Confirmation dialog
+                if (confirm("Are you sure you want to delete this product from deals?")) {
+                    // Send the AJAX request to delete the product
+                    fetch(`/delete-product/${productId}/`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}',  // Django CSRF token
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // Remove the product card from the DOM if successful
+                            this.closest('.product-card').remove();
+                        } else {
+                            alert("Failed to delete the product. Try again.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+            });
+        });
+    });
+
+    // JavaScript to handle modal opening, closing, and form submission
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const modal = document.getElementById("addToDealsModal");
+        const openModalBtn = document.getElementById("addToDealsBtn");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+        const submitDealBtn = document.getElementById("submitDealBtn");
+
+        // Open the modal
+        openModalBtn.addEventListener("click", () => {
+            modal.classList.remove("hidden");
+        });
+
+        // Close the modal
+        closeModalBtn.addEventListener("click", () => {
+            modal.classList.add("hidden");
+        });
+
+        // Handle the form submission with AJAX
+        submitDealBtn.addEventListener("click", function() {
+            const productId = document.getElementById("product").value;
+            const discount = document.getElementById("discount").value;
+            const startNow = document.getElementById("start-now").checked;
+            let startDate = document.getElementById("start-date").value;
+            const endDate = document.getElementById("end-date").value;
+
+            if (startNow) {
+                startDate = new Date().toISOString();
+            }
+
+            // Perform validation (ensure discount and dates are valid)
+            if (discount <= 0 || discount >= 100 || !endDate) {
+                alert("Please provide valid discount and dates.");
+                return;
+            }
+
+            // Send the AJAX request
+            fetch('/add-to-deals/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    product_id: productId,
+                    discount: discount,
+                    start_date: startDate,
+                    end_date: endDate
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Close the modal and reload the page (or update deals dynamically)
+                    modal.classList.add("hidden");
+                    window.location.reload();  // Reload the page to show updated deals
+                } else {
+                    alert("Failed to add product to deals. Please try again.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Something went wrong. Please try again.");
+            });
+        });
+    });
+</script>
+{% endblock %}
