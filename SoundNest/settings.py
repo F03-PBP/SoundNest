@@ -40,7 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'BestDeals',
+    'django.contrib.humanize',
+    'Discussions',
     'products',
+    'reviews',
+    'authentication',
 ]
 
 MIDDLEWARE = [
@@ -133,22 +137,6 @@ else:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'error.log'),  # Use BASE_DIR for a dynamic path
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    },
-}
-
+LOGIN_URL = 'authentication:login_page'
+LOGIN_REDIRECT_URL = 'products:home'
+LOGOUT_REDIRECT_URL = 'authentication:login_page'
