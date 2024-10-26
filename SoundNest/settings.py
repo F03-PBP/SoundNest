@@ -136,4 +136,6 @@ else:
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'reviews:rating'
+LOGIN_URL = 'authentication:login_page'
+LOGIN_REDIRECT_URL = 'products:home'
+LOGOUT_REDIRECT_URL = 'authentication:login_page'
