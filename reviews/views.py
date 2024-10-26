@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Reviews
+from .models import Review
 
 def show_reviews(request):
     return render(request, 'main.html')
