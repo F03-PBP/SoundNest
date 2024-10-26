@@ -4,10 +4,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% block meta %} {% endblock meta %}
+    {% block meta %}{% endblock meta %}
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   </head>
 
   <body>
-    {% block content %} {% endblock content %}
+    <main>
+      {% block content %}{% endblock content %}
+    </main>
+    
+    <!-- Custom JavaScript -->
+    <script src="{% static 'js/index.js' %}"></script>
   </body>
 </html>

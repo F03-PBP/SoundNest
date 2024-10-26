@@ -6,7 +6,6 @@ from products.models import Product
 class Sale(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='sales')
     discount_percentage = models.DecimalField(max_digits=5, decimal_places=2)
-    sale_start_time = models.DateTimeField()
     sale_end_time = models.DateTimeField()
     
 

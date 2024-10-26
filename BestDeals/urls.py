@@ -1,8 +1,10 @@
 from django.urls import path
-from .views import best_deals, delete_product, add_to_deals_ajax  # Import the view
+from .views import best_deals, add_to_deals, edit_deals, delete_deals, show_json  # Import the view
 
 urlpatterns = [
     path('', best_deals, name='best_deals'),  # URL for best deals
-    path('delete-product/<int:product_id>/', delete_product, name='delete_product'),
-    path('add-to-deals/', add_to_deals_ajax, name='add_to_deals_ajax'),
+    path('add-to-deals/', add_to_deals, name='add_to_deals'),
+    path('edit-deals/<uuid:product_id>/', edit_deals, name='edit_deals'),
+    path('delete-deals/<uuid:product_id>/', delete_deals, name='delete_deals'),
+    path('json/', show_json, name='show_json'),
 ]
