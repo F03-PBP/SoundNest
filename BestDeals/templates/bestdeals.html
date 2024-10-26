@@ -142,6 +142,19 @@
        
     </div>
 
+    <div id="quickViewModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg max-w-2xl w-full mx-4 relative">
+            <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-700" id="closeQuickViewBtn">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <div class="p-6" id="quickViewContent">
+                <!-- Content will be dynamically loaded -->
+            </div>
+        </div>
+    </div>
+
     <!-- Show only first 5 products for non-logged in users -->
     <!-- {% if not user.is_authenticated %}
     <div class="mt-8 text-center fadeout">

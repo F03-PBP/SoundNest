@@ -73,25 +73,18 @@ document.addEventListener("DOMContentLoaded", function () {
         const selectedFilter = discountFilter.value;
         
         // Get products from both containers
-        const topPicksProducts = document.querySelectorAll("#topPicksContainer .product-card");
-        const latestDealsProducts = document.querySelectorAll("#latestDealsContainer .product-card");
-
-        // Combine both NodeLists into an array for easier handling
-        const allProducts = [...topPicksProducts, ...latestDealsProducts];
-        
-        allProducts.forEach(card => {
-            // Get the discount value, handling potential missing elements
-            const discountElement = card.querySelector(".discount-percentage");
-            if (!discountElement) return;
+        const allProductCards = document.querySelectorAll(".product-card");
+    
+        allProductCards.forEach(card => {
+            const discountBadge = card.querySelector(".bg-red-500");
+            if (!discountBadge) return;
             
-            // Extract just the number from the discount text (e.g., "Discount: 25%" -> 25)
-            const discount = parseFloat(discountElement.textContent.replace(/[^0-9.]/g, ''));
-            
-            // Skip if we couldn't parse a valid discount
+            // Extract just the number from the discount text (e.g., "-25%" -> 25)
+            const discount = parseFloat(discountBadge.textContent.replace(/[^0-9.]/g, ''));
             if (isNaN(discount)) return;
-
+    
             let shouldDisplay = true;
-
+    
             switch (selectedFilter) {
                 case "lt25":
                     shouldDisplay = discount < 25;
@@ -110,14 +103,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     shouldDisplay = true;
                     break;
             }
-
-            // Use classList for better performance and cleaner code
-            card.classList.toggle("hidden", !shouldDisplay);
+    
+            // Use classList for better performance
+            card.classList.toggle('hidden', !shouldDisplay);
         });
-
-        // Show "no products" message if all products are hidden in each container
-        updateContainerEmptyState(topPicksContainer, "top-picks");
-        updateContainerEmptyState(latestDealsContainer, "latest-deals");
     }
 
     function updateContainerEmptyState(container, containerType) {
@@ -137,30 +126,88 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function createProductCard(product_sale) {
+        // Convert rating to stars
+        const stars = Array(5).fill('').map((_, index) => 
+            index < Math.floor(product_sale.rating) 
+                ? '★' 
+                : '☆'
+        ).join('');
+    
         return `
-            <div class="bg-white shadow-md rounded-lg p-4 product-card">
-                <h3 class="text-xl font-bold">${product_sale.product_name}</h3>
-                <p>Original Price: ${product_sale.original_price}</p>
-                <p>Rating: ${product_sale.rating}</p>
-                <p class="discount-percentage">Discount: ${product_sale.discount}%</p>
-                <p>Price: ${product_sale.price}</p>
-                <p class="text-sm font-medium">
-                    Sales ends in: <span class="time-remaining ${product_sale.time_remaining === 'Sale ended' ? 'text-red-500' : 'text-green-500'}">${product_sale.time_remaining}</span>
-                </p>
+            <div class="relative bg-white shadow-md rounded-lg overflow-hidden product-card group">
+                <!-- Discount Badge -->
+                <div class="absolute top-2 left-2 bg-red-500 text-white text-sm px-2 py-1 rounded">
+                    -${product_sale.discount}%
+                </div>
                 
-                
-                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded flex items-center delete-deals" data-product-id="${product_sale.id}">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                    Delete
-                </button>
-                <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded flex items-center edit-deals mt-2" 
-                    data-product-id="${product_sale.id}" 
-                    data-discount="${product_sale.discount}" 
-                    data-end="${product_sale.sale_end_time}">
-                    Edit
-                </button>
+                <!-- Action Icons -->
+                <div class="absolute top-2 right-2 flex flex-col gap-2">
+                    <button class="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </button>
+                    <button class="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </button>
+                </div>
+    
+                <!-- Product Image -->
+                <div class="aspect-square bg-gray-100">
+                    <img 
+                        src="/api/placeholder/400/400" 
+                        alt="${product_sale.product_name}" 
+                        class="w-full h-full object-cover"
+                    />
+                </div>
+    
+                <!-- Product Info -->
+                <div class="p-4">
+                    <h3 class="text-lg font-medium text-gray-900 mb-2">${product_sale.product_name}</h3>
+                    
+                    <!-- Rating -->
+                    <div class="flex items-center gap-1 mb-2">
+                        <div class="text-yellow-400">${stars}</div>
+                        <span class="text-sm text-gray-600">(${product_sale.review_count || 0})</span>
+                    </div>
+    
+                    <!-- Price -->
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="text-lg font-bold text-gray-900">$${product_sale.price}</span>
+                        <span class="text-sm text-gray-500 line-through">$${product_sale.original_price}</span>
+                    </div>
+    
+                    <!-- Time Remaining -->
+                    <p class="text-sm font-medium mb-3">
+                        Sales ends in: 
+                        <span class="time-remaining ${product_sale.time_remaining === 'Sale ended' ? 'text-red-500' : 'text-green-500'}">
+                            ${product_sale.time_remaining}
+                        </span>
+                    </p>
+    
+                    <!-- Admin Actions -->
+                    <div class="flex gap-2 mt-2">
+                        <button class="flex-1 bg-yellow-500 hover:bg-yellow-700 text-white font-medium py-2 px-4 rounded flex items-center justify-center gap-2 edit-deals" 
+                            data-product-id="${product_sale.id}" 
+                            data-discount="${product_sale.discount}" 
+                            data-end="${product_sale.sale_end_time}">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                            Edit
+                        </button>
+                        <button class="flex-1 bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded flex items-center justify-center gap-2 delete-deals" 
+                            data-product-id="${product_sale.id}">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Delete
+                        </button>
+                    </div>
+                </div>
             </div>`;
     }
 
@@ -221,7 +268,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (response.ok) {
                     await fetchBestDeals(); // Refresh the data
-                    alert('Product removed successfully');
+                    // alert('Product removed successfully');
                 } else {
                     alert('Failed to remove product');
                 }
@@ -236,10 +283,20 @@ document.addEventListener("DOMContentLoaded", function () {
         const button = e.currentTarget;
         const productId = button.getAttribute('data-product-id');
         const discount = button.getAttribute('data-discount');
-        const endDate = button.getAttribute('data-end');
+        const endDate = new Date(button.getAttribute('data-end'));
 
-        // Format the date to YYYY-MM-DD for the input field
-        const formattedDate = endDate.split('T')[0];
+        
+
+        // Get individual parts of the local date and time
+        const year = endDate.getFullYear();
+        const month = String(endDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+        const day = String(endDate.getDate()).padStart(2, '0');
+        const hours = String(endDate.getHours()).padStart(2, '0');
+        const minutes = String(endDate.getMinutes()).padStart(2, '0');
+
+        // Format to 'YYYY-MM-DDTHH:MM'
+        const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
+        
 
         // Set values in the edit modal
         document.getElementById("editDiscount").value = discount;
@@ -271,7 +328,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (response.ok) {
                     toggleModal(editModal, false);
                     await fetchBestDeals();
-                    alert("Deal updated successfully!");
+                    // alert("Deal updated successfully!");
                 } else {
                     alert("Failed to update the deal.");
                 }
@@ -320,7 +377,7 @@ document.addEventListener("DOMContentLoaded", function () {
         discount = document.getElementById("discount").value;
         end_date = new Date(document.getElementById("end_date").value);
         const now = new Date();
-        alert(end_date)
+        // alert(end_date)
         if (discount <= 0 || discount >= 100) {
             alert("Discount must be between 0 and 100.");
             return; // Exit the function to prevent form submission
@@ -354,7 +411,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 addProductForm.reset();
                 toggleModal(addModal, false);
                 await fetchBestDeals();
-                alert("Product added to deals successfully!");
+                // alert("Product added to deals successfully!");
             } else {
                 const errorData = await response.json();
                 alert(errorData.message || "Failed to add product to deals.");
