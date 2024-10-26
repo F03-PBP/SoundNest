@@ -9,7 +9,7 @@ class Product(models.Model):
     reviews = models.IntegerField(default=0)
 
     def update_rating(self):
-        reviews = self.review_set.all()
+        reviews = self.product_reviews.all()
         total_reviews = reviews.count()
         if total_reviews > 0:
             average_rating = reviews.aggregate(models.Avg('rating'))['rating__avg']
