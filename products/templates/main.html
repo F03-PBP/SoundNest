@@ -42,7 +42,11 @@
                     <h2 class="text-xl font-semibold truncate" style="max-width: 100%;">{{ product.product_name }}</h2>
                     <p class="text-xl font-bold text-black mt-1">Rp{{ product.price|intcomma }}</p>
                     <!-- rating dan ada gambar bintang nantinya -->
-                    <p class="text-lg mt-1">{{ product.rating }}</p>
+                     <div class="flex items-center text-lg mt-2">
+                        <span class="text-yellow-500 text-lg">&#9733;</span>
+                        <p class="text-lg ml-2">{{ product.rating }}</p>
+                        <p class="ml-2 text-gray-400">({{ product.reviews }} reviews)</p> <!-- Review count in gray -->
+                    </div>
                 </div>
             </div>
             {% endfor %}
