@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import datetime
 from django.http import JsonResponse
 from WishList.models import WishlistItem
 from .forms import WishlistItemForm
@@ -9,6 +10,8 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.core import serializers
 from django.http import HttpResponseRedirect
+from django.utils.html import strip_tags
+from django.views.decorators.http import require_POST
 def view_wishlist(request):
     context = {
         'npm' : '2306123456',
@@ -41,19 +44,26 @@ def delete_wish(request, id):
     return HttpResponseRedirect(reverse('main:view_wishlist'))
 
 
-# @csrf_exempt
-# @require_POST
-#def add_product_entry_ajax(request):
-    # name = strip_tags(request.POST.get("name"))
-    # description = strip_tags(request.POST.get("description"))
-    # price = request.POST.get("price")
-    # user = request.user
+@csrf_exempt
+@require_POST
+def add_product_entry_ajax(request):
+    name = strip_tags(request.POST.get("product_name"))
+    description = strip_tags(request.POST.get("description"))
+    rating = request.POST.get("rating")
+    price = request.POST.get("price")
+    quantity = request.POST.get("quantity")
+    user = request.user
+    date = str(datetime.datetime.now())
+    new_product = Product(
+        name=name, description = description,
+        price = price,
+    )
+    new_wishlist = WishlistItem(
+        user = user,
+        produk = new_product,
+        jumlah = quantity,
+        date_added = date
+    )
+    new_product.save()
 
-    # new_product = Product(
-    #     name=name, description = description,
-    #     price = price,
-    #     user=user
-    # )
-    # new_product.save()
 
-    # return HttpResponse(b"CREATED", status=201)
