@@ -21,7 +21,15 @@ def view_wishlist(request):
     return render(request, "main.html", context)
 
 def get_product_json(request):
-    data = Product.objects.all() # for now .all karena belum ada login loginan segala
+    data = Product.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def get_wishlist_json(request):
+    data = WishlistItem.objects.all() # for now .all karena belum ada login loginan segala
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+def get_product_json_by_id(request, id):
+    data = Product.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 @csrf_exempt
@@ -41,29 +49,24 @@ def tambah_wishlist_ajax(request):
 def delete_wish(request, id):
     product = Product.objects.get(pk = id)
     product.delete()
-    return HttpResponseRedirect(reverse('main:view_wishlist'))
+    return HttpResponseRedirect(reverse('WishList:view_wishlist'))
 
 
 @csrf_exempt
 @require_POST
 def add_product_entry_ajax(request):
-    name = strip_tags(request.POST.get("product_name"))
-    description = strip_tags(request.POST.get("description"))
-    rating = request.POST.get("rating")
-    price = request.POST.get("price")
+    product_id = request.POST.get('produk')
+    new_product = Product.objects.get(id=product_id)
     quantity = request.POST.get("quantity")
     user = request.user
     date = str(datetime.datetime.now())
-    new_product = Product(
-        name=name, description = description,
-        price = price,
-    )
+    
     new_wishlist = WishlistItem(
-        user = user,
+        # user = user,
         produk = new_product,
         jumlah = quantity,
         date_added = date
     )
-    new_product.save()
+    new_wishlist.save()
 
 
