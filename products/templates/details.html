@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block meta %}
+<title>{{ product.product_name }} - Details</title>
+{% endblock meta %}
+
+{% block content %}
+
+<div class="bg-[#F9F1E7] h-[100px] mb-20 flex items-center justify-start px-4 w-full">
+    <div class="container mx-auto max-w-screen-xl flex items-center">
+        
+    </div>
+</div>
+
+<div class="container mx-auto max-w-screen-xl px-4">
+    <div class="flex flex-col md:flex-row mt-10">
+        <div class="md:w-1/2">
+            <img src="{% static 'images/templateimage.webp' %}" alt="{{ product.product_name }}" class="w-full h-auto">
+        </div>
+        <div class="md:w-1/2 md:pl-10">
+            <h1 class="text-3xl font-bold">{{ product.product_name }}</h1>
+            <p class="text-xl font-bold mt-2">Rp{{ product.price|intcomma }}</p>
+            <div class="flex items-center mt-2">
+                <span class="text-yellow-400 text-lg">&#9733;</span>
+                <p class="text-lg ml-1">{{ product.rating }}</p>
+                <p class="ml-2 text-gray-400">({{ product.reviews }} reviews)</p>
+            </div>
+            <p class="mt-4">{{ product.description }}</p>
+            <!-- Add more product details as needed -->
+            <div class="mt-6">
+                <a href="/" class="px-4 py-2 bg-[#B88E2F] text-white rounded">Back to Products</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.core import serializers
 from products.models import Product
@@ -29,3 +29,9 @@ def show_product(request):
     last_login = request.user.last_login
 
     return render(request, "main.html", {"page_products": page_products, "last_login": last_login})
+
+@login_required()
+def product_details(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
+    return render(request, 'details.html', {'product': product})
