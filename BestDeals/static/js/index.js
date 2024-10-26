@@ -50,8 +50,89 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Add event listeners for edit and delete buttons
             setupEventListeners();
+            setupFilterListeners();
+            
+            // Apply any existing filter
+            if (discountFilter.value !== "all") {
+                applyDiscountFilter();
+            }
         } catch (error) {
             console.error("Error fetching best deals:", error);
+        }
+    }
+
+    //filter berdasarkan diskon
+    const discountFilter = document.getElementById("discountFilter");
+
+   // Add filter event listeners after data is loaded
+    function setupFilterListeners() {
+        discountFilter.addEventListener("change", applyDiscountFilter);
+    }
+
+    function applyDiscountFilter() {
+        const selectedFilter = discountFilter.value;
+        
+        // Get products from both containers
+        const topPicksProducts = document.querySelectorAll("#topPicksContainer .product-card");
+        const latestDealsProducts = document.querySelectorAll("#latestDealsContainer .product-card");
+
+        // Combine both NodeLists into an array for easier handling
+        const allProducts = [...topPicksProducts, ...latestDealsProducts];
+        
+        allProducts.forEach(card => {
+            // Get the discount value, handling potential missing elements
+            const discountElement = card.querySelector(".discount-percentage");
+            if (!discountElement) return;
+            
+            // Extract just the number from the discount text (e.g., "Discount: 25%" -> 25)
+            const discount = parseFloat(discountElement.textContent.replace(/[^0-9.]/g, ''));
+            
+            // Skip if we couldn't parse a valid discount
+            if (isNaN(discount)) return;
+
+            let shouldDisplay = true;
+
+            switch (selectedFilter) {
+                case "lt25":
+                    shouldDisplay = discount < 25;
+                    break;
+                case "25-50":
+                    shouldDisplay = discount >= 25 && discount <= 50;
+                    break;
+                case "50-75":
+                    shouldDisplay = discount > 50 && discount <= 75;
+                    break;
+                case "gt75":
+                    shouldDisplay = discount > 75;
+                    break;
+                case "all":
+                default:
+                    shouldDisplay = true;
+                    break;
+            }
+
+            // Use classList for better performance and cleaner code
+            card.classList.toggle("hidden", !shouldDisplay);
+        });
+
+        // Show "no products" message if all products are hidden in each container
+        updateContainerEmptyState(topPicksContainer, "top-picks");
+        updateContainerEmptyState(latestDealsContainer, "latest-deals");
+    }
+
+    function updateContainerEmptyState(container, containerType) {
+        const visibleProducts = container.querySelectorAll(".product-card:not(.hidden)");
+        const existingMessage = container.querySelector(".no-products-message");
+        
+        if (visibleProducts.length === 0) {
+            if (!existingMessage) {
+                const message = document.createElement("p");
+                message.className = "no-products-message text-gray-500 dark:text-gray-400 text-center py-4";
+                message.textContent = `No ${containerType.replace("-", " ")} available in this discount range.`;
+                container.appendChild(message);
+            }
+        } else if (existingMessage) {
+            existingMessage.remove();
         }
     }
 
@@ -61,8 +142,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 <h3 class="text-xl font-bold">${product_sale.product_name}</h3>
                 <p>Original Price: ${product_sale.original_price}</p>
                 <p>Rating: ${product_sale.rating}</p>
-                <p>Discount: ${product_sale.discount}%</p>
+                <p class="discount-percentage">Discount: ${product_sale.discount}%</p>
                 <p>Price: ${product_sale.price}</p>
+                <p class="text-sm font-medium">
+                    Sales ends in: <span class="time-remaining ${product_sale.time_remaining === 'Sale ended' ? 'text-red-500' : 'text-green-500'}">${product_sale.time_remaining}</span>
+                </p>
+                
                 
                 <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded flex items-center delete-deals" data-product-id="${product_sale.id}">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -77,6 +162,41 @@ document.addEventListener("DOMContentLoaded", function () {
                     Edit
                 </button>
             </div>`;
+    }
+
+    
+
+    function startTimeRefresh() {
+        setInterval(async () => {
+            await fetchBestDeals();  // Refresh the list every minute
+            await deleteExpiredDeals(); // Automatically delete expired deals every minute
+        }, 60000);
+    }
+    
+    async function deleteExpiredDeals() {
+        try {
+            const response = await fetch("/best-deals/json");  // Reuse the endpoint to get the current deals
+            const data = await response.json();
+    
+            data.least_countdown.forEach(async (product_sale) => {
+                if (product_sale.time_remaining === "Sale ended") {
+                    try {
+                        // Delete the expired product
+                        const deleteResponse = await fetch(`/best-deals/delete-deals/${product_sale.product.id}/`, {
+                            method: 'DELETE'
+                        });
+    
+                        if (!deleteResponse.ok) {
+                            console.error(`Failed to delete expired product with ID ${product_sale.product.id}`);
+                        }
+                    } catch (error) {
+                        console.error("Error deleting expired deal:", error);
+                    }
+                }
+            });
+        } catch (error) {
+            console.error("Error fetching deals for deletion:", error);
+        }
     }
 
     function setupEventListeners() {
@@ -200,7 +320,7 @@ document.addEventListener("DOMContentLoaded", function () {
         discount = document.getElementById("discount").value;
         end_date = new Date(document.getElementById("end_date").value);
         const now = new Date();
-        
+        alert(end_date)
         if (discount <= 0 || discount >= 100) {
             alert("Discount must be between 0 and 100.");
             return; // Exit the function to prevent form submission
@@ -208,6 +328,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if(end_date <= now){
             alert("End sale date must be in the future.")
+            return;
+        }
+        if (productIdField.value == ""){
+            alert("Please select a product before submitting.")
             return;
         }
         
@@ -243,4 +367,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initial fetch
     fetchBestDeals();
+
+    // Start periodic refresh
+    startTimeRefresh();
+
+    // Apply filter after fetching products
+    document.addEventListener("DOMContentLoaded", fetchBestDeals);
 }, { once: true });

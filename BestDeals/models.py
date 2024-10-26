@@ -12,18 +12,33 @@ class Sale(models.Model):
     @property
     def discounted_price(self):
         return self.product.price * (1 - (self.discount_percentage / 100))
-
+    
+    @property
     def get_time_remaining(self):
         """
-        Returns the remaining time for the sale to end.
+        Returns the remaining time as a formatted string.
         """
-        return self.sale_end_time - timezone.now()
+        remaining = self.sale_end_time - timezone.localtime()
+        
+        if remaining.total_seconds() <= 0:
+            return "Sale ended"
+            
+        days = remaining.days
+        hours = remaining.seconds // 3600
+        minutes = (remaining.seconds % 3600) // 60
+        
+        if days > 0:
+            return f"{days}d {hours}h"
+        elif hours > 0:
+            return f"{hours}h {minutes}m"
+        else:
+            return f"{minutes}m"
 
     def is_sale_active(self):
         """
         Checks if the sale is still active.
         """
-        return timezone.now() < self.sale_end_time
+        return timezone.localtime() < self.sale_end_time
 
     def __str__(self):
         return f'{self.product.name} - {self.discount_percentage}% off'

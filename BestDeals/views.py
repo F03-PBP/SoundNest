@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.utils import timezone
 import json
-from .forms import AddToDealsForm
+
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.core import serializers
@@ -32,7 +32,8 @@ def show_json(request):
                 'price': sale.discounted_price,
                 'rating': sale.product.rating,
                 'sale_end_time': sale.sale_end_time.isoformat(),
-                
+                'time_remaining': sale.get_time_remaining,
+               
             }
             for sale in sales
         ],
@@ -45,6 +46,7 @@ def show_json(request):
                 'price': sale.discounted_price,
                 'rating': sale.product.rating,
                 'sale_end_time': sale.sale_end_time.isoformat(),
+                'time_remaining': sale.get_time_remaining,
             }
             for sale in top_picks
         ],
@@ -57,6 +59,7 @@ def show_json(request):
                 'price': sale.discounted_price,
                 'rating': sale.product.rating,
                 'sale_end_time': sale.sale_end_time.isoformat(),
+                'time_remaining': sale.get_time_remaining,
             }
             for sale in top_picks_guest
         ],
@@ -69,6 +72,7 @@ def show_json(request):
                 'price': sale.discounted_price,
                 'rating': sale.product.rating,
                 'sale_end_time': sale.sale_end_time.isoformat(),
+                'time_remaining': sale.get_time_remaining,
             }
             for sale in least_countdown
         ],
