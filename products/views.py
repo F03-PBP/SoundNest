@@ -26,4 +26,6 @@ def show_product(request):
 
     page_products = paginator.get_page(page_number)
 
-    return render(request, "main.html", {"page_products": page_products})
+    last_login = request.user.last_login
+
+    return render(request, "main.html", {"page_products": page_products, "last_login": last_login})
