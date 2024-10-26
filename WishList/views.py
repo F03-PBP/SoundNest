@@ -12,13 +12,14 @@ from django.core import serializers
 from django.http import HttpResponseRedirect
 from django.utils.html import strip_tags
 from django.views.decorators.http import require_POST
+
 def view_wishlist(request):
     context = {
-        'npm' : '2306123456',
-        'name': 'Pak Bepe',
-        'class': 'PBP E'
+        'npm' : '911',
+        'name': 'easteregg',
+        'class': 'skibidi'
     }
-    return render(request, "main.html", context)
+    return render(request, "wishlist.html", context)
 
 def get_product_json(request):
     data = Product.objects.all()
@@ -45,10 +46,9 @@ def tambah_wishlist_ajax(request):
         return JsonResponse({'status': 'error', 'message': 'Form tidak valid.'}, status=400)
     return JsonResponse({'status': 'error', 'message': 'Invalid request.'}, status=400)
 
-
 def delete_wish(request, id):
-    product = Product.objects.get(pk = id)
-    product.delete()
+    wishlist = WishlistItem.objects.get(pk = id)
+    wishlist.delete()
     return HttpResponseRedirect(reverse('WishList:view_wishlist'))
 
 
@@ -58,7 +58,7 @@ def add_product_entry_ajax(request):
     product_id = request.POST.get('produk')
     new_product = Product.objects.get(id=product_id)
     quantity = request.POST.get("quantity")
-    user = request.user
+    #user = request.user
     date = str(datetime.datetime.now())
     
     new_wishlist = WishlistItem(

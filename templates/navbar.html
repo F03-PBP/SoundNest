@@ -1,0 +1,87 @@
+{% load static %}
+
+<nav class="border-b border-gray-300 bg-white h-25">
+    <div class="max-w-screen mx-auto py-4 px-6 md:px-12 h-full">
+        <div class="flex justify-between h-full">
+            <a href="/" class="flex items-center font-bold">
+                <img src="{% static 'images/logo.webp' %}" alt="Soundnest Logo" class="h-10 w-auto mr-1">
+                SOUNDNEST
+            </a>
+
+            <!-- (Hamburger Icon) -->
+            <div class="md:hidden flex">
+                <button id="mobileMenuButton" class="focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Desktop Menu -->
+            <ul class="hidden md:flex items-center space-x-8">
+                <a href="/"><li>Home</li></a>
+                <a href="/"><li>About</li></a>
+                <a href="/"><li>Discussions</li></a>
+            </ul>
+
+            <!-- Dropdown -->
+            <div class="relative hidden md:inline-block">
+                {% if current_user %}
+                    <button id="dropdownButton" data-username="{{ current_user.username }}" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" aria-expanded="true" aria-haspopup="true">
+                        Hello, {{ current_user.username }}
+                        <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.66l3.71-3.43a.75.75 0 011.06 1.06l-4.25 3.93a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+            
+                    <div id="dropdownMenu" class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-100 text-sm text-gray-700 px-4 py-2" role="menu" aria-orientation="vertical" aria-labelledby="dropdownButton">
+                        <div class="py-1" role="none">
+                            <a href="#" class="block hover:bg-gray-200" role="menuitem">Profile</a>
+                            
+                            <p class="py-2">Last Login : {{ last_login }}</p>
+                            <a href="/">
+                                <button type="submit" class="w-full text-left bg-red-400 hover:bg-red-500 text-white text-center rounded-md" role="menuitem">
+                                    Logout
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="space-x-4 flex items-center">
+                        <a href="/auth/login" class="text-sm font-medium text-gray-700 hover:text-gray-900 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
+                            Log In
+                        </a>
+                        <a href="/auth/register" class="text-sm font-medium text-white bg-[#B88E2F] hover:bg-amber-900 px-4 py-2 rounded-md">
+                            Sign Up
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-gray-100 text-md text-gray-700 px-6 pt-4 pb-6">
+        <ul class="flex flex-col items-center justify-center space-y-3 text-center">
+            <li class="w-full">
+                <a href="/" class="block hover:bg-gray-200 rounded-lg py-2">Home</a>
+            </li>
+
+            <li class="w-full">
+                <a href="/" class="block hover:bg-gray-200 rounded-lg py-2">About</a>
+            </li>
+
+            <li class="w-full">
+                <a href="/" class="block hover:bg-gray-200 rounded-lg py-2">Discussions</a>
+            </li>
+
+            <li class="w-full">
+                <a href="#" class="block hover:bg-gray-200 rounded-lg py-2">Profile</a>
+            </li>    
+            <p class="py-2">Last Login: {{ last_login }}</p>
+            <li class="w-full">
+                <a href="/" class="block bg-red-400 hover:bg-red-500 rounded-lg py-2 text-white">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block meta %}
+<title>Product List</title>
+{% endblock meta %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+    <div class="relative h-[316px] w-full bg-cover bg-center" style="background-image: url('{% static 'images/header-image.webp' %}');">
+        <div class="absolute inset-0 bg-white opacity-20"></div>
+        <div class="absolute inset-0 backdrop-blur-sm"></div>
+        <div class="relative flex flex-col items-center justify-center h-full text-white">
+            <h1 class="text-[48px] font-semibold text-black">Products</h1>
+            <p class="text-[16px] text-black"><b>Home &gt;</b> Products</p>
+        </div>
+    </div>
+
+    <div class="bg-[#F9F1E7] h-[100px] mb-20 flex items-center justify-start px-4">
+        <div class="container mx-auto max-w-screen-xl flex items-center">
+            <form method="GET" class="flex items-center h-full">
+                <label for="filter" class="text-lg ml-5 mr-4">Filter by:</label>
+                <select name="filter" id="filter" class="border border-gray-300 rounded-md p-2 text-gray-500 focus:border-gray-500 hover:bg-gray-50" onchange="this.form.submit()">
+                    <option value="default">Default</option>
+                    <option value="price_asc">Price (Lowest to Highest)</option>
+                    <option value="price_desc">Price (Highest to Lowest)</option>
+                    <option value="alpha_asc">Alphabetical (A - Z)</option>
+                    <option value="alpha_desc">Alphabetical (Z - A)</option>
+                </select>
+            </form>
+        </div>
+    </div>
+
+    <div class="container mx-auto max-w-screen-xl">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 justify-items-center">
+            {% for product in page_products %}
+            <div class="bg-[#F4F5F7] overflow-hidden relative w-[285px] h-[446px] border border-gray-100"><!-- ini perlu ada border gak ya?-->
+                <img src="{% static 'images/templateimage.webp' %}" alt="{{ product.product_name }}" class="w-full h-2/3 object-cover">
+                <div class="p-4 h-1/3 flex flex-col justify-start space-y-2">
+                    <h2 class="text-xl font-semibold truncate" style="max-width: 100%;">{{ product.product_name }}</h2>
+                    <p class="text-xl font-bold text-black mt-1">Rp{{ product.price|intcomma }}</p>
+                    <!-- rating dan ada gambar bintang nantinya -->
+                    <p class="text-lg mt-1">{{ product.rating }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="flex justify-center mt-16 mb-16">
+        <nav>
+            <ul class="inline-flex space-x-2">
+                <!-- Previous Button -->
+                {% if page_products.has_previous %}
+                <li>
+                    <a href="?page={{ page_products.previous_page_number }}" class="px-[18px] py-3 rounded-md text-gray-700 border border-gray-300 hover:bg-gray-300 mr-4">Previous</a>
+                </li>
+                {% endif %}
+    
+                <!-- Page Number Buttons -->
+                {% for num in page_products.paginator.page_range %}
+                    {% if num <= 3 %}
+                        {% if num == page_products.number %}
+                            <li>
+                                <span class="px-[18px] py-3 rounded-md bg-[#B88E2F] text-white mr-4">{{ num }}</span>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="?page={{ num }}" class="px-[18px] py-3 rounded-md text-gray-700 bg-[#F9F1E7] hover:bg-[#B88E2F] hover:text-white mr-4">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+    
+                <!-- Next Button -->
+                {% if page_products.has_next %}
+                <li>
+                    <a href="?page={{ page_products.next_page_number }}" class="px-[18px] py-3 rounded-md text-gray-700 bg-[#F9F1E7] hover:bg-[#B88E2F] hover:text-white mr-4">Next</a>
+                </li>
+                {% endif %} 
+            </ul>
+        </nav>
+    </div>
+
+    <div class="bg-[#FAF3EA] h-[220px] flex items-center justify-center px-4 space-x-24">
+        <!-- High Quality -->
+        <div class="flex items-center space-x-4">
+            <img src="{% static 'images/pic1.webp' %}" alt="High Quality" class="h-12">
+            <div class="text-left">
+                <p class="font-semibold text-lg">High Quality</p>
+                <p class="text-gray-500">crafted from top materials</p>
+            </div>
+        </div>
+        
+        <!-- Warranty Protection -->
+        <div class="flex items-center space-x-4">
+            <img src="{% static 'images/pic2.webp' %}" alt="Warranty Protection" class="h-12">
+            <div class="text-left">
+                <p class="font-semibold text-lg">Warranty Protection</p>
+                <p class="text-gray-500">Over 2 years</p>
+            </div>
+        </div>
+    
+        <!-- 24/7 Support -->
+        <div class="flex items-center space-x-4">
+            <img src="{% static 'images/pic3.webp' %}" alt="24/7 Support" class="h-12">
+            <div class="text-left">
+                <p class="font-semibold text-lg">24/7 Support</p>
+                <p class="text-gray-500">Dedicated support</p>
+            </div>
+        </div>
+    </div>
+    
+    
+{% endblock content %}
