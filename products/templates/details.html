@@ -8,31 +8,89 @@
 
 {% block content %}
 
-<div class="bg-[#F9F1E7] h-[100px] mb-20 flex items-center justify-start px-4 w-full">
-    <div class="container mx-auto max-w-screen-xl flex items-center">
-        
+<div class="bg-[#F9F1E7] h-[100px] mb-16 flex items-center px-4 w-full">
+    <div class="container mx-auto max-w-screen-xl flex items-center ml-12">
+        <nav class="text-gray-500 text-lg truncate">
+            <a href="/" class="text-gray-400 hover:text-gray-900">Home &nbsp;</a>
+            <span class="text-gray-700 font-black text-2xl"> &gt; &nbsp;</span>
+            <a href="#" id="products-link" class="text-gray-400 hover:text-gray-900">Products &nbsp;</a>
+            <span class="text-gray-700 font-black text-2xl"> &gt; &nbsp;</span> 
+            <span class="text-gray-900 font-semibold text-xl">| &nbsp; {{ product.product_name }}</span>
+        </nav>
     </div>
 </div>
 
 <div class="container mx-auto max-w-screen-xl px-4">
-    <div class="flex flex-col md:flex-row mt-10">
-        <div class="md:w-1/2">
-            <img src="{% static 'images/templateimage.webp' %}" alt="{{ product.product_name }}" class="w-full h-auto">
+    <div class="flex flex-col md:flex-row mt-10 gap-2">
+
+        <div class="md:w-1/4 flex flex-col gap-2">
+            <img src="{% static 'images/templateimage.webp' %}" alt="Image 1" class="w-20 h-24 cursor-pointer border border-gray-300 rounded-[10px]" onclick="changeMainImage('{% static 'images/templateimage.webp' %}', this)">
+            <img src="{% static 'images/altpic1.webp' %}" alt="Image 2" class="w-20 h-24 cursor-pointer border border-gray-300 rounded-[10px]" onclick="changeMainImage('{% static 'images/altpic1.webp' %}', this)">
+            <img src="{% static 'images/altpic2.webp' %}" alt="Image 3" class="w-20 h-24 cursor-pointer border border-gray-300 rounded-[10px]" onclick="changeMainImage('{% static 'images/altpic2.webp' %}', this)">
+            <img src="{% static 'images/altpic3.webp' %}" alt="Image 4" class="w-20 h-24 cursor-pointer border border-gray-300 rounded-[10px]" onclick="changeMainImage('{% static 'images/altpic3.webp' %}', this)">
         </div>
-        <div class="md:w-1/2 md:pl-10">
-            <h1 class="text-3xl font-bold">{{ product.product_name }}</h1>
-            <p class="text-xl font-bold mt-2">Rp{{ product.price|intcomma }}</p>
-            <div class="flex items-center mt-2">
-                <span class="text-yellow-400 text-lg">&#9733;</span>
-                <p class="text-lg ml-1">{{ product.rating }}</p>
-                <p class="ml-2 text-gray-400">({{ product.reviews }} reviews)</p>
+
+        <div class="flex flex-col md:flex-row md:gap-[120px]">
+            <div>
+                <img id="mainImage" src="{% static 'images/templateimage.webp' %}" alt="{{ product.product_name }}" class="w-[440px] h-[500px] border border-gray-400 rounded-[10px]">
             </div>
-            <p class="mt-4">{{ product.description }}</p>
-            <!-- Add more product details as needed -->
-            <div class="mt-6">
-                <a href="/" class="px-4 py-2 bg-[#B88E2F] text-white rounded">Back to Products</a>
+            
+            <div class="mt-4 md:mt-0 md:w-[calc(100%-420px)]"> <!-- Adjusted width for the description -->
+                <h1 class="text-4xl font-semibold">{{ product.product_name }}</h1>
+                <p class="text-xl text-gray-400 font-semibold mt-4 mb-4">Rp{{ product.price|intcomma }}</p>
+                <div class="flex items-center mt-2">
+                    <span class="text-yellow-400 text-lg">&#9733;</span>
+                    <p class="text-lg ml-2">{{ product.rating }}</p>
+                    <p class="ml-2 text-gray-400">&nbsp; | &nbsp;&nbsp;&nbsp;{{ product.reviews }} customer reviews</p>
+                </div>
+                <p class="mt-6 text-justify" style="margin-right: 140px;"> <!-- Justified text with right margin -->
+                    Experience sound like never before with the {{ product.product_name }} Headphones. Engineered for audiophiles and casual listeners alike, these headphones deliver immersive sound quality with deep bass, crisp highs, and a balanced midrange. Featuring advanced noise-cancellation technology, you can escape the hustle and bustle of your surroundings and dive into your music, podcasts, or calls without distractions.
+                </p>
+
+                <!-- Color Options -->
+                <div class="mt-6">
+                    <h3 class="text-md text-gray-400 font-semibold mb-2">Color</h3>
+                    <div class="flex space-x-2">
+                        <span class="w-6 h-6 rounded-full bg-black"></span>
+                        <span class="w-6 h-6 rounded-full bg-white border border-gray-300"></span>
+                    </div>
+                </div>
+
+                <!-- Add to Wishlist Button -->
+                <div class="mt-8">
+                    <button class="h-14 w-40 px-4 py-2 text-black border border-gray-800 rounded-[15px]">Add To Wishlist</button>
+                </div>
+
+                <div class="mt-16 mb-20 text-gray-400">
+                    <hr class="my-4 border-gray-300">
+                    <pre class="mt-10">Category : IEM</pre>
+                    <pre class="mt-4">Tags     : earphones, headphones, audio</pre>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<hr class="w-full border-gray-300">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#products-link').on('click', function(event) {
+            event.preventDefault();
+            window.location.href = '{% url "products:home" %}'; 
+        });
+    });
+
+    function changeMainImage(imageUrl, thumbnail) {
+        document.getElementById("mainImage").src = imageUrl;
+        
+        // Reset border for all thumbnails
+        const thumbnails = document.querySelectorAll('.border-2');
+        thumbnails.forEach(img => img.classList.remove('border-2', 'border-[#B88E2F]'));
+
+        // Add a thicker border to the selected thumbnail
+        thumbnail.classList.add('border-2', 'border-[#B88E2F]');
+    }
+</script>
 {% endblock content %}
