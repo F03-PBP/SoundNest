@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Discussion Threads</h1>
-    <a href="{% url 'create_thread' %}">Create a New Thread</a>
+    <a href="{% url 'Discussions:create_thread' %}">Create a New Thread</a>
     <ul>
         {% for thread in threads %}
             <li>
