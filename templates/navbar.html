@@ -33,7 +33,7 @@
                     </a>
                 {% else %}
                     <a href="{% url 'authentication:login_page' %}" class="text-gray-700">Log In</a>
-                    <a href="" class="bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white px-4">Register</a>
+                    <a href="{% url 'authentication:register_page' %}" class="bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white px-4">Register</a>
                 {% endif %}
             </div>
         </div>
@@ -53,17 +53,17 @@
             </li>
             <!-- Profile Icon (Mobile) -->
             <li class="w-full">
-                {% if user.is_authenticated %}
+                {% if current_user %}
                     <a href="/profile" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Profile</a>
                     <p class="py-2">Last Login: {{ last_login }}</p>
                 {% else %}
-                    <a href="/login" class="block border border-gray-500 rounded-lg py-2">Log In</a>
-                    <a href="/register" class="block bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white">Register</a>
+                    <a href="{% url 'authentication:login_page' %}" class="block border border-gray-500 rounded-lg py-2 mb-2">Log In</a>
+                    <a href="{% url 'authentication:register_page' %}" class="block bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white">Register</a>
                 {% endif %}
             </li>
-            {% if user.is_authenticated %}
+            {% if current_user %}
                 <li class="w-full">
-                    <a href="/" class="block bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white">Logout</a>
+                    <a href="{% url 'authentication:logout' %}" class="block bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white">Logout</a>
                 </li>
             {% endif %}
         </ul>
