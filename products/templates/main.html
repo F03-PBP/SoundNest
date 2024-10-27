@@ -17,11 +17,11 @@
         </div>
     </div>
 
-    <div class="bg-[#F9F1E7] h-[100px] mb-20 flex items-center justify-start px-4 w-full">
+    <div class="bg-[#F9F1E7] h-[100px] mb-20 flex items-center justify-start px-6 md:px-24 w-full">
         <div class="container mx-auto max-w-screen-xl flex items-center">
-            <form method="GET" class="flex items-center h-full w-full ml-8">
-                <label for="filter" class="text-lg ml-5 mr-4">Filter by:</label>
-                <select name="filter" id="filter" class="border border-gray-300 rounded-md p-2 text-gray-500 focus:border-gray-500 hover:bg-gray-50" onchange="this.form.submit()">
+            <form method="GET" class="flex items-center h-full w-full">
+                <label for="filter" class="text-sm md:text-lg px-1">Filter by:</label>
+                <select name="filter" id="filter" class="border border-gray-300 rounded-md max-md:w-[60%] text-sm md:text-lg p-2 pr-2 text-gray-500 focus:border-gray-500 hover:bg-gray-50" onchange="this.form.submit()">
                     <option value="default" {% if request.GET.filter == "default" %}selected{% endif %}>Default</option>
                     <option value="price_asc" {% if request.GET.filter == "price_asc" %}selected{% endif %}>Price (Lowest to Highest)</option>
                     <option value="price_desc" {% if request.GET.filter == "price_desc" %}selected{% endif %}>Price (Highest to Lowest)</option>
@@ -29,14 +29,14 @@
             </form>
         </div>
         {% if user.is_authenticated and user.is_superuser %}
-        <div class="flex flex-end mr-16">
-            <button class="bg-[#B88E2F] text-white px-4 py-2 rounded hover:bg-amber-900" id="add-product-button">Add Product</button>
+        <div class="flex justify-end">
+            <button class="bg-[#B88E2F] text-sm md:text-base text-white px-4 py-2 rounded hover:bg-amber-900" id="add-product-button">Add Product</button>
         </div>
         {% endif %}
     </div>
 
     <div class="container mx-auto max-w-screen-xl px-4">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-10 justify-items-center">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-10 justify-items-center">
             {% for product in page_products %}
             <div class="bg-[#F4F5F7] overflow-hidden relative w-[285px] h-[446px] border border-gray-100 transition duration-300 ease-in-out group hover:bg-[#3A3A3A]" data-product-id="{{ product.id }}">
                 <div class="relative group">
@@ -106,7 +106,7 @@
         </nav>
     </div>
 
-    <div class="w-full bg-[#FAF3EA] py-16 flex flex-col md:flex-row justify-center items-center px-4 md:space-x-24 max-md:space-y-16">
+    <div class="w-full bg-[#FAF3EA] py-16 flex flex-col md:flex-row justify-center items-center px-4 md:space-x-8 lg:space-x-24 max-md:space-y-16">
         <!-- High Quality -->
         <div class="flex justify-center space-x-4">
             <img src="{% static 'images/pic1.webp' %}" alt="High Quality" class="h-12">
