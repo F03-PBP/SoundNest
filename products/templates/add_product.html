@@ -1,0 +1,28 @@
+<div id="addProductModal" class="fixed inset-0 flex items-center justify-center hidden bg-black bg-opacity-50">
+    <div class="bg-white p-6 rounded-lg max-h-lg w-full max-w-lg h-auto">
+        <h2 class="text-2xl font-bold mb-8">Add New Product</h2>
+        <form id="addProductForm" onsubmit="addProduct(event)">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label class="block text-gray-700">Product Name:</label>
+                <input type="text" name="product_name" class="w-full border border-gray-300 p-2 rounded" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Price:</label>
+                <input type="number" name="price" class="w-full border border-gray-300 p-2 rounded" min="1" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Rating:</label>
+                <input type="number" name="rating" class="w-full border border-gray-300 p-2 rounded" min="1" max="10" step=".01" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Reviews:</label>
+                <input type="number" name="reviews" class="w-full border border-gray-300 p-2 rounded" required>
+            </div>
+            <div class="flex justify-end mt-12">
+                <button type="button" class="mr-4 text-gray-500" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="bg-[#B88E2F] w-1/6 text-white px-4 py-2 rounded">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
