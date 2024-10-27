@@ -24,7 +24,7 @@
             </ul>
 
             <div class="hidden md:flex items-center space-x-6 ml-12">
-                {% if user.is_authenticated %}
+                {% if current_user %}
                     <a href="/wishlist">
                         <img src="{% static 'images/wishicon.webp' %}" alt="My Wishlist" class="h-6 w-7">
                     </a>
@@ -32,8 +32,8 @@
                         <img src="{% static 'images/profile.webp' %}" alt="My Profile" class="h-7 w-8">
                     </a>
                 {% else %}
-                    <a href="/login" class="text-gray-700">Log In</a>
-                    <a href="/register" class="bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white px-4">Register</a>
+                    <a href="{% url 'authentication:login_page' %}" class="text-gray-700">Log In</a>
+                    <a href="" class="bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white px-4">Register</a>
                 {% endif %}
             </div>
         </div>
