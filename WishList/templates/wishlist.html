@@ -51,9 +51,17 @@
     <div class=""></div>
     <h1 class="text-3xl font-bold mb-6 text-center">Wished Products</h1>
     <div class="flex justify-center space-x-10">
+      <button style="margin-left: 2vw; background-color: #F9F1E7;" class="btn hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded-lg" onclick="sortAscending();">
+        Sort Ascending By Price
+      </button>
+      <button style="margin-left: 2vw; background-color: #F9F1E7;" class="btn hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded-lg" onclick="sortQuantity();">
+        Sort Ascending By Quantity
+      </button>
       <button data-modal-target="crudModal" style="margin-left: 2vw; background-color: #F9F1E7;" data-modal-toggle="crudModal" class="btn hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded-lg" onclick="showModal();">
         Add New Product to Wishlist
+      </button>
     </div>
+    <br>
 
 
 
@@ -153,30 +161,7 @@
 <!-- ################# -->
 
   <script>
-    var username = document.getElementById('dropdownButton').getAttribute('data-username'); // Mendapatkan username user yang sedang login
-    console.log(username);
-    var dropdownMenu = document.getElementById('dropdownMenu');
-    console.log("tes1");
-    console.log(dropdownMenu);
-    console.log("tes1");
-    var dropdownButton = document.getElementById('dropdownButton');
-    console.log("tes");
-    console.log(dropdownButton);
-    console.log("tes");
-    var mobileMenu = document.getElementById('mobileMenu');
-    var mobileMenuButton = document.getElementById('mobileMenuButton');
     
-    document.getElementById('dropdownButton').addEventListener('click', function () {
-      console.log("masuk");
-        if (username){
-            console.log("Masuk 2");
-            if (dropdownMenu.classList.contains('hidden')) {
-                dropdownMenu.classList.remove('hidden');
-            } else {
-                dropdownMenu.classList.add('hidden');
-            }
-        }
-    });
 
     document.getElementById('mobileMenuButton').addEventListener('click', function () {
         if (username){
@@ -205,7 +190,7 @@
             return fetch("{% url 'WishList:get_wishlist_json' %}").then((res) => res.json())
     }
     async function getProductEntryById(id){
-      const response = await fetch(`/WishList/json/${id}/`);
+      const response = await fetch(`json/${id}/`);
       const data = await response.json();
       return data;
     }
@@ -224,8 +209,8 @@
     }
     return cookieValue;
 }
-    function deleteProduct(productId) {
-    fetch(`/WishList/delete/${productId}/`, {
+function deleteProduct(productId) {
+    fetch(`delete/${productId}/`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -266,8 +251,8 @@
     let product_length = 0;
     let products;
     let wishlists;
-
-
+    let ascFlag = 0;
+    let ascQuantity = 0;
     const selectElement = document.getElementById("produk-select");
     function addProductEntry() {
       const formData = new FormData(document.querySelector('#productEntryForm'));
@@ -291,10 +276,28 @@
       console.log("Produk yang dipilih:", selectedpk);
       addProductEntry();
     })
-
+    function sortAscending(){
+      ascFlag=1;
+      ascQuantity=0;
+      renderProducts(currentPage);
+    }
+    function sortQuantity(){
+      ascQuantity=1;
+      ascFlag=0;
+      renderProducts(currentPage);
+    }
     async function renderProducts(page) {
       wishlists = await getWishlistEntries();
       products = await getProductEntries();
+      if(ascFlag===1){
+        console.log("GETS INNN");
+        wishlists.sort((a, b) => a.fields.price - b.fields.price);
+        console.log("fortunately");
+        console.log(wishlists);
+        console.log("unfortunately");
+      }else if(ascQuantity===1){
+        wishlists.sort((a, b) => a.fields.jumlah - b.fields.jumlah);
+      }
       console.log(wishlists.length);
       product_length = products.length;
       productContainer.innerHTML = '';
@@ -302,6 +305,7 @@
       const end = start + productsPerPage;
       const wishlistsToDisplay = wishlists.slice(start, end);
       let total_price = 0;
+      selectElement.innerHTML = '';
       products.forEach(produk => {
         const optionForSelect = document.createElement('option');
         optionForSelect.value = produk.pk;
@@ -322,16 +326,9 @@
         console.log(products);
         wishlistsToDisplay.forEach(wishlist => {
           const key_product = wishlist.fields.produk;
-          let productName;
-          const wishlist_product = getProductEntryById(key_product).then(wishlist_product => {
-              if (wishlist_product) {
-                  productName = wishlist_product[0].fields.product_name;
-                  total_price += wishlist_product[0].fields.price;
-                  console.log(wishlist_product[0].fields.price);
-                  console.log(total_price);
-              } else {
-                  console.log("Product not found");
-              }
+          total_price += wishlist.fields.price;
+          let productName = wishlist.fields.nama_produk;
+          const wishlist_product = getProductEntryById(key_product);
               const key_wishlist = wishlist.pk;
               console.log(key_wishlist);
               const rawDate = wishlist.fields.date_added;
@@ -350,7 +347,7 @@
                   <h2 class="text-1xl font-semibold" style="color: black;">Nama Produk: ${productName}</h2>
                   <br>
                   <h3 class="text-lg text-gray-800">Date Added: ${dateObject}</h3>
-                  <p class="text-gray-600 mt-2">Price: <span class="font-medium">${wishlist_product[0].fields.price}</span></p>
+                  <p class="text-gray-600 mt-2">Price: <span class="font-medium">${wishlist.fields.price}</span></p>
                   <p class="text-gray-600 mt-2">Quantity: <span class="font-medium">${wishlist.fields.jumlah}</span></p>
                   <a href="#" onclick="deleteProduct('${key_wishlist}');" class="text-red-600 font-bold hover:underline">Delete</a>
               </div>
@@ -361,7 +358,7 @@
               <p>Total harga adalah: ${total_price}</p>
               `
               totalHarga.innerHTML = productPrice;
-          });
+          ;
         });
         // Handle pagination button states
         prevBtn.disabled = page === 1;
