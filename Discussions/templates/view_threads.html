@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold mb-6">Discussion Threads</h1>
+        <a href="{% url 'create_thread' %}" class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition">Create a New Thread</a>
+        <ul class="mt-6 space-y-4">
+            {% for thread in threads %}
+                <li class="bg-white shadow-lg rounded-lg p-4">
+                    <h2 class="text-xl font-semibold">{{ thread.title }}</h2>
+                    <p class="text-gray-700">{{ thread.content }}</p>
+                    <p class="text-gray-500 text-sm">Created at: {{ thread.created_at }}</p>
+                    <a href="{% url 'add_comment' thread.id %}" class="text-blue-500 hover:underline">Add Comment</a>
+                    <h3 class="font-bold mt-2">Comments:</h3>
+                    <ul class="mt-2 comments-list">
+                        {% for comment in thread.comments.all %}
+                            <li class="text-gray-600">{{ comment.content }} ({{ comment.created_at }})</li>
+                        {% empty %}
+                            <li class="text-gray-500">No comments yet.</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% empty %}
+                <li class="text-gray-500">No discussion threads available.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock content %}
