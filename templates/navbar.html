@@ -18,17 +18,16 @@
             </div>
 
             <!-- Desktop Menu -->
+            {% if request.user.is_authenticated %}
             <ul class="hidden md:flex items-center space-x-8">
                 <a href="/"><li>Home</li></a>
                 <a href="/"><li>About</li></a>
-                <a href="/discussion"><li>Discussions</li></a>
+                <a href="/"><li>Discussions</li></a>
                 <a href="/WishList"><li>Wishlist</li></a>
             </ul>
 
             <!-- Dropdown -->
             <div class="relative hidden md:inline-block">
-                {% if user %}
-                    <p>disiini akudisini</p>
                     <button id="dropdownButton" data-username="{{ user.username }}" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" aria-expanded="true" aria-haspopup="true">
                         Hello, {{ user.username }}
                         <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -49,6 +48,10 @@
                         </div>
                     </div>
                 {% else %}
+                    <ul class="hidden md:flex items-center space-x-8">
+                        <a href="/"><li>Home</li></a>
+                        <a href="/"><li>About</li></a>
+                    </ul>
                     <div class="space-x-4 flex items-center">
                         <a href="/auth/login" class="text-sm font-medium text-gray-700 hover:text-gray-900 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
                             Log In

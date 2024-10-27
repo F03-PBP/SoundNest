@@ -62,12 +62,13 @@ def add_product_entry_ajax(request):
     quantity = request.POST.get("quantity")
     user = request.user
     date = str(datetime.datetime.now())
-    
+    harga = new_product.price
     new_wishlist = WishlistItem(
         user = user,
         produk = new_product,
         jumlah = quantity,
-        date_added = date
+        date_added = date,
+        price = harga
     )
     new_wishlist.save()
 
