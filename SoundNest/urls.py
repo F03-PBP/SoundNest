@@ -8,4 +8,5 @@ urlpatterns = [
     path('auth/', include('authentication.urls')),
     path('WishList/', include('WishList.urls')),
     path('', include('products.urls')),
+    path('best-deals/', include('BestDeals.urls')),
 ]
