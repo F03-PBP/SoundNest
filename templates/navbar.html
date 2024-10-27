@@ -18,10 +18,9 @@
 
             <!-- Desktop Menu -->
             <ul class="hidden md:flex items-center justify-center flex-grow space-x-8">
-                <a href="{% url 'BestDeals:best_deals' %}"><li>Home</li></a>
-                <a href="{% url 'products:home' %}"><li>Products</li></a>
+                <a href="{% url 'products:home' %}"><li>Home</li></a>
                 <a href="{% url 'Discussions:view_threads' %}"><li>Discussions</li></a>
-                <a href="/best-deals"><li>Best Deals</li></a>
+                <a href="{% url 'BestDeals:best_deals' %}"><li>Best Deals</li></a>
             </ul>
 
             <div class="hidden md:flex items-center space-x-6 ml-12">
@@ -48,26 +47,23 @@
     <div id="mobileMenu" class="hidden md:hidden bg-[#F9F1E7] text-md text-gray-700 px-6 pt-4 pb-6">
         <ul class="flex flex-col items-center justify-center space-y-3 text-center">
             <li class="w-full">
-                <a href="{% url 'BestDeals:best_deals' %}" class="block hover:bg-white rounded-lg py-2">Home</a>
-            </li>
-
-            <li class="w-full">
-                <a href="{% url 'products:home' %}" class="block hover:bg-white rounded-lg py-2">Products</a>
+                <a href="{% url 'products:home' %}" class="block hover:bg-white rounded-lg py-2">Home</a>
             </li>
 
             <li class="w-full">
                 <a href="{% url 'Discussions:view_threads' %}" class="block hover:bg-white rounded-lg py-2">Discussions</a>
             </li>
 
+            <li class="w-full">
+                <a href="{% url 'BestDeals:best_deals' %}" class="block hover:bg-white rounded-lg py-2">Best Deals</a>
+            </li>
+
+
             <!-- Profile Icon (Mobile) -->
             <li class="w-full">
                 {% if user.is_authenticated %}
                 <li class="w-full">
                     <a href="{% url 'WishList:view_wishlist' %}" class="block hover:bg-white rounded-lg py-2">Wish List</a>
-                </li>
-
-                <li class="w-full">
-                    <a href="/profile" class="block hover:bg-white rounded-lg py-2">Profile</a>
                 </li>
 
                 <li class="w-full">
