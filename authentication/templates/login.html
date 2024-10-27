@@ -52,7 +52,8 @@
                         </div>
 
                         <button type="submit" class="w-full bg-[#FCE2CE] font-semibold text-[#92613A] py-3 text-sm rounded-full">Login</button>
-    
+                        <a href="{% url 'products:home' %}" class="w-full bg-[#FCE2CE] mt-4 font-semibold text-[#92613A] py-3 text-sm rounded-full text-center block">Login as Guest</a>
+
                         <div class="flex space-x-1 py-4 justify-center">
                             <p class="text-sm text-[#553922] opacity-70">Don't have an account?</p> 
                             <a href="{% url 'authentication:register_page' %}" class="text-sm font-bold text-[#C3824E] cursor-pointer">Sign Up</a>
@@ -86,10 +87,13 @@
                     </div>
         
                     <button type="submit" class="w-full bg-[#FCE2CE] font-semibold text-[#92613A] py-4 px-10 text-base rounded-full">Login</button>
-
-                    <div class="flex space-x-1 py-4 justify-center">
-                        <p class="text-sm text-[#553922] opacity-70">Don't have an account?</p> 
-                        <a href="{% url 'authentication:register_page' %}" class="text-sm font-bold text-[#C3824E] cursor-pointer">Sign Up</a>
+                    
+                    <div class="py-4 space-y-2">
+                        <a href="{% url 'products:home' %}" class="w-full bg-[#FCE2CE] font-semibold text-[#92613A] py-2 text-sm rounded-full text-center block">Login as Guest</a>
+                        <div class="flex space-x-1 justify-center">
+                            <p class="text-sm text-[#553922] opacity-70">Don't have an account?</p> 
+                            <a href="{% url 'authentication:register_page' %}" class="text-sm font-bold text-[#C3824E] cursor-pointer">Sign Up</a>
+                        </div>
                     </div>
                 </form>
             </div>

@@ -18,9 +18,9 @@
 
             <!-- Desktop Menu -->
             <ul class="hidden md:flex items-center justify-center flex-grow space-x-8">
-                <a href="{% url 'BestDeals:best_deals' %}"><li>Home</li></a>
-                <a href="{% url 'products:home' %}"><li>Products</li></a>
+                <a href="{% url 'products:home' %}"><li>Home</li></a>
                 <a href="{% url 'Discussions:view_threads' %}"><li>Discussions</li></a>
+                <a href="{% url 'BestDeals:best_deals' %}"><li>Best Deals</li></a>
             </ul>
 
             <div class="hidden md:flex items-center space-x-6 ml-12 relative">
@@ -28,6 +28,7 @@
                     <a href="{% url 'WishList:view_wishlist' %}">
                         <img src="{% static 'images/wishicon.webp' %}" alt="My Wishlist" class="h-6 w-7">
                     </a>
+<<<<<<< HEAD
 
                     <!-- Profile Icon with Dropdown -->
                     <div class="relative">
@@ -45,6 +46,13 @@
                                 Logout
                             </a>
                         </div>
+=======
+                    <a href="#" id="profile-button">
+                        <img src="{% static 'images/profile.webp' %}" alt="My Profile" class="h-7 w-8">
+                    </a>
+                    <div id="logout-popover" class="popover hidden">
+                        <a href="{% url 'authentication:logout' %}" class="bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white px-4">Logout</a>
+>>>>>>> a03e4d2c2fc848d0b8dab21e71e85dd4d7bf59ad
                     </div>
                 {% else %}
                     <a href="{% url 'authentication:login_page' %}" class="text-gray-700">Log In</a>
@@ -55,27 +63,38 @@
     </div>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="hidden md:hidden bg-gray-100 text-md text-gray-700 px-6 pt-4 pb-6">
+    <div id="mobileMenu" class="hidden md:hidden bg-[#F9F1E7] text-md text-gray-700 px-6 pt-4 pb-6">
         <ul class="flex flex-col items-center justify-center space-y-3 text-center">
             <li class="w-full">
-                <a href="{% url 'BestDeals:best_deals' %}" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Home</a>
+                <a href="{% url 'products:home' %}" class="block hover:bg-white rounded-lg py-2">Home</a>
             </li>
 
             <li class="w-full">
-                <a href="{% url 'products:home' %}" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Products</a>
+                <a href="{% url 'Discussions:view_threads' %}" class="block hover:bg-white rounded-lg py-2">Discussions</a>
             </li>
 
             <li class="w-full">
-                <a href="{% url 'Discussions:view_threads' %}" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Discussions</a>
+                <a href="{% url 'BestDeals:best_deals' %}" class="block hover:bg-white rounded-lg py-2">Best Deals</a>
             </li>
 
+<<<<<<< HEAD
             <li class="w-full">
                 <a href="{% url 'WishList:view_wishlist' %}" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Wish List</a>
             </li>
             {% if user.is_authenticated %}
+=======
+
+            <!-- Profile Icon (Mobile) -->
+            <li class="w-full">
+                {% if user.is_authenticated %}
+>>>>>>> a03e4d2c2fc848d0b8dab21e71e85dd4d7bf59ad
                 <li class="w-full">
                     <p class="text-gray-900">Last login: {{ user.last_login|date:"Y-m-d H:i" }}</p>
                 </li>
+<<<<<<< HEAD
+=======
+
+>>>>>>> a03e4d2c2fc848d0b8dab21e71e85dd4d7bf59ad
                 <li class="w-full">
                     <a href="{% url 'authentication:logout' %}" class="block bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white">Logout</a>
                 </li>
@@ -124,4 +143,21 @@
             profileDropdown.classList.add('hidden');
         }
     }
+
+    const profileButton = document.getElementById('profile-button');
+    const logoutPopover = document.getElementById('logout-popover');
+
+    profileButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        logoutPopover.classList.toggle('hidden');
+        logoutPopover.classList.toggle('visible');
+    });
+
+    // Menutup popover jika klik di luar
+    document.addEventListener('click', function(event) {
+        if (!profileButton.contains(event.target) && !logoutPopover.contains(event.target)) {
+            logoutPopover.classList.add('hidden');
+            logoutPopover.classList.remove('visible');
+        }
+    });
 </script>

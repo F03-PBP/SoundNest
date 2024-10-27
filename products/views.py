@@ -18,7 +18,6 @@ def get_products(request):
 
     return HttpResponse(serializers.serialize("json", data), content_type = "application/json")
 
-@login_required
 def show_product(request):
     # Get all the products from the data base
     products = Product.objects.all().order_by('-created_at')

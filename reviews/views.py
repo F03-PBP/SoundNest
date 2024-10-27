@@ -11,15 +11,12 @@ from products.models import Product
 
 def show_reviews(request, product_id):
     reviews = Review.objects.filter(product_id=product_id)
-    product = get_object_or_404(Product, id=product_id)
 
     reviews_data = []
     for review in reviews:
         stars = range(review.rating)  # Bintang penuh
         empty_stars = range(10 - review.rating)  # Bintang kosong
         reviews_data.append({ # Ambil dari user
-            'product_ratings': product.rating,
-            'product_reviews': product.reviews,
             'user_name': review.user.username,
             'user_initials': review.user.username[:2].upper(),
             'date': review.created_at,

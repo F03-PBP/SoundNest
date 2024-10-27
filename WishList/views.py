@@ -62,12 +62,15 @@ def add_product_entry_ajax(request):
     quantity = request.POST.get("quantity")
     user = request.user
     date = str(datetime.datetime.now())
-    
+    harga = new_product.price
+    product_name = new_product.product_name
     new_wishlist = WishlistItem(
         user = user,
         produk = new_product,
         jumlah = quantity,
-        date_added = date
+        date_added = date,
+        price = harga,
+        nama_produk = product_name
     )
     new_wishlist.save()
 
@@ -75,5 +78,3 @@ def add_product_entry_ajax(request):
         return JsonResponse({'status': 'success'})
     else:
         return JsonResponse({'status': 'failed'}, status=400)
-
-

@@ -29,7 +29,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-image: url("{% static 'image/background.jpeg' %}");
+      background-image: url("{% static 'images/background.jpeg' %}");
       background-size: cover;
       background-position: center;
       filter: blur(4px);
@@ -51,9 +51,17 @@
     <div class=""></div>
     <h1 class="text-3xl font-bold mb-6 text-center">Wished Products</h1>
     <div class="flex justify-center space-x-10">
+      <button style="margin-left: 2vw; background-color: #F9F1E7;" class="btn hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded-lg" onclick="sortAscending();">
+        Sort Ascending By Price
+      </button>
+      <button style="margin-left: 2vw; background-color: #F9F1E7;" class="btn hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded-lg" onclick="sortQuantity();">
+        Sort Ascending By Quantity
+      </button>
       <button data-modal-target="crudModal" style="margin-left: 2vw; background-color: #F9F1E7;" data-modal-toggle="crudModal" class="btn hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded-lg" onclick="showModal();">
         Add New Product to Wishlist
+      </button>
     </div>
+    <br>
 
 
 
@@ -91,8 +99,8 @@
         </div>
         <!-- Modal footer -->
         <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end">
-          <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg" id="cancelButton">Cancel</button>
-          <button type="submit" id="submitProductEntry" form="productEntryForm" class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg">Save</button>
+          <button type="button" class="bg-gray-200 hover:bg-gray-600 text-black hover:text-white font-bold py-2 px-4 rounded-lg" id="cancelButton">Cancel</button>
+          <button type="submit" id="submitProductEntry" form="productEntryForm" class="bg-[#F9F1E7] hover:bg-[#362417] text-black hover:text-white font-bold py-2 px-4 rounded-lg">Save</button>
         </div>
       </div>
     </div>
@@ -120,32 +128,32 @@
 
   <br>
   <br>
-  <div class="bg-[#FAF3EA] h-[220px] flex items-center justify-center px-4 space-x-24">
+  <div class="w-full bg-[#FAF3EA] py-16 flex flex-col md:flex-row justify-center items-center px-4 md:space-x-8 lg:space-x-24 max-md:space-y-16">
     <!-- High Quality -->
-    <div class="flex items-center space-x-4">
-        <img src="{% static 'images/pic1.webp' %}" alt="High Quality" class="h-12">
-        <div class="text-left">
-            <p class="font-semibold text-lg">High Quality</p>
-            <p class="text-gray-500">crafted from top materials</p>
-        </div>
+    <div class="flex justify-center space-x-4">
+      <img src="{% static 'images/pic1.webp' %}" alt="High Quality" class="h-12">
+      <div class="text-center">
+        <p class="font-semibold text-lg">High Quality</p>
+        <p class="text-gray-500">crafted from top materials</p>
+      </div>
     </div>
     
     <!-- Warranty Protection -->
-    <div class="flex items-center space-x-4">
-        <img src="{% static 'images/pic2.webp' %}" alt="Warranty Protection" class="h-12">
-        <div class="text-left">
-            <p class="font-semibold text-lg">Warranty Protection</p>
-            <p class="text-gray-500">Over 2 years</p>
-        </div>
+    <div class="flex justify-center space-x-4">
+      <img src="{% static 'images/pic2.webp' %}" alt="Warranty Protection" class="h-12">
+      <div class="text-center">
+        <p class="font-semibold text-lg">Warranty Protection</p>
+        <p class="text-gray-500">Over 2 years</p>
+      </div>
     </div>
 
     <!-- 24/7 Support -->
-    <div class="flex items-center space-x-4">
-        <img src="{% static 'images/pic3.webp' %}" alt="24/7 Support" class="h-12">
-        <div class="text-left">
-            <p class="font-semibold text-lg">24/7 Support</p>
-            <p class="text-gray-500">Dedicated support</p>
-        </div>
+    <div class="flex justify-center space-x-4">
+      <img src="{% static 'images/pic3.webp' %}" alt="24/7 Support" class="h-12">
+      <div class="text-center">
+        <p class="font-semibold text-lg">24/7 Support</p>
+        <p class="text-gray-500">Dedicated support</p>
+      </div>
     </div>
   </div>
 <!-- ################# -->
@@ -153,30 +161,7 @@
 <!-- ################# -->
 
   <script>
-    var username = document.getElementById('dropdownButton').getAttribute('data-username'); // Mendapatkan username user yang sedang login
-    console.log(username);
-    var dropdownMenu = document.getElementById('dropdownMenu');
-    console.log("tes1");
-    console.log(dropdownMenu);
-    console.log("tes1");
-    var dropdownButton = document.getElementById('dropdownButton');
-    console.log("tes");
-    console.log(dropdownButton);
-    console.log("tes");
-    var mobileMenu = document.getElementById('mobileMenu');
-    var mobileMenuButton = document.getElementById('mobileMenuButton');
     
-    document.getElementById('dropdownButton').addEventListener('click', function () {
-      console.log("masuk");
-        if (username){
-            console.log("Masuk 2");
-            if (dropdownMenu.classList.contains('hidden')) {
-                dropdownMenu.classList.remove('hidden');
-            } else {
-                dropdownMenu.classList.add('hidden');
-            }
-        }
-    });
 
     document.getElementById('mobileMenuButton').addEventListener('click', function () {
         if (username){
@@ -205,7 +190,7 @@
             return fetch("{% url 'WishList:get_wishlist_json' %}").then((res) => res.json())
     }
     async function getProductEntryById(id){
-      const response = await fetch(`/WishList/json/${id}/`);
+      const response = await fetch(`json/${id}/`);
       const data = await response.json();
       return data;
     }
@@ -224,8 +209,8 @@
     }
     return cookieValue;
 }
-    function deleteProduct(productId) {
-    fetch(`/WishList/delete/${productId}/`, {
+function deleteProduct(productId) {
+    fetch(`delete/${productId}/`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -266,8 +251,8 @@
     let product_length = 0;
     let products;
     let wishlists;
-
-
+    let ascFlag = 0;
+    let ascQuantity = 0;
     const selectElement = document.getElementById("produk-select");
     function addProductEntry() {
       const formData = new FormData(document.querySelector('#productEntryForm'));
@@ -291,10 +276,28 @@
       console.log("Produk yang dipilih:", selectedpk);
       addProductEntry();
     })
-
+    function sortAscending(){
+      ascFlag=1;
+      ascQuantity=0;
+      renderProducts(currentPage);
+    }
+    function sortQuantity(){
+      ascQuantity=1;
+      ascFlag=0;
+      renderProducts(currentPage);
+    }
     async function renderProducts(page) {
       wishlists = await getWishlistEntries();
       products = await getProductEntries();
+      if(ascFlag===1){
+        console.log("GETS INNN");
+        wishlists.sort((a, b) => a.fields.price - b.fields.price);
+        console.log("fortunately");
+        console.log(wishlists);
+        console.log("unfortunately");
+      }else if(ascQuantity===1){
+        wishlists.sort((a, b) => a.fields.jumlah - b.fields.jumlah);
+      }
       console.log(wishlists.length);
       product_length = products.length;
       productContainer.innerHTML = '';
@@ -302,6 +305,7 @@
       const end = start + productsPerPage;
       const wishlistsToDisplay = wishlists.slice(start, end);
       let total_price = 0;
+      selectElement.innerHTML = '';
       products.forEach(produk => {
         const optionForSelect = document.createElement('option');
         optionForSelect.value = produk.pk;
@@ -322,16 +326,9 @@
         console.log(products);
         wishlistsToDisplay.forEach(wishlist => {
           const key_product = wishlist.fields.produk;
-          let productName;
-          const wishlist_product = getProductEntryById(key_product).then(wishlist_product => {
-              if (wishlist_product) {
-                  productName = wishlist_product[0].fields.product_name;
-                  total_price += wishlist_product[0].fields.price;
-                  console.log(wishlist_product[0].fields.price);
-                  console.log(total_price);
-              } else {
-                  console.log("Product not found");
-              }
+          total_price += wishlist.fields.price;
+          let productName = wishlist.fields.nama_produk;
+          const wishlist_product = getProductEntryById(key_product);
               const key_wishlist = wishlist.pk;
               console.log(key_wishlist);
               const rawDate = wishlist.fields.date_added;
@@ -350,7 +347,7 @@
                   <h2 class="text-1xl font-semibold" style="color: black;">Nama Produk: ${productName}</h2>
                   <br>
                   <h3 class="text-lg text-gray-800">Date Added: ${dateObject}</h3>
-                  <p class="text-gray-600 mt-2">Price: <span class="font-medium">${wishlist_product[0].fields.price}</span></p>
+                  <p class="text-gray-600 mt-2">Price: <span class="font-medium">${wishlist.fields.price}</span></p>
                   <p class="text-gray-600 mt-2">Quantity: <span class="font-medium">${wishlist.fields.jumlah}</span></p>
                   <a href="#" onclick="deleteProduct('${key_wishlist}');" class="text-red-600 font-bold hover:underline">Delete</a>
               </div>
@@ -361,7 +358,7 @@
               <p>Total harga adalah: ${total_price}</p>
               `
               totalHarga.innerHTML = productPrice;
-          });
+          ;
         });
         // Handle pagination button states
         prevBtn.disabled = page === 1;
