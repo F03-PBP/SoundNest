@@ -9,6 +9,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST, require_http_methods
 import json
 
+from reviews.models import Review
+from reviews.views import show_reviews
+
 
 def get_products(request):
     data = Product.objects.all()
@@ -38,14 +41,20 @@ def show_product(request):
 
     page_products = paginator.get_page(page_number)
 
-    last_login = request.user.last_login
+    # last_login = request.user.last_login
 
-    return render(request, "main.html", {"page_products": page_products, "last_login": last_login})
+    return render(request, "main.html", {"page_products": page_products})
 
 def product_details(request, product_id):
     product = get_object_or_404(Product, id=product_id)
+    reviews = show_reviews(request, product_id)
 
-    return render(request, 'details.html', {'product': product})
+    context = {
+        'product': product,
+        'reviews': reviews,
+        'product_id': product.id
+    }
+    return render(request, 'details.html', context)
 
 @csrf_exempt
 @require_POST
