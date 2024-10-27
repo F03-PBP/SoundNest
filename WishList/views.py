@@ -78,5 +78,3 @@ def add_product_entry_ajax(request):
         return JsonResponse({'status': 'success'})
     else:
         return JsonResponse({'status': 'failed'}, status=400)
-
-

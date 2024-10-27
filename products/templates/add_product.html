@@ -1,5 +1,5 @@
 <div id="addProductModal" class="fixed inset-0 flex items-center justify-center hidden bg-black bg-opacity-50">
-    <div class="bg-white p-6 rounded-lg max-h-lg w-full max-w-lg h-auto">
+    <div class="bg-white p-6 rounded-lg max-h-lg w-[80%] md:w-full max-w-lg h-auto">
         <h2 class="text-2xl font-bold mb-8">Add New Product</h2>
         <form id="addProductForm" onsubmit="addProduct(event)">
             {% csrf_token %}
@@ -21,7 +21,7 @@
             </div>
             <div class="flex justify-end mt-12">
                 <button type="button" class="mr-4 text-gray-500" onclick="closeModal()">Cancel</button>
-                <button type="submit" class="bg-[#B88E2F] w-1/6 text-white px-4 py-2 rounded">Add</button>
+                <button type="submit" class="bg-[#B88E2F] text-white px-3 py-2 rounded">Add</button>
             </div>
         </form>
     </div>

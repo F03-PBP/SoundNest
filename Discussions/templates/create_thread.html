@@ -8,14 +8,14 @@
             {{ form.as_p }}
             <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition">Create Thread</button>
         </form>
-        <a href="{% url 'view_threads' %}" class="text-blue-500 hover:underline mt-4 inline-block">View Discussion Threads</a>
+        <a href="{% url 'Discussions:view_threads' %}" class="text-blue-500 hover:underline mt-4 inline-block">View Discussion Threads</a>
     </div>
 
     <script>
         document.getElementById('create-thread-form').addEventListener('submit', function(event) {
             event.preventDefault(); 
             const formData = new FormData(this);
-            fetch("{% url 'create_thread' %}", {
+            fetch("{% url 'Discussions:create_thread' %}", {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -25,7 +25,7 @@
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                window.location.href = "{% url 'view_threads' %}"; 
+                window.location.href = "{% url 'Discussions:view_threads' %}"; 
             })
             .catch(error => console.error('Error:', error));
         });
