@@ -14,8 +14,8 @@
             <div class="footer-right mb-8 md:mt-0 md:text-left">
                 <ul class="flex flex-col space-y-8 font-semibold mr-8">
                     <li><a href="#" class="hover:text-gray-400">Home</a></li>
-                    <li><a href="#" class="hover:text-gray-400">About</a></li>
-                    <li><a href="#" class="hover:text-gray-400">Discussions</a></li>
+                    <li><a href="{% url 'products:home' %}" class="hover:text-gray-400">Products</a></li>
+                    <li><a href="{% url 'Discussions:view_threads' %}" class="hover:text-gray-400">Discussions</a></li>
                 </ul>
             </div>
         </div>

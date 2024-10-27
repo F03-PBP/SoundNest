@@ -39,4 +39,4 @@ def user_register(request):
 def user_logout(request):
     logout(request)
     messages.info(request, "You have successfully logged out.") 
-    return redirect('authentication:login_page')
+    return redirect('products:home')

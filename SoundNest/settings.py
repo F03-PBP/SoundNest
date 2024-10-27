@@ -41,11 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'BestDeals',
     'django.contrib.humanize',
-    'Discussions',
+    'authentication',
     'products',
     'reviews',
-    'authentication',
-    'WishList'
+    'Discussions',
+    'WishList',
 ]
 
 MIDDLEWARE = [

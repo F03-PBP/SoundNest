@@ -19,13 +19,13 @@
             <!-- Desktop Menu -->
             <ul class="hidden md:flex items-center justify-center flex-grow space-x-8">
                 <a href="/"><li>Home</li></a>
-                <a href="/"><li>Products</li></a>
-                <a href="/"><li>Discussions</li></a>
+                <a href="{% url 'products:home' %}"><li>Products</li></a>
+                <a href="{% url 'Discussions:view_threads' %}"><li>Discussions</li></a>
             </ul>
 
             <div class="hidden md:flex items-center space-x-6 ml-12">
-                {% if current_user %}
-                    <a href="/wishlist">
+                {% if user.is_authenticated  %}
+                    <a href="{% url 'WishList:view_wishlist' %}">
                         <img src="{% static 'images/wishicon.webp' %}" alt="My Wishlist" class="h-6 w-7">
                     </a>
                     <a href="/profile">
@@ -46,27 +46,37 @@
             <li class="w-full">
                 <a href="/" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Home</a>
             </li>
+
             <li class="w-full">
-                <a href="/" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Products</a>
+                <a href="{% url 'products:home' %}" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Products</a>
             </li>
+
             <li class="w-full">
-                <a href="/" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Discussions</a>
+                <a href="{% url 'Discussions:view_threads' %}" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Discussions</a>
+            </li>
+
+            <li class="w-full">
+                <a href="{% url 'WishList:view_wishlist' %}" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Wish List</a>
             </li>
             <!-- Profile Icon (Mobile) -->
-            <li class="w-full">
-                {% if user.is_authenticated %}
-                    <a href="/profile" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Profile</a>
-                    <p class="py-2">Last Login: {{ last_login }}</p>
-                {% else %}
-                    <a href="/login" class="block border border-gray-500 rounded-lg py-2">Log In</a>
-                    <a href="/register" class="block bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white">Register</a>
-                {% endif %}
-            </li>
             {% if user.is_authenticated %}
                 <li class="w-full">
-                    <a href="/" class="block bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white">Logout</a>
+                    <a href="/profile" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Profile</a>
+                </li>
+
+                <li class="w-full">
+                    <a href="{% url 'authentication:logout' %}" class="block bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white">Logout</a>
+                </li>
+            {% else %}
+                <li class="w-full">
+                    <a href="{% url 'authentication:login_page' %}" class="block bg-white rounded-lg py-2 hover:bg-[#F9F1E7]">Log In</a>
+                </li>
+
+                <li class="w-full">
+                    <a href="{% url 'authentication:register_page' %}" class="block bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white">Register</a>
                 </li>
             {% endif %}
+        
         </ul>
     </div>
 </nav>
