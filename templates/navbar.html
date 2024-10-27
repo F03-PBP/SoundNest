@@ -26,13 +26,15 @@
 
             <div class="hidden md:flex items-center space-x-6 ml-12">
                 {% if user.is_authenticated  %}
-                <a href="{% url 'authentication:logout' %}" class="bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white px-4">Logout</a>
                     <a href="{% url 'WishList:view_wishlist' %}">
                         <img src="{% static 'images/wishicon.webp' %}" alt="My Wishlist" class="h-6 w-7">
                     </a>
-                    <a href="/profile">
+                    <a href="#" id="profile-button">
                         <img src="{% static 'images/profile.webp' %}" alt="My Profile" class="h-7 w-8">
                     </a>
+                    <div id="logout-popover" class="popover hidden">
+                        <a href="{% url 'authentication:logout' %}" class="bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white px-4">Logout</a>
+                    </div>
                 {% else %}
                     <a href="{% url 'authentication:login_page' %}" class="text-gray-700">Log In</a>
                     <a href="{% url 'authentication:register_page' %}" class="bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white px-4">Register</a>
@@ -108,4 +110,21 @@
             mobileMenu.classList.add('hidden');
         }
     }
+
+    const profileButton = document.getElementById('profile-button');
+    const logoutPopover = document.getElementById('logout-popover');
+
+    profileButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        logoutPopover.classList.toggle('hidden');
+        logoutPopover.classList.toggle('visible');
+    });
+
+    // Menutup popover jika klik di luar
+    document.addEventListener('click', function(event) {
+        if (!profileButton.contains(event.target) && !logoutPopover.contains(event.target)) {
+            logoutPopover.classList.add('hidden');
+            logoutPopover.classList.remove('visible');
+        }
+    });
 </script>
