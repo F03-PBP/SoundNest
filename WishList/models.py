@@ -8,3 +8,5 @@ class WishlistItem(models.Model):
     produk = models.ForeignKey(Product, on_delete=models.CASCADE)
     jumlah = models.PositiveIntegerField(default=1)
     date_added = models.DateTimeField(default=timezone.now)
+    price = models.IntegerField()
+    nama_produk = models.CharField(max_length=255)

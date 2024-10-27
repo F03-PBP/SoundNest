@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'Discussions',
     'BestDeals',
     'WishList',
+    
 ]
 
 MIDDLEWARE = [
