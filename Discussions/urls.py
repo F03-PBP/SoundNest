@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-app_name = 'Discussions'  # Menambahkan app_name untuk namespace
+app_name = 'Discussions' 
 
 urlpatterns = [
     path('create_thread/', views.create_thread, name='create_thread'),
