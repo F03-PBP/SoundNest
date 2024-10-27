@@ -95,3 +95,42 @@ def delete_product(request):
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)})
     
+@csrf_exempt
+@require_POST
+@login_required
+def edit_product(request):
+    try:
+        product_id = request.POST.get("id")
+        product = get_object_or_404(Product, id=product_id)
+        
+        product.product_name = request.POST.get("product_name")
+        product.price = int(request.POST.get("price"))
+        product.rating = float(request.POST.get("rating"))
+        product.reviews = int(request.POST.get("reviews"))
+        
+        product.save()
+
+        return JsonResponse({
+            "success": True,
+            "product": {
+                "id": product.id,
+                "product_name": product.product_name,
+                "price": product.price,
+                "rating": product.rating,
+                "reviews": product.reviews,
+            }
+        })
+    except Exception as e:
+        return JsonResponse({"success": False, "error": str(e)})
+    
+@login_required
+def product_details_json(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    return JsonResponse({
+        "id": product.id,
+        "product_name": product.product_name,
+        "price": product.price,
+        "rating": product.rating,
+        "reviews": product.reviews,
+    })
+
