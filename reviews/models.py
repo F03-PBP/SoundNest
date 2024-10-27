@@ -13,10 +13,14 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        # 1 user hanya bisa review 1 produk 1 kali
+        unique_together = ('user', 'product')
+
     def save(self, *args, **kwargs):
-        # Rating ada di antara 1-5
-        if self.rating < 1 or self.rating > 5:
-            raise ValueError("Rating harus antara 1 dan 5")
+        # Rating ada di antara 1-10
+        if self.rating < 1 or self.rating > 10:
+            raise ValueError("Rating harus antara 1 dan 10")
         super().save(*args, **kwargs)
 
     def __str__(self):

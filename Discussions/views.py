@@ -9,7 +9,7 @@ def create_thread(request):
         form = DiscussionThreadForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('view_threads')
+            return redirect('Discussions:view_threads')
     else:
         form = DiscussionThreadForm()
     return render(request, 'Discussions/create_thread.html', {'form': form})
@@ -22,7 +22,7 @@ def add_comment(request, thread_id):
             comment = form.save(commit=False)
             comment.thread = thread
             comment.save()
-            return redirect('view_threads')
+            return redirect('Discussions:view_threads')
     else:
         form = DiscussionCommentForm()
     return render(request, 'Discussions/add_comment.html', {'form': form, 'thread': thread})

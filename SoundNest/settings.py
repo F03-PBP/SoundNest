@@ -40,10 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'Discussions',
+    'authentication',
     'products',
     'reviews',
-    'authentication',
+    'Discussions',
     'WishList',
     'BestDeals',
 ]
