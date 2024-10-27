@@ -349,7 +349,8 @@
         console.log(products);
         wishlistsToDisplay.forEach(wishlist => {
           const key_product = wishlist.fields.produk;
-          let productName;
+          total_price += wishlist.fields.price;
+          let productName = wishlist.fields.nama_produk;
           const wishlist_product = getProductEntryById(key_product);
               const key_wishlist = wishlist.pk;
               console.log(key_wishlist);

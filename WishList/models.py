@@ -9,3 +9,4 @@ class WishlistItem(models.Model):
     jumlah = models.PositiveIntegerField(default=1)
     date_added = models.DateTimeField(default=timezone.now)
     price = models.IntegerField()
+    nama_produk = models.CharField(max_length=255)
