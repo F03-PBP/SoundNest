@@ -137,6 +137,8 @@
     
     {% include 'add_product.html' %}  <!-- So the modal can be seen -->
 
+    {% include 'edit_product.html' %}
+
     <script>
         function openModal() {
             document.getElementById("addProductModal").classList.remove("hidden");
@@ -152,6 +154,7 @@
             if (event.target == document.getElementById('addProductModal')) {
                 closeModal();
             }
+
         };
 
         function addProduct(event) {
@@ -229,7 +232,7 @@
         }
 
         function openEditModal(productId) {
-            fetch(`/products/details/${productId}/`)
+            fetch(`/details/json/${productId}/`)
                 .then(response => response.json())
                 .then(data => {
                     // Populate the modal form fields with the product data
@@ -279,6 +282,13 @@
             })
             .catch(error => console.error("Error:", error));
         }
+
+        document.getElementById("editProductModal").addEventListener("click", function(event) {
+            const modalContent = document.getElementById("editProductContent");
+            if (!modalContent.contains(event.target)) {
+                closeEditModal();
+            }
+        });
         
     </script>
 

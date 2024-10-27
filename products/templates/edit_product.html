@@ -1,5 +1,5 @@
 <div id="editProductModal" class="hidden fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75">
-    <div class="bg-white p-8 rounded-lg w-[400px]">
+    <div class="bg-white p-8 rounded-lg w-[400px]" id="editProductContent">
         <h2 class="text-2xl font-semibold mb-4">Edit Product</h2>
         <form id="editProductForm" onsubmit="saveProduct(event)">
             <input type="hidden" id="edit-product-id" name="id">
@@ -19,10 +19,10 @@
                 <label class="block text-gray-700">Reviews:</label>
                 <input type="number" id="edit-product-reviews" name="reviews" class="border border-gray-300 rounded px-3 py-2 w-full">
             </div>
-            <div class="flex justify-end">
-                <button type="button" onclick="closeEditModal()" class="mr-2 px-4 py-2 bg-gray-500 text-white rounded">Cancel</button>
-                <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded">Save</button>
+            <div class="flex justify-end mt-8">
+                <button type="button" onclick="closeEditModal()" class="mr-2 px-4 py-2 rounded">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-[#B88E2F] text-white rounded">Save</button>
             </div>
         </form>
-    </div>
+    </div> 
 </div>

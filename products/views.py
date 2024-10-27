@@ -15,6 +15,7 @@ def get_products(request):
 
     return HttpResponse(serializers.serialize("json", data), content_type = "application/json")
 
+@login_required
 def show_product(request):
     # Get all the products from the data base
     products = Product.objects.all().order_by('-created_at')
@@ -123,7 +124,6 @@ def edit_product(request):
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)})
     
-@login_required
 def product_details_json(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     return JsonResponse({

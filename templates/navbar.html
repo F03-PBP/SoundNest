@@ -24,8 +24,8 @@
             </ul>
 
             <div class="hidden md:flex items-center space-x-6 ml-12">
-                {% if current_user %}
-                    <a href="/wishlist">
+                {% if current_user and user.is_authenticated %}
+                    <a href="{% url 'WishList:view_wishlist' %}">
                         <img src="{% static 'images/wishicon.webp' %}" alt="My Wishlist" class="h-6 w-7">
                     </a>
                     <a href="/profile">
