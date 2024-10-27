@@ -21,14 +21,16 @@
             <ul class="hidden md:flex items-center space-x-8">
                 <a href="/"><li>Home</li></a>
                 <a href="/"><li>About</li></a>
-                <a href="/"><li>Discussions</li></a>
+                <a href="/discussion"><li>Discussions</li></a>
+                <a href="/WishList"><li>Wishlist</li></a>
             </ul>
 
             <!-- Dropdown -->
             <div class="relative hidden md:inline-block">
-                {% if current_user %}
-                    <button id="dropdownButton" data-username="{{ current_user.username }}" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" aria-expanded="true" aria-haspopup="true">
-                        Hello, {{ current_user.username }}
+                {% if user %}
+                    <p>disiini akudisini</p>
+                    <button id="dropdownButton" data-username="{{ user.username }}" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" aria-expanded="true" aria-haspopup="true">
+                        Hello, {{ user.username }}
                         <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.66l3.71-3.43a.75.75 0 011.06 1.06l-4.25 3.93a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd" />
                         </svg>
@@ -39,7 +41,7 @@
                             <a href="#" class="block hover:bg-gray-200" role="menuitem">Profile</a>
                             
                             <p class="py-2">Last Login : {{ last_login }}</p>
-                            <a href="/">
+                            <a href="{% url 'authentication:logout' %}">
                                 <button type="submit" class="w-full text-left bg-red-400 hover:bg-red-500 text-white text-center rounded-md" role="menuitem">
                                     Logout
                                 </button>
@@ -48,10 +50,10 @@
                     </div>
                 {% else %}
                     <div class="space-x-4 flex items-center">
-                        <a href="/login" class="text-sm font-medium text-gray-700 hover:text-gray-900 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
+                        <a href="/auth/login" class="text-sm font-medium text-gray-700 hover:text-gray-900 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
                             Log In
                         </a>
-                        <a href="/signup" class="text-sm font-medium text-white bg-[#B88E2F] hover:bg-amber-900 px-4 py-2 rounded-md">
+                        <a href="/auth/register" class="text-sm font-medium text-white bg-[#B88E2F] hover:bg-amber-900 px-4 py-2 rounded-md">
                             Sign Up
                         </a>
                     </div>
