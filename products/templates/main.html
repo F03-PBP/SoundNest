@@ -57,7 +57,7 @@
                             <span class="font-bold text-lg">Details</span>
                         </a>
                         {% if user.is_authenticated and user.is_superuser %}
-                        <button class="w-[90px] h-[44px] text-[#B88E2F] text-center bg-white px-4 py-2 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100" onclick="openEditModal({{ product.id|json_script }})">
+                        <button class="w-[90px] h-[44px] text-[#B88E2F] text-center bg-white px-4 py-2 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100" onclick="openEditModal('{{ product.id }}')">
                             <span class="font-bold text-lg">Edit</span>
                         </button>
                         <button onclick="deleteProduct('{{ product.id }}')" class="w-[90px] h-[44px] text-white bg-red-600 px-4 py-2 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100">
