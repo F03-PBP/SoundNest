@@ -1,0 +1,404 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Website</title>
+  <style>
+    .blurred-background {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      color: black;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 15px;
+      border-radius: 10px;
+    }
+
+    .blurred-background::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url("{% static 'images/background.jpeg' %}");
+      background-size: cover;
+      background-position: center;
+      filter: blur(4px);
+      z-index: -1; 
+      opacity: 0.8;
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white">
+  {% include 'navbar.html' %}
+  <!-- Container for Products -->
+  <div class="max-w-7xl mx-auto p-4">
+    <br><br><br><br>
+    <div class="blurred-background">
+      <p>Wishlist</p>
+    </div>
+    <br><br>
+    <div class=""></div>
+    <h1 class="text-3xl font-bold mb-6 text-center">Wished Products</h1>
+    <div class="flex justify-center space-x-10">
+      <button data-modal-target="crudModal" style="margin-left: 2vw; background-color: #F9F1E7;" data-modal-toggle="crudModal" class="btn hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded-lg" onclick="showModal();">
+        Add New Product to Wishlist
+    </div>
+
+
+
+
+
+    <div id="crudModal" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
+      <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
+        <!-- Modal header -->
+        <div class="flex items-center justify-between p-4 border-b rounded-t">
+          <h3 class="text-xl font-semibold text-gray-900">
+            Add New Product Entry
+          </h3>
+          <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" id="closeModalBtn">
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <div class="px-6 py-4 space-y-6 form-style">
+          <form id="productEntryForm">
+            <div class="mb-4">
+              <label for="produk-select">Choose Product:</label>
+              <select class="form-control" id="produk-select" name="produk">
+                <!-- Pilihan produk akan diisi dengan AJAX -->
+              </select>
+            </div>
+            <div class="mb-4">
+              <!-- dont forget to change price to quantity -->
+              <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+              <input type="number" id="quantity" name="quantity" min="1" max="10" class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-indigo-700" required>
+            </div>
+          </form>
+        </div>
+        <!-- Modal footer -->
+        <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end">
+          <button type="button" class="bg-gray-200 hover:bg-gray-600 text-black hover:text-white font-bold py-2 px-4 rounded-lg" id="cancelButton">Cancel</button>
+          <button type="submit" id="submitProductEntry" form="productEntryForm" class="bg-[#F9F1E7] hover:bg-[#362417] text-black hover:text-white font-bold py-2 px-4 rounded-lg">Save</button>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <div class="gap-6" style="display: grid; grid-template-columns: 3fr 1fr;">
+      <div id="product-container" class="grid grid-cols-3 gap-6 mb-6">
+        <!-- Product cards will be dynamically inserted here -->
+      </div>
+      <div id="total-product-price" class="grid grid-cols-1 gap-6 mb-6" style="height: 100%; border-radius: 10px; background-color:#F9F1E7;">
+
+      </div>
+    </div>
+
+
+    <!-- Pagination Buttons -->
+    <div class="flex justify-center space-x-4">
+      <button id="prev-btn" class="bg-gray-500 text-white px-4 py-2 rounded disabled:opacity-50" disabled>Previous</button>
+      <button id="next-btn" class="text-black px-4 py-2 rounded" style="background-color: #F9F1E7;">Next</button>
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <div class="w-full bg-[#FAF3EA] py-16 flex flex-col md:flex-row justify-center items-center px-4 md:space-x-8 lg:space-x-24 max-md:space-y-16">
+    <!-- High Quality -->
+    <div class="flex justify-center space-x-4">
+      <img src="{% static 'images/pic1.webp' %}" alt="High Quality" class="h-12">
+      <div class="text-center">
+        <p class="font-semibold text-lg">High Quality</p>
+        <p class="text-gray-500">crafted from top materials</p>
+      </div>
+    </div>
+    
+    <!-- Warranty Protection -->
+    <div class="flex justify-center space-x-4">
+      <img src="{% static 'images/pic2.webp' %}" alt="Warranty Protection" class="h-12">
+      <div class="text-center">
+        <p class="font-semibold text-lg">Warranty Protection</p>
+        <p class="text-gray-500">Over 2 years</p>
+      </div>
+    </div>
+
+    <!-- 24/7 Support -->
+    <div class="flex justify-center space-x-4">
+      <img src="{% static 'images/pic3.webp' %}" alt="24/7 Support" class="h-12">
+      <div class="text-center">
+        <p class="font-semibold text-lg">24/7 Support</p>
+        <p class="text-gray-500">Dedicated support</p>
+      </div>
+    </div>
+  </div>
+<!-- ################# -->
+<!-- ################# -->
+<!-- ################# -->
+
+  <script>
+    var username = document.getElementById('dropdownButton').getAttribute('data-username'); // Mendapatkan username user yang sedang login
+    console.log(username);
+    var dropdownMenu = document.getElementById('dropdownMenu');
+    console.log("tes1");
+    console.log(dropdownMenu);
+    console.log("tes1");
+    var dropdownButton = document.getElementById('dropdownButton');
+    console.log("tes");
+    console.log(dropdownButton);
+    console.log("tes");
+    var mobileMenu = document.getElementById('mobileMenu');
+    var mobileMenuButton = document.getElementById('mobileMenuButton');
+    
+    document.getElementById('dropdownButton').addEventListener('click', function () {
+      console.log("masuk");
+        if (username){
+            console.log("Masuk 2");
+            if (dropdownMenu.classList.contains('hidden')) {
+                dropdownMenu.classList.remove('hidden');
+            } else {
+                dropdownMenu.classList.add('hidden');
+            }
+        }
+    });
+
+    document.getElementById('mobileMenuButton').addEventListener('click', function () {
+        if (username){
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('hidden');
+            }
+        }
+    });
+
+    // Close Dropdown
+    window.onclick = function(event) {
+        if (!dropdownButton.contains(event.target)) {
+            dropdownMenu.classList.add('hidden');
+        }
+
+        if (!mobileMenuButton.contains(event.target)) {
+        mobileMenu.classList.add('hidden');
+    }
+    }
+    async function getProductEntries(){
+            return fetch("{% url 'WishList:get_product_json' %}").then((res) => res.json())
+    }
+    async function getWishlistEntries(){
+            return fetch("{% url 'WishList:get_wishlist_json' %}").then((res) => res.json())
+    }
+    async function getProductEntryById(id){
+      const response = await fetch(`/WishList/json/${id}/`);
+      const data = await response.json();
+      return data;
+    }
+    function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Periksa apakah cookie saat ini adalah cookie yang kita cari
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+    function deleteProduct(productId) {
+    fetch(`/WishList/delete/${productId}/`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+          },
+      }
+    ).then(response => renderProducts(currentPage));
+    }
+    let currentPage = 1;
+    const productsPerPage = 6;
+    function showModal() {
+        const modal = document.getElementById('crudModal');
+        const modalContent = document.getElementById('crudModalContent');
+        modal.classList.remove('hidden'); 
+        setTimeout(() => {
+          modalContent.classList.remove('opacity-0', 'scale-95');
+          modalContent.classList.add('opacity-100', 'scale-100');
+        }, 50); 
+    }
+
+    function hideModal() {
+        const modal = document.getElementById('crudModal');
+        const modalContent = document.getElementById('crudModalContent');
+  
+        modalContent.classList.remove('opacity-100', 'scale-100');
+        modalContent.classList.add('opacity-0', 'scale-95');
+  
+        setTimeout(() => {
+          modal.classList.add('hidden');
+        }, 150); 
+    }
+    document.getElementById("cancelButton").addEventListener("click", hideModal);
+    document.getElementById("closeModalBtn").addEventListener("click", hideModal);
+    const productContainer = document.getElementById('product-container');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const totalHarga = document.getElementById('total-product-price');
+    let product_length = 0;
+    let products;
+    let wishlists;
+
+
+    const selectElement = document.getElementById("produk-select");
+    function addProductEntry() {
+      const formData = new FormData(document.querySelector('#productEntryForm'));
+      const formDataObject = Object.fromEntries(formData.entries());
+      console.log(formDataObject);
+      fetch("{% url 'WishList:add_product_entry_ajax' %}", {
+        method: "POST",
+        body: formData,
+      })
+      .then(response => renderProducts(currentPage));
+  
+      document.getElementById("productEntryForm").reset(); 
+      document.querySelector("[data-modal-toggle='crudModal']").click();
+  
+      return false;
+    }
+
+    document.getElementById("productEntryForm").addEventListener("submit", (e) => {
+      event.preventDefault();
+      let selectedpk = selectElement.value;
+      console.log("Produk yang dipilih:", selectedpk);
+      addProductEntry();
+    })
+
+    async function renderProducts(page) {
+      wishlists = await getWishlistEntries();
+      products = await getProductEntries();
+      console.log(wishlists.length);
+      product_length = products.length;
+      productContainer.innerHTML = '';
+      const start = (page - 1) * productsPerPage;
+      const end = start + productsPerPage;
+      const wishlistsToDisplay = wishlists.slice(start, end);
+      let total_price = 0;
+      products.forEach(produk => {
+        const optionForSelect = document.createElement('option');
+        optionForSelect.value = produk.pk;
+        optionForSelect.textContent = produk.fields.product_name;
+        selectElement.appendChild(optionForSelect);
+        })
+      if(wishlists.length === 0){
+        productContainer.innerHTML = `
+              <p class="text-center text-gray-600 mt-4">Belum ada data product pada wishlist.</p>
+        `;
+        const productPrice = `
+        <p>Wishlist Total</p>
+        <p>Total harga adalah: ${total_price}</p>
+        `
+        totalHarga.innerHTML = productPrice;
+      }else{
+        console.log(wishlists);
+        console.log(products);
+        wishlistsToDisplay.forEach(wishlist => {
+          const key_product = wishlist.fields.produk;
+          let productName;
+          const wishlist_product = getProductEntryById(key_product).then(wishlist_product => {
+              if (wishlist_product) {
+                  productName = wishlist_product[0].fields.product_name;
+                  total_price += wishlist_product[0].fields.price;
+                  console.log(wishlist_product[0].fields.price);
+                  console.log(total_price);
+              } else {
+                  console.log("Product not found");
+              }
+              const key_wishlist = wishlist.pk;
+              console.log(key_wishlist);
+              const rawDate = wishlist.fields.date_added;
+              const dateObject = new Date(rawDate);
+              const formattedDate = dateObject.toLocaleString('id-ID', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  second: '2-digit',
+              });
+              const productCard = `
+                <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center text-center">
+                  <img src="{% static 'image/tws.png' %}" alt="${wishlist.product}" class="mb-4" style="width:150px; height: 125px;">
+                  <h2 class="text-1xl font-semibold" style="color: black;">Nama Produk: ${productName}</h2>
+                  <br>
+                  <h3 class="text-lg text-gray-800">Date Added: ${dateObject}</h3>
+                  <p class="text-gray-600 mt-2">Price: <span class="font-medium">${wishlist_product[0].fields.price}</span></p>
+                  <p class="text-gray-600 mt-2">Quantity: <span class="font-medium">${wishlist.fields.jumlah}</span></p>
+                  <a href="#" onclick="deleteProduct('${key_wishlist}');" class="text-red-600 font-bold hover:underline">Delete</a>
+              </div>
+              `;
+              productContainer.innerHTML += productCard;
+              const productPrice = `
+              <p>Wishlist Total</p>
+              <p>Total harga adalah: ${total_price}</p>
+              `
+              totalHarga.innerHTML = productPrice;
+          });
+        });
+        // Handle pagination button states
+        prevBtn.disabled = page === 1;
+        nextBtn.disabled = page === Math.ceil(wishlists.length / productsPerPage);
+      }
+    }
+
+    // Event listeners for pagination buttons
+    prevBtn.addEventListener('click', () => {
+      // event.preventDefault();
+      // const scrollPosition = window.scrollY;
+      // localStorage.setItem('scrollPosition', scrollPosition);
+      if (currentPage > 1) {
+        currentPage--;
+        renderProducts(currentPage);
+      }
+      setTimeout(() => {
+            window.scrollTo(0, document.body.scrollHeight); // Kembalikan posisi scroll ke yang disimpan
+        }, 100);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      // event.preventDefault();
+      // const scrollPosition = window.scrollY;
+      // localStorage.setItem('scrollPosition', scrollPosition);
+      if (currentPage < Math.ceil(product_length / productsPerPage)) {
+        currentPage++;
+        renderProducts(currentPage);
+      }
+      setTimeout(() => {
+            window.scrollTo(0, document.body.scrollHeight); // Kembalikan posisi scroll ke yang disimpan
+        }, 100);
+    });
+
+    // Initial render
+    renderProducts(currentPage);
+  </script>
+</body>
+{% include 'footer.html' %}
+</html>

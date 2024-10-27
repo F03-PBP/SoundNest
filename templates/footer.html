@@ -1,7 +1,7 @@
 {% load static %}
 
 <footer class="py-8">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+    <div class="container mx-auto px-8 sm:px-6 lg:px-16 mt-6">
         <div class="flex flex-col md:flex-row justify-between items-start">
             <div class="footer-left">
                 <h2 class="text-2xl font-bold">Soundnest</h2>
@@ -14,8 +14,8 @@
             <div class="footer-right mb-8 md:mt-0 md:text-left">
                 <ul class="flex flex-col space-y-8 font-semibold mr-8">
                     <li><a href="#" class="hover:text-gray-400">Home</a></li>
-                    <li><a href="#" class="hover:text-gray-400">About</a></li>
-                    <li><a href="#" class="hover:text-gray-400">Discussions</a></li>
+                    <li><a href="{% url 'products:home' %}" class="hover:text-gray-400">Products</a></li>
+                    <li><a href="{% url 'Discussions:view_threads' %}" class="hover:text-gray-400">Discussions</a></li>
                 </ul>
             </div>
         </div>
