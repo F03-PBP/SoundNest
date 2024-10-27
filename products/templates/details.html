@@ -32,7 +32,7 @@
 
         <div class="flex flex-col md:flex-row md:gap-[120px]">
             <div>
-                <img id="mainImage" src="{% static 'images/templateimage.webp' %}" alt="{{ product.product_name }}" class="w-[440px] h-[500px] border border-gray-400 rounded-[10px]">
+                <img id="mainImage" src="{% static 'images/templateimage.webp' %}" alt="{{ product.product_name }}" class="w-[450px] h-[500px] border border-gray-400 rounded-[10px]">
             </div>
             
             <div class="mt-4 md:mt-0 md:w-[calc(100%-420px)]"> <!-- Adjusted width for the description -->
@@ -43,7 +43,7 @@
                     <p class="text-lg ml-2">{{ product.rating }}</p>
                     <p class="ml-2 text-gray-400">&nbsp; | &nbsp;&nbsp;&nbsp;{{ product.reviews }} customer reviews</p>
                 </div>
-                <p class="mt-6 text-justify" style="margin-right: 140px;"> <!-- Justified text with right margin -->
+                <p class="mt-6 text-justify" style="margin-right: 100px;"> <!-- Justified text with right margin -->
                     Experience sound like never before with the {{ product.product_name }} Headphones. Engineered for audiophiles and casual listeners alike, these headphones deliver immersive sound quality with deep bass, crisp highs, and a balanced midrange. Featuring advanced noise-cancellation technology, you can escape the hustle and bustle of your surroundings and dive into your music, podcasts, or calls without distractions.
                 </p>
 
@@ -58,13 +58,13 @@
 
                 <!-- Add to Wishlist Button -->
                 <div class="mt-8">
-                    <button class="h-14 w-40 px-4 py-2 text-black border border-gray-800 rounded-[15px]">Add To Wishlist</button>
+                    <button class="h-14 w-40 px-4 py-2 text-black border border-gray-800 rounded-[15px]" id="wishlist_button">Add To Wishlist</button>
                 </div>
 
                 <div class="mt-16 mb-20 text-gray-400">
                     <hr class="my-4 border-gray-300">
                     <pre class="mt-10">Category : IEM</pre>
-                    <pre class="mt-4">Tags     : earphones, headphones, audio</pre>
+                    <pre class="mt-2">Tags     : earphones, headphones, audio</pre>
                 </div>
             </div>
         </div>
@@ -79,6 +79,11 @@
         $('#products-link').on('click', function(event) {
             event.preventDefault();
             window.location.href = '{% url "products:home" %}'; 
+        });
+
+        $('#wishlist_button').on('click', function(event) {
+            event.preventDefault();
+            window.location.href = '/wishlist';
         });
     });
 

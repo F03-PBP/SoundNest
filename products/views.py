@@ -1,9 +1,12 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from products.models import Product
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+
 
 def get_products(request):
     data = Product.objects.all()
@@ -35,3 +38,32 @@ def product_details(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
     return render(request, 'details.html', {'product': product})
+
+@csrf_exempt
+@require_POST
+def add_product(request):
+    if request.method == 'POST':
+        product_name = request.POST.get('product_name')
+        price = request.POST.get('price')
+        rating = request.POST.get('rating')
+        reviews = request.POST.get('reviews')
+
+        # Create a new Product instance
+        product = Product.objects.create(
+            product_name=product_name,
+            price=price,
+            rating=rating,
+            reviews=reviews
+        )
+
+        # Return success response with the product data
+        return JsonResponse({
+            'success': True,
+            'product': {
+                'product_name': product.product_name,
+                'price': product.price,
+                'rating': product.rating,
+                'reviews': product.reviews,
+            }
+        })
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'})

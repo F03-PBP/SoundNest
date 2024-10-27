@@ -1,5 +1,4 @@
 {% load static %}
-
 <nav class="border-b border-gray-300 bg-white h-25">
     <div class="max-w-screen mx-auto py-4 px-6 md:px-12 h-full">
         <div class="flex justify-between items-center h-full">
@@ -25,12 +24,17 @@
             </ul>
 
             <div class="hidden md:flex items-center space-x-6 ml-12">
-                <a href="/wishlist">
-                    <img src="{% static 'images/wishicon.webp' %}" alt="My Wishlist" class="h-6 w-7">
-                </a>
-                <a href="/profile">
-                    <img src="{% static 'images/profile.webp' %}" alt="My Profile" class="h-7 w-8">
-                </a>
+                {% if user.is_authenticated %}
+                    <a href="/wishlist">
+                        <img src="{% static 'images/wishicon.webp' %}" alt="My Wishlist" class="h-6 w-7">
+                    </a>
+                    <a href="/profile">
+                        <img src="{% static 'images/profile.webp' %}" alt="My Profile" class="h-7 w-8">
+                    </a>
+                {% else %}
+                    <a href="/login" class="text-gray-700">Log In</a>
+                    <a href="/register" class="bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white px-4">Register</a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -49,14 +53,19 @@
             </li>
             <!-- Profile Icon (Mobile) -->
             <li class="w-full">
-                <a href="/profile" class="block hover:bg-[#F9F1E7] rounded-lg py-2">
-                    Profile
-                </a>
+                {% if user.is_authenticated %}
+                    <a href="/profile" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Profile</a>
+                    <p class="py-2">Last Login: {{ last_login }}</p>
+                {% else %}
+                    <a href="/login" class="block border border-gray-500 rounded-lg py-2">Log In</a>
+                    <a href="/register" class="block bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white">Register</a>
+                {% endif %}
             </li>
-            <p class="py-2">Last Login: {{ last_login }}</p>
-            <li class="w-full">
-                <a href="/" class="block bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white">Logout</a>
-            </li>
+            {% if user.is_authenticated %}
+                <li class="w-full">
+                    <a href="/" class="block bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white">Logout</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
