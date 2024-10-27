@@ -1,10 +1,16 @@
 from django.test import TestCase, Client
 from django.utils import timezone
+from django.contrib.auth.models import User
 from .models import Product
 import uuid
 
 class mainTest(TestCase):
     def setUp(self):
+        # Create a superuser and log them in
+        self.superuser = User.objects.create_superuser(username='admin', password='adminpass')
+        self.client.login(username='admin', password='adminpass')
+
+        # Create test products
         Product.objects.create(
             id=uuid.uuid4(),
             product_name="Test Product 1",
@@ -21,13 +27,13 @@ class mainTest(TestCase):
             reviews=5,
             created_at=timezone.now()
         )
-        self.client = Client()
 
     def test_show_product(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
 
-    def test_add_product(self):
+    def test_add_product_as_superuser(self):
+        # Test adding product as superuser
         response = self.client.post('/add_product/', {
             'product_name': "New Product",
             'price': 15000,
@@ -38,13 +44,15 @@ class mainTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(Product.objects.filter(product_name="New Product").exists())
 
-    def test_delete_product(self):
+    def test_delete_product_as_superuser(self):
+        # Test deleting product as superuser
         product = Product.objects.first()
         response = self.client.post('/delete_product/', {'id': str(product.id)}, content_type="application/json")
         self.assertEqual(response.status_code, 200)
         self.assertFalse(Product.objects.filter(id=product.id).exists())
 
-    def test_edit_product(self):
+    def test_edit_product_as_superuser(self):
+        # Test editing product as superuser
         product = Product.objects.first()
         response = self.client.post('/edit_product', {
             'id': str(product.id),
@@ -59,6 +67,7 @@ class mainTest(TestCase):
         self.assertEqual(updated_product.price, 12000)
         self.assertEqual(updated_product.rating, 4.2)
         self.assertEqual(updated_product.reviews, 15)
+
 
     def test_product_details_json(self):
         product = Product.objects.first()
