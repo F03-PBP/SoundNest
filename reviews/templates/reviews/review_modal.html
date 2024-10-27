@@ -13,7 +13,7 @@
             </div>
 
             <form id="review-form" class="w-full">
-                <input type="hidden" id="product-id" name="product" value="24177050-823e-4a9e-be48-b8649f283e53">
+                <input type="hidden" id="product-id" name="product" value="{{ product_id }}">
 
                 <div class="textarea mb-4">
                     <textarea id="review-description" cols="30" rows="3" class="w-full p-3 bg-gray-200 text-black border border-gray-600 rounded-lg focus:outline-none focus:border-white" placeholder="Describe your experience..." style="resize: none; overflow-y: auto;"></textarea>
@@ -64,7 +64,7 @@
                 });
                 return;
             }
-
+ 
             fetch("{% url 'reviews:add_review' %}", {
                 method: 'POST',
                 headers: {
