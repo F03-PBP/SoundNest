@@ -39,12 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'BestDeals',
     'django.contrib.humanize',
     'Discussions',
     'products',
     'reviews',
     'authentication',
+    'WishList',
+    'BestDeals',
 ]
 
 MIDDLEWARE = [

@@ -1,14 +1,13 @@
 {% load static %}
-
 <nav class="border-b border-gray-300 bg-white h-25">
     <div class="max-w-screen mx-auto py-4 px-6 md:px-12 h-full">
-        <div class="flex justify-between h-full">
+        <div class="flex justify-between items-center h-full">
             <a href="/" class="flex items-center font-bold">
                 <img src="{% static 'images/logo.webp' %}" alt="Soundnest Logo" class="h-10 w-auto mr-1">
                 SOUNDNEST
             </a>
 
-            <!-- (Hamburger Icon) -->
+            <!-- Hamburger Icon (Mobile) -->
             <div class="md:hidden flex">
                 <button id="mobileMenuButton" class="focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -18,49 +17,26 @@
             </div>
 
             <!-- Desktop Menu -->
-            <ul class="hidden md:flex items-center space-x-8">
+            <ul class="hidden md:flex items-center justify-center flex-grow space-x-8">
                 <a href="/"><li>Home</li></a>
-                <a href="/"><li>About</li></a>
+                <a href="/"><li>Products</li></a>
                 <a href="/"><li>Discussions</li></a>
-                <a href="best-deals/"><li>Best Deals</li></a>
+                <a href="/best-deals"><li>Best Deals</li></a>
             </ul>
 
-            <!-- Dropdown -->
-            <div class="relative hidden md:inline-block">
+            <div class="hidden md:flex items-center space-x-6 ml-12">
                 {% if user.is_authenticated %}
-                    <button id="dropdownButton" data-username="{{ current_user.username }}" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" aria-expanded="true" aria-haspopup="true">
-                        Hello, {{ user.username }}
-                        <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.66l3.71-3.43a.75.75 0 011.06 1.06l-4.25 3.93a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                    <form method="post" action="{% url 'authentication:logout' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="w-full text-left bg-red-400 hover:bg-red-500 text-white text-center rounded-md" role="menuitem">
-                            Logout
-                        </button>
-                    </form>
-                    <div id="dropdownMenu" class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-gray-100 text-sm text-gray-700 px-4 py-2" role="menu" aria-orientation="vertical" aria-labelledby="dropdownButton">
-                        <div class="py-1" role="none">
-                            <a href="#" class="block hover:bg-gray-200" role="menuitem">Profile</a>
-                            
-                            <p class="py-2">Last Login : {{ last_login }}</p>
-                            <a href="/">
-                                <button type="submit" class="w-full text-left bg-red-400 hover:bg-red-500 text-white text-center rounded-md" role="menuitem">
-                                    Logout
-                                </button>
-                            </a>
-                        </div>
-                    </div>
+                    <a href="{% url 'authentication:logout' %}" class="text-gray-700">Log Out</a>
+                    <a href="/wishlist">
+                        <img src="{% static 'images/wishicon.webp' %}" alt="My Wishlist" class="h-6 w-7">
+                    </a>
+                    <a href="/profile">
+                        <img src="{% static 'images/profile.webp' %}" alt="My Profile" class="h-7 w-8">
+                    </a>
                 {% else %}
-                    <div class="space-x-4 flex items-center">
-                        <a href="{% url 'authentication:login_page' %}" class="text-sm font-medium text-gray-700 hover:text-gray-900 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
-                            Log In
-                        </a>
-                        <a href="{% url 'authentication:register_page' %}" class="text-sm font-medium text-white bg-[#B88E2F] hover:bg-amber-900 px-4 py-2 rounded-md">
-                            Sign Up
-                        </a>
-                    </div>
+                    <a href="{% url 'authentication:login_page' %}" class="text-gray-700">Log In</a>
+                    <a href="{% url 'authentication:register_page' %}" class="bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white px-4">Register</a>
+
                 {% endif %}
             </div>
         </div>
@@ -70,29 +46,60 @@
     <div id="mobileMenu" class="hidden md:hidden bg-gray-100 text-md text-gray-700 px-6 pt-4 pb-6">
         <ul class="flex flex-col items-center justify-center space-y-3 text-center">
             <li class="w-full">
-                <a href="/" class="block hover:bg-gray-200 rounded-lg py-2">Home</a>
+                <a href="/" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Home</a>
             </li>
-
             <li class="w-full">
-                <a href="/" class="block hover:bg-gray-200 rounded-lg py-2">About</a>
+                <a href="/" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Products</a>
             </li>
-
             <li class="w-full">
-                <a href="/" class="block hover:bg-gray-200 rounded-lg py-2">Discussions</a>
+                <a href="/" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Discussions</a>
             </li>
-
+            <!-- Profile Icon (Mobile) -->
             <li class="w-full">
                 <a href="best-deals/" class="block hover:bg-gray-200 rounded-lg py-2">Best Deals</a>
             </li>
 
+            <!-- Profile Icon (Mobile) -->
             <li class="w-full">
-                <a href="#" class="block hover:bg-gray-200 rounded-lg py-2">Profile</a>
-            </li>    
-            <p class="py-2">Last Login: {{ last_login }}</p>
-            <li class="w-full">
-                <a href="/" class="block bg-red-400 hover:bg-red-500 rounded-lg py-2 text-white">Logout</a>
+                {% if user.is_authenticated %}
+                    <a href="/profile" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Profile</a>
+                    <p class="py-2">Last Login: {{ last_login }}</p>
+                {% else %}
+                    <a href="/login" class="block border border-gray-500 rounded-lg py-2">Log In</a>
+                    <a href="/register" class="block bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white">Register</a>
+                {% endif %}
             </li>
+            {% if user.is_authenticated %}
+                <li class="w-full">
+                    <a href="/" class="block bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white">Logout</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 
 </nav>
+
+<script>
+    var dropdownMenu = document.getElementById('dropdownMenu');
+    var dropdownButton = document.getElementById('dropdownButton');
+    var mobileMenu = document.getElementById('mobileMenu');
+    var mobileMenuButton = document.getElementById('mobileMenuButton');
+
+    dropdownButton?.addEventListener('click', function () {
+        dropdownMenu.classList.toggle('hidden');
+    });
+
+    mobileMenuButton?.addEventListener('click', function () {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // Close Dropdown
+    window.onclick = function(event) {
+        if (!dropdownButton?.contains(event.target)) {
+            dropdownMenu.classList.add('hidden');
+        }
+        if (!mobileMenuButton?.contains(event.target) && !mobileMenu.contains(event.target)) {
+            mobileMenu.classList.add('hidden');
+        }
+    }
+</script>

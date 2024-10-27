@@ -1,4 +1,6 @@
-/* Modal styling */
+nav {
+    border: none;
+}/* Modal styling */
 .modal {
     position: fixed;
     top: 0;

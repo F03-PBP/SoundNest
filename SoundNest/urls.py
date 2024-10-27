@@ -1,8 +1,5 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.urls import path, include
-from django.urls import path, include
-from BestDeals.views import best_deals
 
 urlpatterns = [
   
@@ -10,6 +7,7 @@ urlpatterns = [
     path('discussion/', include('Discussions.urls')),
     path('reviews/', include('reviews.urls')),
     path('auth/', include('authentication.urls')),
+    path('WishList/', include('WishList.urls')),
     path('', include('products.urls')),
     path('best-deals/', include('BestDeals.urls')),
 ]
