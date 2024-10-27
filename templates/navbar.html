@@ -100,12 +100,12 @@
     });
 
     // Close Dropdown
-    // window.onclick = function(event) {
-    //     if (!dropdownButton?.contains(event.target)) {
-    //         dropdownMenu.classList.add('hidden');
-    //     }
-    //     if (!mobileMenuButton?.contains(event.target) && !mobileMenu.contains(event.target)) {
-    //         mobileMenu.classList.add('hidden');
-    //     }
-    // }
+    window.onclick = function(event) {
+        if (!dropdownButton?.contains(event.target)) {
+            dropdownMenu.classList.add('hidden');
+        }
+        if (!mobileMenuButton?.contains(event.target) && !mobileMenu.contains(event.target)) {
+            mobileMenu.classList.add('hidden');
+        }
+    }
 </script>

@@ -161,30 +161,7 @@
 <!-- ################# -->
 
   <script>
-    var username = document.getElementById('dropdownButton').getAttribute('data-username'); // Mendapatkan username user yang sedang login
-    console.log(username);
-    var dropdownMenu = document.getElementById('dropdownMenu');
-    console.log("tes1");
-    console.log(dropdownMenu);
-    console.log("tes1");
-    var dropdownButton = document.getElementById('dropdownButton');
-    console.log("tes");
-    console.log(dropdownButton);
-    console.log("tes");
-    var mobileMenu = document.getElementById('mobileMenu');
-    var mobileMenuButton = document.getElementById('mobileMenuButton');
     
-    document.getElementById('dropdownButton').addEventListener('click', function () {
-      console.log("masuk");
-        if (username){
-            console.log("Masuk 2");
-            if (dropdownMenu.classList.contains('hidden')) {
-                dropdownMenu.classList.remove('hidden');
-            } else {
-                dropdownMenu.classList.add('hidden');
-            }
-        }
-    });
 
     document.getElementById('mobileMenuButton').addEventListener('click', function () {
         if (username){
@@ -233,14 +210,31 @@
     return cookieValue;
 }
     function deleteProduct(productId) {
-    fetch(/WishList/delete/${productId}/, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken')
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+      fetch(`/WishList/delete/${productId}/`, {
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': csrfToken
           },
-      }
-    ).then(response => renderProducts(currentPage));
+      })
+      .then(response => {
+          if (!response.ok) {
+              // Jika tidak OK, tangkap respons sebagai teks dan log
+              return response.text().then(text => {
+                  throw new Error(`Request failed with status ${response.status}: ${text}`);
+              });
+          }
+          return response.json(); // Jika OK, parse sebagai JSON
+      })
+      .then(data => {
+          console.log('Product deleted successfully:', data);
+          renderProducts(currentPage);
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
     }
     let currentPage = 1;
     const productsPerPage = 6;
