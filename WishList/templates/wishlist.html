@@ -209,13 +209,30 @@
       const data = await response.json();
       return data;
     }
+    function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Periksa apakah cookie saat ini adalah cookie yang kita cari
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
     function deleteProduct(productId) {
     fetch(`/WishList/delete/${productId}/`, {
         method: 'DELETE',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
           },
-      });
+      }
+    ).then(response => renderProducts(currentPage));
     }
     let currentPage = 1;
     const productsPerPage = 6;

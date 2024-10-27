@@ -46,6 +46,8 @@ def tambah_wishlist_ajax(request):
         return JsonResponse({'status': 'error', 'message': 'Form tidak valid.'}, status=400)
     return JsonResponse({'status': 'error', 'message': 'Invalid request.'}, status=400)
 
+@csrf_exempt
+@login_required
 def delete_wish(request, id):
     wishlist = WishlistItem.objects.get(pk = id)
     wishlist.delete()
@@ -58,15 +60,20 @@ def add_product_entry_ajax(request):
     product_id = request.POST.get('produk')
     new_product = Product.objects.get(id=product_id)
     quantity = request.POST.get("quantity")
-    #user = request.user
+    user = request.user
     date = str(datetime.datetime.now())
     
     new_wishlist = WishlistItem(
-        # user = user,
+        user = user,
         produk = new_product,
         jumlah = quantity,
         date_added = date
     )
     new_wishlist.save()
+
+    if request.method == 'POST':
+        return JsonResponse({'status': 'success'})
+    else:
+        return JsonResponse({'status': 'failed'}, status=400)
 
 
