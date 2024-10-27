@@ -63,4 +63,4 @@ class DiscussionViewsTest(TestCase):
             'content': 'This is a test comment.'
         })
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'This is a tests comment.')
+        self.assertContains(response, 'This is a test comment.')
