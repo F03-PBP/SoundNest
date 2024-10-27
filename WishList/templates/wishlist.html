@@ -326,7 +326,7 @@ function deleteProduct(productId) {
         console.log(products);
         wishlistsToDisplay.forEach(wishlist => {
           const key_product = wishlist.fields.produk;
-          total_price += wishlist.fields.price;
+          total_price += wishlist.fields.price*wishlist.fields.jumlah;
           let productName = wishlist.fields.nama_produk;
           const wishlist_product = getProductEntryById(key_product);
               const key_wishlist = wishlist.pk;

@@ -12,7 +12,7 @@ from django.core import serializers
 from django.http import HttpResponseRedirect
 from django.utils.html import strip_tags
 from django.views.decorators.http import require_POST
-
+@login_required
 def view_wishlist(request):
     context = {
         'npm' : '911',
@@ -26,7 +26,7 @@ def get_product_json(request):
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def get_wishlist_json(request):
-    data = WishlistItem.objects.all() # for now .all karena belum ada login loginan segala
+    data = WishlistItem.objects.filter(user= request.user) # for now .all karena belum ada login loginan segala
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def get_product_json_by_id(request, id):
