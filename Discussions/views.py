@@ -13,7 +13,7 @@ def create_thread(request):
             return JsonResponse({'id': thread.id, 'title': thread.title, 'content': thread.content, 'created_at': thread.created_at.strftime('%Y-%m-%d %H:%M:%S')})
     else:
         form = DiscussionThreadForm()
-    return render(request, 'Discussions/create_thread.html', {'form': form})
+    return render(request, 'create_thread.html', {'form': form})
 
 def add_comment(request, thread_id):
     thread = DiscussionThread.objects.get(id=thread_id)
@@ -26,8 +26,8 @@ def add_comment(request, thread_id):
             return JsonResponse({'content': comment.content, 'created_at': comment.created_at.strftime('%Y-%m-%d %H:%M:%S')})
     else:
         form = DiscussionCommentForm()
-    return render(request, 'Discussions/add_comment.html', {'form': form, 'thread': thread})
+    return render(request, 'add_comment.html', {'form': form, 'thread': thread})
 
 def view_threads(request):
     threads = DiscussionThread.objects.all()
-    return render(request, 'Discussions/view_threads.html', {'threads': threads})
+    return render(request, 'view_threads.html', {'threads': threads})
