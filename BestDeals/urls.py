@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import best_deals, add_to_deals, edit_deals, delete_deals, show_json  # Import the view
 
+app_name = 'BestDeals'
+
 urlpatterns = [
     path('', best_deals, name='best_deals'),  # URL for best deals
     path('add-to-deals/', add_to_deals, name='add_to_deals'),

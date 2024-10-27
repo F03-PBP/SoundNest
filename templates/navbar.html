@@ -2,7 +2,7 @@
 <nav class="border-b border-gray-300 bg-white h-25">
     <div class="max-w-screen mx-auto py-4 px-6 md:px-12 h-full">
         <div class="flex justify-between items-center h-full">
-            <a href="/" class="flex items-center font-bold">
+            <a href="{% url 'BestDeals:best_deals' %}" class="flex items-center font-bold">
                 <img src="{% static 'images/logo.webp' %}" alt="Soundnest Logo" class="h-10 w-auto mr-1">
                 SOUNDNEST
             </a>
@@ -18,7 +18,7 @@
 
             <!-- Desktop Menu -->
             <ul class="hidden md:flex items-center justify-center flex-grow space-x-8">
-                <a href="/"><li>Home</li></a>
+                <a href="{% url 'BestDeals:best_deals' %}"><li>Home</li></a>
                 <a href="{% url 'products:home' %}"><li>Products</li></a>
                 <a href="{% url 'Discussions:view_threads' %}"><li>Discussions</li></a>
                 <a href="/best-deals"><li>Best Deals</li></a>
@@ -43,27 +43,29 @@
     </div>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="hidden md:hidden bg-gray-100 text-md text-gray-700 px-6 pt-4 pb-6">
+    <div id="mobileMenu" class="hidden md:hidden bg-[#F9F1E7] text-md text-gray-700 px-6 pt-4 pb-6">
         <ul class="flex flex-col items-center justify-center space-y-3 text-center">
             <li class="w-full">
-                <a href="/" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Home</a>
+                <a href="{% url 'BestDeals:best_deals' %}" class="block hover:bg-white rounded-lg py-2">Home</a>
             </li>
 
             <li class="w-full">
-                <a href="{% url 'products:home' %}" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Products</a>
+                <a href="{% url 'products:home' %}" class="block hover:bg-white rounded-lg py-2">Products</a>
             </li>
 
             <li class="w-full">
-                <a href="{% url 'Discussions:view_threads' %}" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Discussions</a>
+                <a href="{% url 'Discussions:view_threads' %}" class="block hover:bg-white rounded-lg py-2">Discussions</a>
             </li>
 
-            <li class="w-full">
-                <a href="{% url 'WishList:view_wishlist' %}" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Wish List</a>
-            </li>
             <!-- Profile Icon (Mobile) -->
-            {% if user.is_authenticated %}
+            <li class="w-full">
+                {% if user.is_authenticated %}
                 <li class="w-full">
-                    <a href="/profile" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Profile</a>
+                    <a href="{% url 'WishList:view_wishlist' %}" class="block hover:bg-white rounded-lg py-2">Wish List</a>
+                </li>
+
+                <li class="w-full">
+                    <a href="/profile" class="block hover:bg-white rounded-lg py-2">Profile</a>
                 </li>
 
                 <li class="w-full">
@@ -71,7 +73,7 @@
                 </li>
             {% else %}
                 <li class="w-full">
-                    <a href="{% url 'authentication:login_page' %}" class="block bg-white rounded-lg py-2 hover:bg-[#F9F1E7]">Log In</a>
+                    <a href="{% url 'authentication:login_page' %}" class="block bg-white rounded-lg py-2 hover:bg-gray-200">Log In</a>
                 </li>
 
                 <li class="w-full">

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mx-auto p-6">
+        <h1 class="text-4xl font-bold mb-6">Create a New Discussion Thread</h1>
+        <form id="create-thread-form" method="post" class="bg-white shadow-lg rounded-lg p-8">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition">Create Thread</button>
+        </form>
+        <a href="{% url 'Discussions:view_threads' %}" class="text-blue-500 hover:underline mt-4 inline-block">View Discussion Threads</a>
+    </div>
+
+    <script>
+        document.getElementById('create-thread-form').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            const formData = new FormData(this);
+            fetch("{% url 'Discussions:create_thread' %}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                window.location.href = "{% url 'Discussions:view_threads' %}"; 
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+{% endblock content %}

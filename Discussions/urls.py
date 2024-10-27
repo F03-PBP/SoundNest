@@ -1,10 +1,10 @@
 from django.urls import path
-from . import views
+from Discussions.views import *
 
-app_name = 'Discussions'  # Menambahkan app_name untuk namespace
+app_name = 'Discussions' 
 
 urlpatterns = [
-    path('create_thread/', views.create_thread, name='create_thread'),
-    path('add_comment/<int:thread_id>/', views.add_comment, name='add_comment'),
-    path('view_threads/', views.view_threads, name='view_threads'),
+    path('create_thread/', create_thread, name='create_thread'),
+    path('add_comment/<int:thread_id>/', add_comment, name='add_comment'),
+    path('view_threads/', view_threads, name='view_threads'),
 ]
