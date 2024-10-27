@@ -153,6 +153,51 @@
 <!-- ################# -->
 
   <script>
+    var username = document.getElementById('dropdownButton').getAttribute('data-username'); // Mendapatkan username user yang sedang login
+    console.log(username);
+    var dropdownMenu = document.getElementById('dropdownMenu');
+    console.log("tes1");
+    console.log(dropdownMenu);
+    console.log("tes1");
+    var dropdownButton = document.getElementById('dropdownButton');
+    console.log("tes");
+    console.log(dropdownButton);
+    console.log("tes");
+    var mobileMenu = document.getElementById('mobileMenu');
+    var mobileMenuButton = document.getElementById('mobileMenuButton');
+    
+    document.getElementById('dropdownButton').addEventListener('click', function () {
+      console.log("masuk");
+        if (username){
+            console.log("Masuk 2");
+            if (dropdownMenu.classList.contains('hidden')) {
+                dropdownMenu.classList.remove('hidden');
+            } else {
+                dropdownMenu.classList.add('hidden');
+            }
+        }
+    });
+
+    document.getElementById('mobileMenuButton').addEventListener('click', function () {
+        if (username){
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('hidden');
+            }
+        }
+    });
+
+    // Close Dropdown
+    window.onclick = function(event) {
+        if (!dropdownButton.contains(event.target)) {
+            dropdownMenu.classList.add('hidden');
+        }
+
+        if (!mobileMenuButton.contains(event.target)) {
+        mobileMenu.classList.add('hidden');
+    }
+    }
     async function getProductEntries(){
             return fetch("{% url 'WishList:get_product_json' %}").then((res) => res.json())
     }
