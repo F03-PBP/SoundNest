@@ -22,6 +22,8 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('jumlah', models.PositiveIntegerField(default=1)),
                 ('date_added', models.DateTimeField(default=django.utils.timezone.now)),
+                ('price', models.IntegerField()),
+                ('nama_produk', models.CharField(max_length=255)),
                 ('produk', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='products.product')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
