@@ -190,7 +190,7 @@
             return fetch("{% url 'WishList:get_wishlist_json' %}").then((res) => res.json())
     }
     async function getProductEntryById(id){
-      const response = await fetch(`/WishList/json/${id}/`);
+      const response = await fetch(`json/${id}/`);
       const data = await response.json();
       return data;
     }
@@ -209,32 +209,15 @@
     }
     return cookieValue;
 }
-    function deleteProduct(productId) {
-      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-      fetch(`/WishList/delete/${productId}/`, {
-          method: 'DELETE',
-          headers: {
-              'Content-Type': 'application/json',
-              'X-CSRFToken': csrfToken
+function deleteProduct(productId) {
+    fetch(`delete/${productId}/`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
           },
-      })
-      .then(response => {
-          if (!response.ok) {
-              // Jika tidak OK, tangkap respons sebagai teks dan log
-              return response.text().then(text => {
-                  throw new Error(`Request failed with status ${response.status}: ${text}`);
-              });
-          }
-          return response.json(); // Jika OK, parse sebagai JSON
-      })
-      .then(data => {
-          console.log('Product deleted successfully:', data);
-          renderProducts(currentPage);
-      })
-      .catch(error => {
-          console.error('Error:', error);
-      });
+      }
+    ).then(response => renderProducts(currentPage));
     }
     let currentPage = 1;
     const productsPerPage = 6;
