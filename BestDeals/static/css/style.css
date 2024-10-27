@@ -53,3 +53,59 @@
 .product-card.border-blue-500 {
     border: 2px solid #3B82F6;
 }
+
+.product-fade-container {
+    position: relative;
+}
+
+.login-overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.9) 50%, rgba(255, 255, 255, 1) 100%);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.login-message {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    z-index: 20;
+}
+
+.login-message h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+}
+
+.login-message a {
+    display: inline-block;
+    background: #3b82f6;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-top: 1rem;
+}
+
+.login-message a:hover {
+    background: #2563eb;
+}
+
+/* Show overlay and message for non-authenticated users */
+body:not(.user-authenticated) .product-fade-container .login-overlay,
+body:not(.user-authenticated) .product-fade-container .login-message {
+    display: block;
+}

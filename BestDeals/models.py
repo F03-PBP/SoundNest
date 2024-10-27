@@ -40,8 +40,6 @@ class Sale(models.Model):
         """
         return timezone.localtime() < self.sale_end_time
 
-    def __str__(self):
-        return f'{self.product.name} - {self.discount_percentage}% off'
 
 # # User Interaction Model (optional)
 # class UserInteraction(models.Model):
