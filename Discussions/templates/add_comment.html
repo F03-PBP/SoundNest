@@ -1,20 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Comment</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100">
+{% extends 'base.html' %}
+
+{% block content %}
     <div class="container mx-auto p-6">
         <h1 class="text-3xl font-bold mb-4">Add a Comment to "{{ thread.title }}"</h1>
-        <form method="post" class="bg-white shadow-lg rounded-lg p-6">
+        <form id="add-comment-form" method="post" class="bg-white shadow-lg rounded-lg p-6">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition">Add Comment</button>
         </form>
         <a href="{% url 'view_threads' %}" class="text-blue-500 hover:underline mt-4 inline-block">View Discussion Threads</a>
     </div>
-</body>
-</html>
+
+    <script>
+        document.getElementById('add-comment-form').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            const formData = new FormData(this);
+            fetch("{% url 'add_comment' thread.id %}", {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest' 
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                const commentsList = document.querySelector('.comments-list');
+                const newComment = document.createElement('li');
+                newComment.className = 'text-gray-600';
+                newComment.innerHTML = `${data.content} (${data.created_at})`;
+                commentsList.appendChild(newComment);
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+{% endblock content %}
