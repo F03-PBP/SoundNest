@@ -41,27 +41,28 @@
     </div>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="hidden md:hidden bg-gray-100 text-md text-gray-700 px-6 pt-4 pb-6">
+    <div id="mobileMenu" class="hidden md:hidden bg-[#F9F1E7] text-md text-gray-700 px-6 pt-4 pb-6">
         <ul class="flex flex-col items-center justify-center space-y-3 text-center">
             <li class="w-full">
-                <a href="/" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Home</a>
+                <a href="/" class="block hover:bg-white rounded-lg py-2">Home</a>
             </li>
 
             <li class="w-full">
-                <a href="{% url 'products:home' %}" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Products</a>
+                <a href="{% url 'products:home' %}" class="block hover:bg-white rounded-lg py-2">Products</a>
             </li>
 
             <li class="w-full">
-                <a href="{% url 'Discussions:view_threads' %}" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Discussions</a>
+                <a href="{% url 'Discussions:view_threads' %}" class="block hover:bg-white rounded-lg py-2">Discussions</a>
             </li>
 
-            <li class="w-full">
-                <a href="{% url 'WishList:view_wishlist' %}" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Wish List</a>
-            </li>
             <!-- Profile Icon (Mobile) -->
             {% if user.is_authenticated %}
                 <li class="w-full">
-                    <a href="/profile" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Profile</a>
+                    <a href="{% url 'WishList:view_wishlist' %}" class="block hover:bg-white rounded-lg py-2">Wish List</a>
+                </li>
+
+                <li class="w-full">
+                    <a href="/profile" class="block hover:bg-white rounded-lg py-2">Profile</a>
                 </li>
 
                 <li class="w-full">
@@ -69,7 +70,7 @@
                 </li>
             {% else %}
                 <li class="w-full">
-                    <a href="{% url 'authentication:login_page' %}" class="block bg-white rounded-lg py-2 hover:bg-[#F9F1E7]">Log In</a>
+                    <a href="{% url 'authentication:login_page' %}" class="block bg-white rounded-lg py-2 hover:bg-gray-200">Log In</a>
                 </li>
 
                 <li class="w-full">

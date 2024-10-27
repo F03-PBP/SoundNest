@@ -91,8 +91,8 @@
         </div>
         <!-- Modal footer -->
         <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end">
-          <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg" id="cancelButton">Cancel</button>
-          <button type="submit" id="submitProductEntry" form="productEntryForm" class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg">Save</button>
+          <button type="button" class="bg-gray-200 hover:bg-gray-600 text-black hover:text-white font-bold py-2 px-4 rounded-lg" id="cancelButton">Cancel</button>
+          <button type="submit" id="submitProductEntry" form="productEntryForm" class="bg-[#F9F1E7] hover:bg-[#362417] text-black hover:text-white font-bold py-2 px-4 rounded-lg">Save</button>
         </div>
       </div>
     </div>
@@ -120,34 +120,36 @@
 
   <br>
   <br>
-  <div class="bg-[#FAF3EA] h-[220px] flex items-center justify-center px-4 space-x-24">
+  <div class="w-full bg-[#FAF3EA] py-16 flex flex-col md:flex-row justify-center items-center px-4 md:space-x-8 lg:space-x-24 max-md:space-y-16">
     <!-- High Quality -->
-    <div class="flex items-center space-x-4">
-        <img src="{% static 'images/pic1.webp' %}" alt="High Quality" class="h-12">
-        <div class="text-left">
-            <p class="font-semibold text-lg">High Quality</p>
-            <p class="text-gray-500">crafted from top materials</p>
-        </div>
+    <div class="flex justify-center space-x-4">
+      <img src="{% static 'images/pic1.webp' %}" alt="High Quality" class="h-12">
+      <div class="text-center">
+        <p class="font-semibold text-lg">High Quality</p>
+        <p class="text-gray-500">crafted from top materials</p>
+      </div>
     </div>
     
     <!-- Warranty Protection -->
-    <div class="flex items-center space-x-4">
-        <img src="{% static 'images/pic2.webp' %}" alt="Warranty Protection" class="h-12">
-        <div class="text-left">
-            <p class="font-semibold text-lg">Warranty Protection</p>
-            <p class="text-gray-500">Over 2 years</p>
-        </div>
+    <div class="flex justify-center space-x-4">
+      <img src="{% static 'images/pic2.webp' %}" alt="Warranty Protection" class="h-12">
+      <div class="text-center">
+        <p class="font-semibold text-lg">Warranty Protection</p>
+        <p class="text-gray-500">Over 2 years</p>
+      </div>
     </div>
 
     <!-- 24/7 Support -->
-    <div class="flex items-center space-x-4">
-        <img src="{% static 'images/pic3.webp' %}" alt="24/7 Support" class="h-12">
-        <div class="text-left">
-            <p class="font-semibold text-lg">24/7 Support</p>
-            <p class="text-gray-500">Dedicated support</p>
-        </div>
+    <div class="flex justify-center space-x-4">
+      <img src="{% static 'images/pic3.webp' %}" alt="24/7 Support" class="h-12">
+      <div class="text-center">
+        <p class="font-semibold text-lg">24/7 Support</p>
+        <p class="text-gray-500">Dedicated support</p>
+      </div>
     </div>
   </div>
+
+  {% include 'footer.html' %}
 <!-- ################# -->
 <!-- ################# -->
 <!-- ################# -->
