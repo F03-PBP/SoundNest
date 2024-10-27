@@ -39,16 +39,3 @@ class Sale(models.Model):
         Checks if the sale is still active.
         """
         return timezone.localtime() < self.sale_end_time
-
-
-# # User Interaction Model (optional)
-# class UserInteraction(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-#     reminder_time = models.DateTimeField(null=True, blank=True)
-#     notified = models.BooleanField(default=False)
-
-#     def __str__(self):
-#         return f'{self.user.username} - {self.product.name} interaction'
-
-
