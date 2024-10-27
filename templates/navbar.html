@@ -23,18 +23,32 @@
                 <a href="{% url 'Discussions:view_threads' %}"><li>Discussions</li></a>
             </ul>
 
-            <div class="hidden md:flex items-center space-x-6 ml-12">
-                {% if user.is_authenticated  %}
+            <div class="hidden md:flex items-center space-x-6 ml-12 relative">
+                {% if user.is_authenticated %}
                     <a href="{% url 'WishList:view_wishlist' %}">
                         <img src="{% static 'images/wishicon.webp' %}" alt="My Wishlist" class="h-6 w-7">
                     </a>
-                    <a href="/profile">
-                        <img src="{% static 'images/profile.webp' %}" alt="My Profile" class="h-7 w-8">
-                    </a>
+
+                    <!-- Profile Icon with Dropdown -->
+                    <div class="relative">
+                        <button id="profileButton" class="focus:outline-none">
+                            <img src="{% static 'images/profile.webp' %}" alt="My Profile" class="h-7 w-8">
+                        </button>
+                        <!-- Dropdown Menu -->
+                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg">
+                            <div class="px-4 py-2">
+                                <p class="text-gray-700 font-semibold">{{ user.username }}</p>
+                                <p class="text-sm text-gray-500">Last login: {{ user.last_login|date:"Y-m-d H:i" }}</p>
+                            </div>
+                            <hr class="border-t border-gray-200">
+                            <a href="{% url 'authentication:logout' %}" class="block px-4 py-2 text-red-600 hover:bg-gray-100">
+                                Logout
+                            </a>
+                        </div>
+                    </div>
                 {% else %}
                     <a href="{% url 'authentication:login_page' %}" class="text-gray-700">Log In</a>
                     <a href="{% url 'authentication:register_page' %}" class="bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white px-4">Register</a>
-
                 {% endif %}
             </div>
         </div>
@@ -58,17 +72,10 @@
             <li class="w-full">
                 <a href="{% url 'WishList:view_wishlist' %}" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Wish List</a>
             </li>
-            <!-- Profile Icon (Mobile) -->
-            <li class="w-full">
-                {% if user.is_authenticated %}
+            {% if user.is_authenticated %}
                 <li class="w-full">
-                    <a href="{% url 'WishList:view_wishlist' %}" class="block hover:bg-white rounded-lg py-2">Wish List</a>
+                    <p class="text-gray-900">Last login: {{ user.last_login|date:"Y-m-d H:i" }}</p>
                 </li>
-
-                <li class="w-full">
-                    <a href="/profile" class="block hover:bg-white rounded-lg py-2">Profile</a>
-                </li>
-
                 <li class="w-full">
                     <a href="{% url 'authentication:logout' %}" class="block bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white">Logout</a>
                 </li>
@@ -76,12 +83,10 @@
                 <li class="w-full">
                     <a href="{% url 'authentication:login_page' %}" class="block bg-white rounded-lg py-2 hover:bg-gray-200">Log In</a>
                 </li>
-
                 <li class="w-full">
                     <a href="{% url 'authentication:register_page' %}" class="block bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white">Register</a>
                 </li>
             {% endif %}
-        
         </ul>
     </div>
 </nav>
@@ -91,6 +96,8 @@
     var dropdownButton = document.getElementById('dropdownButton');
     var mobileMenu = document.getElementById('mobileMenu');
     var mobileMenuButton = document.getElementById('mobileMenuButton');
+    var profileButton = document.getElementById('profileButton');
+    var profileDropdown = document.getElementById('profileDropdown');
 
     dropdownButton?.addEventListener('click', function () {
         dropdownMenu.classList.toggle('hidden');
@@ -100,6 +107,11 @@
         mobileMenu.classList.toggle('hidden');
     });
 
+    profileButton?.addEventListener('click', function (event) {
+        event.stopPropagation();  // Prevent the click from closing the dropdown
+        profileDropdown.classList.toggle('hidden');
+    });
+
     // Close Dropdown
     window.onclick = function(event) {
         if (!dropdownButton?.contains(event.target)) {
@@ -107,6 +119,9 @@
         }
         if (!mobileMenuButton?.contains(event.target) && !mobileMenu.contains(event.target)) {
             mobileMenu.classList.add('hidden');
+        }
+        if (!profileButton?.contains(event.target) && !profileDropdown.contains(event.target)) {
+            profileDropdown.classList.add('hidden');
         }
     }
 </script>
