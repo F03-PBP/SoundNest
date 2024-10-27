@@ -1,0 +1,112 @@
+{% block content %}
+<div id="reviewModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+    <div class="bg-white p-8 rounded-lg flex flex-col items-center justify-center w-[80%] lg:w-[40%]">
+        <div class="star-widget flex flex-col items-center w-full">
+            <div class="flex flex-row justify-center mb-4 space-x space-x-2">
+                <!-- Rating dari 1 - 10 -->
+                {% for _ in ".........."|slice:":10" %}
+                    <input type="radio" name="rate" id="rate-{{ forloop.counter }}" class="hidden">
+                    <label for="rate-{{ forloop.counter }}" class="text-gray-200 text-base md:text-2xl lg:text-4xl cursor-pointer hover:text-yellow-400">&#9733;</label>
+                {% endfor %}
+
+
+            </div>
+
+            <form id="review-form" class="w-full">
+                <input type="hidden" id="product-id" name="product" value="24177050-823e-4a9e-be48-b8649f283e53">
+
+                <div class="textarea mb-4">
+                    <textarea id="review-description" cols="30" rows="3" class="w-full p-3 bg-gray-200 text-black border border-gray-600 rounded-lg focus:outline-none focus:border-white" placeholder="Describe your experience..." style="resize: none; overflow-y: auto;"></textarea>
+                </div>
+                <div class="btn">
+                    <button type="submit" class="w-full py-2 bg-[#705D56] text-white rounded-lg hover:bg-gray-700 uppercase">Post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Memperbarui tampilan bintang berdasarkan rating yang dipilih
+    function updateStarRating(rating) {
+        const stars = document.querySelectorAll('.star-widget label');
+        stars.forEach((star, index) => {
+            if (index < rating) {
+                star.classList.add('text-yellow-400');  // Tambahkan warna kuning untuk bintang yang sesuai dengan rating
+            } else {
+                star.classList.remove('text-yellow-400');  // Hapus warna kuning dari bintang yang tidak terpilih
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.star-widget label').forEach((star, index) => {
+            star.addEventListener('click', () => {
+                updateStarRating(index + 1);  // Ubah rating berdasarkan indeks
+            });
+        });
+
+        document.getElementById('review-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const ratingElement = document.querySelector('input[name="rate"]:checked');
+            const rating = ratingElement ? ratingElement.id.split('-')[1] : null;
+            const description = document.getElementById('review-description').value;
+            const productId = document.getElementById('product-id').value;
+            const csrfToken = '{{ csrf_token }}';
+            const submitButton = e.target.querySelector('button[type="submit"]');
+
+            if (!rating || !description) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please provide both rating and description!',
+                });
+                return;
+            }
+
+            fetch("{% url 'reviews:add_review' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrfToken
+                },
+                body: new URLSearchParams({
+                    'rating': rating,
+                    'description': description,
+                    'product': productId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Review added!',
+                        text: 'Your review has been submitted successfully.',
+                        showConfirmButton: false,
+                        timer: 1000
+                    }).then(() => {
+                        document.getElementById('reviewModal').classList.add('hidden');
+                        location.reload();  // Reload halaman
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.message
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Something went wrong! Please try again.'
+                });
+            })
+        });
+    });
+</script>
+{% endblock content %}
