@@ -82,13 +82,13 @@ class ViewsTests(TestCase):
 
     def test_best_deals_view(self):
         """Test the best deals view"""
-        response = self.client.get(reverse('best_deals'))
+        response = self.client.get(reverse('BestDeals:best_deals'))  # Updated
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'bestdeals.html')
 
     def test_show_json_view(self):
         """Test the JSON data endpoint"""
-        response = self.client.get(reverse('show_json'))
+        response = self.client.get(reverse('BestDeals:show_json'))
         self.assertEqual(response.status_code, 200)
         data = json.loads(response.content)
         self.assertIn('sales', data)
@@ -113,7 +113,7 @@ class ViewsTests(TestCase):
         }
         
         response = self.client.post(
-            reverse('add_to_deals'),
+            reverse('BestDeals:add_to_deals'),  # Updated
             json.dumps(data),
             content_type='application/json'
         )
@@ -129,7 +129,7 @@ class ViewsTests(TestCase):
         }
         
         response = self.client.put(
-            reverse('edit_deals', args=[self.product.id]),
+            reverse('BestDeals:edit_deals', args=[self.product.id]),  # Updated
             json.dumps(data),
             content_type='application/json'
         )
@@ -141,7 +141,7 @@ class ViewsTests(TestCase):
     def test_delete_deals(self):
         """Test deleting a deal"""
         response = self.client.delete(
-            reverse('delete_deals', args=[self.product.id])
+            reverse('BestDeals:delete_deals', args=[self.product.id])  # Updated
         )
         
         self.assertEqual(response.status_code, 200)
@@ -150,31 +150,36 @@ class ViewsTests(TestCase):
 class URLTests(TestCase):
     def setUp(self):
         self.client = Client()
-        self.product_id = uuid.uuid4()
+        self.product = Product.objects.create(
+            product_name="Test Product",
+            price=100,
+            rating=4.5,
+            reviews=10
+        )
 
     def test_url_best_deals(self):
         """Test best deals URL"""
-        url = reverse('best_deals')
-        self.assertEqual(url, '/')
+        url = reverse('BestDeals:best_deals')
+        self.assertEqual(url, '/best-deals/')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_url_add_to_deals(self):
         """Test add to deals URL"""
-        url = reverse('add_to_deals')
-        self.assertEqual(url, '/add-to-deals/')
+        url = reverse('BestDeals:add_to_deals')  # Updated
+        self.assertEqual(url, '/best-deals/add-to-deals/')  # Updated path
 
     def test_url_edit_deals(self):
         """Test edit deals URL"""
-        url = reverse('edit_deals', args=[self.product_id])
-        self.assertEqual(url, f'/edit-deals/{self.product_id}/')
+        url = reverse('BestDeals:edit_deals', args=[self.product.id])  # Updated
+        self.assertEqual(url, f'/best-deals/edit-deals/{self.product.id}/')  # Updated path
 
     def test_url_delete_deals(self):
         """Test delete deals URL"""
-        url = reverse('delete_deals', args=[self.product_id])
-        self.assertEqual(url, f'/delete-deals/{self.product_id}/')
+        url = reverse('BestDeals:delete_deals', args=[self.product.id])  # Updated
+        self.assertEqual(url, f'/best-deals/delete-deals/{self.product.id}/')  # Updated path
 
     def test_url_show_json(self):
         """Test show JSON URL"""
-        url = reverse('show_json')
-        self.assertEqual(url, '/json/')
+        url = reverse('BestDeals:show_json')  # Updated
+        self.assertEqual(url, '/best-deals/json/')  # Updated path
