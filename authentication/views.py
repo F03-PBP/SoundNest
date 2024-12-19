@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpRequest, JsonResponse
 from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 import json
 
 def user_login(request):
@@ -57,12 +58,14 @@ def flutter_login(request: HttpRequest):
     if user is not None:
         if user.is_active:
             login(request, user)
-            # Status login sukses.
+            
+            token, created = Token.objects.get_or_create(user=user)
+            print(token.key)
             return JsonResponse({
                 "username": user.username,
                 "status": True,
-                "message": "Login sukses!"
-                # Tambahkan data lainnya jika ingin mengirim data ke Flutter.
+                "message": "Login sukses!",
+                "token": token.key,
             }, status=200)
         else:
             return JsonResponse({
@@ -103,10 +106,12 @@ def flutter_register(request):
         user = User.objects.create_user(username=username, password=password1)
         user.save()
         
+        token, created = Token.objects.get_or_create(user=user)
         return JsonResponse({
             "username": user.username,
             "status": 'success',
-            "message": "User created successfully!"
+            "message": "User created successfully!",
+            "token": token.key,
         }, status=200)
     
     else:
@@ -117,17 +122,25 @@ def flutter_register(request):
     
 @csrf_exempt
 def flutter_logout(request):
-    username = request.user.username
+    if request.user.is_authenticated:
+        username = request.user.username
 
-    try:
-        logout(request)
+        try:
+            Token.objects.filter(user=request.user).delete()
+
+            logout(request)  # Logout user
+            return JsonResponse({
+                "username": username,
+                "status": True,
+                "message": "Logout berhasil!"
+            }, status=200)
+        except:
+            return JsonResponse({
+                "status": False,
+                "message": "Logout gagal."
+            }, status=401)
+    else:
         return JsonResponse({
-            "username": username,
-            "status": True,
-            "message": "Logout berhasil!"
-        }, status=200)
-    except:
-        return JsonResponse({
-        "status": False,
-        "message": "Logout gagal."
+            "status": False,
+            "message": "User tidak terautentikasi."
         }, status=401)
