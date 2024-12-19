@@ -28,13 +28,25 @@
                     <a href="{% url 'WishList:view_wishlist' %}">
                         <img src="{% static 'images/wishicon.webp' %}" alt="My Wishlist" class="h-6 w-7">
                     </a>
-                    <a href="#" id="profile-button">
-                        <img src="{% static 'images/profile.webp' %}" alt="My Profile" class="h-7 w-8">
-                    </a>
-                    <div id="logout-popover" class="popover hidden">
-                        <a href="{% url 'authentication:logout' %}" class="bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white px-4">Logout</a>
+
+                    <!-- Profile Icon with Dropdown -->
+                    <div class="relative">
+                        <button id="profileButton" class="focus:outline-none">
+                            <img src="{% static 'images/profile.webp' %}" alt="My Profile" class="h-7 w-8">
+                        </button>
+                        <!-- Dropdown Menu -->
+                        <div id="profileDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg">
+                            <div class="px-4 py-2">
+                                <p class="text-gray-700 font-semibold">{{ user.username }}</p>
+                                <p class="text-sm text-gray-500">Last login: {{ user.last_login|date:"Y-m-d H:i" }}</p>
+                            </div>
+                            <hr class="border-t border-gray-200">
+                            <a href="{% url 'authentication:logout' %}" class="block px-4 py-2 text-red-600 hover:bg-gray-100">
+                                Logout
+                            </a>
+                        </div>
                     </div>
-                {% else %}
+                    {% else %}
                     <a href="{% url 'authentication:login_page' %}" class="text-gray-700">Log In</a>
                     <a href="{% url 'authentication:register_page' %}" class="bg-[#B88E2F] hover:bg-amber-900 rounded-lg py-2 text-white px-4">Register</a>
                 {% endif %}
@@ -57,10 +69,10 @@
                 <a href="{% url 'BestDeals:best_deals' %}" class="block hover:bg-white rounded-lg py-2">Best Deals</a>
             </li>
 
-
-            <!-- Profile Icon (Mobile) -->
             <li class="w-full">
-                {% if user.is_authenticated %}
+                <a href="{% url 'WishList:view_wishlist' %}" class="block hover:bg-[#F9F1E7] rounded-lg py-2">Wish List</a>
+            </li>
+            {% if user.is_authenticated %}
                 <li class="w-full">
                     <p class="text-gray-900">Last login: {{ user.last_login|date:"Y-m-d H:i" }}</p>
                 </li>
@@ -112,21 +124,4 @@
             profileDropdown.classList.add('hidden');
         }
     }
-
-    const profileButton = document.getElementById('profile-button');
-    const logoutPopover = document.getElementById('logout-popover');
-
-    profileButton.addEventListener('click', function(event) {
-        event.preventDefault();
-        logoutPopover.classList.toggle('hidden');
-        logoutPopover.classList.toggle('visible');
-    });
-
-    // Menutup popover jika klik di luar
-    document.addEventListener('click', function(event) {
-        if (!profileButton.contains(event.target) && !logoutPopover.contains(event.target)) {
-            logoutPopover.classList.add('hidden');
-            logoutPopover.classList.remove('visible');
-        }
-    });
 </script>
