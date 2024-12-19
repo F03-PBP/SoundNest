@@ -9,4 +9,5 @@ urlpatterns = [
     path('edit/<uuid:review_id>/', edit_review, name='edit_review'),
     path('delete/<uuid:review_id>/', delete_review, name='delete_review'),
     path('api/', review_list, name='review_list'),
+    path('flutter/show_reviews/<str:product_id>/', show_reviews_flutter, name='show_reviews_flutter'),
 ]
