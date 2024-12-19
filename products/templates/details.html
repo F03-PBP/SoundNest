@@ -8,14 +8,14 @@
 
 {% block content %}
 
-<div class="bg-[#F9F1E7] h-[60px] md:h-[100px] mb-16 flex items-center px-4 w-full">
-    <div class="container mx-auto max-w-screen-xl flex items-center md:ml-12">
+<div class="bg-[#F9F1E7] h-[100px] mb-16 flex items-center px-4 w-full">
+    <div class="container mx-auto max-w-screen-xl flex items-center ml-12">
         <nav class="text-gray-500 text-lg truncate">
-            <a href="/" class="text-gray-400 hover:text-gray-900 text-sm md:text-base">Home &nbsp;</a>
-            <span class="text-gray-700 font-black text-sm md:text-2xl"> &gt; &nbsp;</span>
-            <a href="#" id="products-link" class="text-gray-400 hover:text-gray-900 text-sm md:text-base">Products &nbsp;</a>
-            <span class="text-gray-700 font-black text-sm md:text-2xl"> &gt; &nbsp;</span> 
-            <span class="text-gray-900 font-semibold text-sm md:text-xl">| &nbsp; {{ product.product_name }}</span>
+            <a href="{% url 'BestDeals:best_deals' %}" class="text-gray-400 hover:text-gray-900">Home &nbsp;</a>
+            <span class="text-gray-700 font-black text-2xl"> &gt; &nbsp;</span>
+            <a href="{% url 'products:home' %}" id="products-link" class="text-gray-400 hover:text-gray-900">Products &nbsp;</a>
+            <span class="text-gray-700 font-black text-2xl"> &gt; &nbsp;</span> 
+            <span class="text-gray-900 font-semibold text-xl">| &nbsp; {{ product.product_name }}</span>
         </nav>
     </div>
 </div>
@@ -23,7 +23,7 @@
 <div class="container mx-auto max-w-screen-xl px-4">
     <div class="flex flex-col md:flex-row mt-10 gap-2">
 
-        <div class="md:w-1/4 flex flex-row md:flex-col gap-2 max-md:justify-center">
+        <div class="md:w-1/4 flex flex-col gap-2">
             <img src="{% static 'images/templateimage.webp' %}" alt="Image 1" class="w-20 h-24 cursor-pointer border border-gray-300 rounded-[10px]" onclick="changeMainImage('{% static 'images/templateimage.webp' %}', this)">
             <img src="{% static 'images/altpic1.webp' %}" alt="Image 2" class="w-20 h-24 cursor-pointer border border-gray-300 rounded-[10px]" onclick="changeMainImage('{% static 'images/altpic1.webp' %}', this)">
             <img src="{% static 'images/altpic2.webp' %}" alt="Image 3" class="w-20 h-24 cursor-pointer border border-gray-300 rounded-[10px]" onclick="changeMainImage('{% static 'images/altpic2.webp' %}', this)">
@@ -63,8 +63,8 @@
 
                 <div class="mt-16 mb-20 text-gray-400">
                     <hr class="my-4 border-gray-300">
-                    <pre class="mt-10 text-sm md:text-base">Category : IEM</pre>
-                    <pre class="mt-2 text-sm md:text-base">Tags     : earphones, headphones, audio</pre>
+                    <pre class="mt-10">Category : IEM</pre>
+                    <pre class="mt-2">Tags     : earphones, headphones, audio</pre>
                 </div>
             </div>
         </div>
@@ -88,7 +88,7 @@
 
         $('#wishlist_button').on('click', function(event) {
             event.preventDefault();
-            window.location.href = '/wishlist';
+            window.location.href = '/wishlist/view_wishlist';
         });
     });
 
