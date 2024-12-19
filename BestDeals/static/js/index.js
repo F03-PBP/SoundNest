@@ -414,7 +414,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       
     
-        // Product selection
+    // Product selection
     productList.addEventListener("click", function(e) {
         const card = e.target.closest(".product-card");
         if (!card || !productList.contains(card)) return;
@@ -491,4 +491,4 @@ document.addEventListener("DOMContentLoaded", function () {
     // Apply filter after fetching products
     document.addEventListener("DOMContentLoaded", fetchBestDeals);
 }, { once: true });
-// Add this right after your DOMContentLoaded event
+
