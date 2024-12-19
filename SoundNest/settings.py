@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'BestDeals',
     'WishList',
     'corsheaders',
+    'rest_framework',
+    'rest_framework.authtoken',  
 ]
 
 MIDDLEWARE = [
