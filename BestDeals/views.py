@@ -1,4 +1,5 @@
 # Create your views here.
+
 from django.shortcuts import render, redirect
 from .models import Sale, Product
 from django.http import JsonResponse
