@@ -51,18 +51,17 @@ def user_logout(request):
 # FLUTTER API
 @csrf_exempt
 def flutter_login(request: HttpRequest):
-    print(request.body)
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(username=username, password=password)
     if user is not None:
         if user.is_active:
             login(request, user)
-            
             token, created = Token.objects.get_or_create(user=user)
-            print(token.key)
+
             return JsonResponse({
                 "username": user.username,
+                "is_superuser": user.is_superuser,
                 "status": True,
                 "message": "Login sukses!",
                 "token": token.key,
