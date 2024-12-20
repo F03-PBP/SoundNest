@@ -66,6 +66,7 @@ def flutter_login(request: HttpRequest):
                 "status": True,
                 "message": "Login sukses!",
                 "token": token.key,
+                "is_superuser": user.is_superuser,
             }, status=200)
         else:
             return JsonResponse({

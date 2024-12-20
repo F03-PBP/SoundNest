@@ -23,7 +23,7 @@ def best_deals(request):
 
 def get_deals_data():
     """Helper function to get all deals data"""
-    sales = Sale.objects.filter(sale_end_time__gt=timezone.now())
+    sales = Sale.objects.all()
     top_picks = sales.order_by('-product__rating')
     top_picks_guest = top_picks[:5]
     least_countdown = sales.order_by('sale_end_time')
