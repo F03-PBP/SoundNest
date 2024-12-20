@@ -1,0 +1,375 @@
+{% block content %}
+<div>
+    <div class="relative py-2">
+        <!-- Filter rating dari 1 - 10 -->
+        <select
+            id="rating-filter"
+            class="max-lg:w-full py-2 pl-12 px-5 lg:px-10 rounded-xl appearance-none"
+        >
+            <option value="all">All Ratings</option>
+            <option value="1">&#9733; 1 (Poor)</option>
+            <option value="2">&#9733; 2 (Fair)</option>
+            <option value="3">&#9733; 3 (Average)</option>
+            <option value="4">&#9733; 4 (Good)</option>
+            <option value="5">&#9733; 5 (Very Good)</option>
+            <option value="6">&#9733; 6 (Excellent)</option>
+            <option value="7">&#9733; 7 (Outstanding)</option>
+            <option value="8">&#9733; 8 (Amazing)</option>
+            <option value="9">&#9733; 9 (Super)</option>
+            <option value="10">&#9733; 10 (Perfect)</option>
+        </select>
+
+        <div
+            class="absolute inset-y-0 left-2 flex items-center px-2 pointer-events-none"
+        >
+            <svg
+                class="w-4 h-4 fill-current text-black"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+            >
+                <path d="M5.5 7l4.5 4.5L14.5 7h-9z" />
+            </svg>
+        </div>
+    </div>
+
+    <div class="mx-auto w-full mt-10">
+        <div class="space-y-1" id="reviews-list">
+            {% if reviews %} {% for review in reviews %}
+            <div
+                class="bg-white p-6 rounded-lg review-item"
+                data-rating="{{ review.rating }}"
+            >
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <div
+                            class="w-12 h-12 bg-[#0A014F] text-white flex items-center justify-center rounded-full mr-4"
+                        >
+                            <span class="text-xl font-bold"
+                                >{{ review.user_initials }}</span
+                            >
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-black">
+                                {{ review.user_name }}
+                            </h3>
+                            <p class="text-sm text-gray-500">
+                                {{ review.updated_at }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        {% if user.is_staff %}
+                        <button
+                            class="delete-review"
+                            data-review-id="{{ review.id }}"
+                        >
+                            Delete
+                        </button>
+                        {% if review.user_id == user.id %}
+                        <button
+                            class="text-blue-600 edit-review"
+                            data-review-id="{{ review.id }}"
+                        >
+                            Edit
+                        </button>
+                        {% endif %} {% else %} {% if review.user_id == user.id %}
+                        <button
+                            class="delete-review"
+                            data-review-id="{{ review.id }}"
+                        >
+                            Delete
+                        </button>
+                        <button
+                            class="text-blue-600 edit-review"
+                            data-review-id="{{ review.id }}"
+                        >
+                            Edit
+                        </button>
+                        {% endif %} {% endif %}
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <div class="inline-flex items-center">
+                        {% for star in review.stars %}
+                        <div class="text-[#E7B66B]">&#9733;</div>
+                        {% endfor %} {% for empty_star in review.empty_stars %}
+                        <div class="text-gray-200">&#9733;</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <p class="mt-4 text-gray-700">{{ review.description }}</p>
+            </div>
+            {% endfor %} {% else %}
+            <div class="flex justify-center">No reviews available.</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div
+        id="editReviewModal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center"
+    >
+        <div
+            class="bg-white p-8 rounded-lg flex flex-col items-center justify-center w-[80%] lg:w-[40%]"
+        >
+            <div class="star-widget flex flex-col items-center w-full">
+                <div
+                    class="flex flex-row justify-center mb-4 space-x space-x-2"
+                >
+                    <!-- Rating dari 1 - 10 -->
+                    {% for _ in ".........."|slice:":10" %}
+                    <input
+                        type="radio"
+                        name="edit-rate"
+                        id="edit-rate-{{ forloop.counter }}"
+                        value="{{ forloop.counter }}"
+                        class="hidden"
+                    />
+                    <label
+                        for="edit-rate-{{ forloop.counter }}"
+                        class="text-gray-200 text-base md:text-2xl lg:text-4xl cursor-pointer hover:text-yellow-400"
+                        >&#9733;</label
+                    >
+                    {% endfor %}
+                </div>
+
+                <form id="edit-review-form" class="w-full">
+                    <input
+                        type="hidden"
+                        id="edit-review-id"
+                        name="edit-review-id"
+                    />
+                    <input
+                        type="hidden"
+                        id="edit-product-id"
+                        value="24177050-823e-4a9e-be48-b8649f283e53"
+                    />
+
+                    <div class="textarea mb-4">
+                        <textarea
+                            id="edit-review-description"
+                            cols="30"
+                            rows="3"
+                            class="w-full p-3 bg-gray-200 text-black border border-gray-600 rounded-lg focus:outline-none focus:border-white"
+                            placeholder="Describe your experience..."
+                            style="resize: none; overflow-y: auto"
+                        ></textarea>
+                    </div>
+                    <div class="btn">
+                        <button
+                            type="submit"
+                            class="w-full py-2 bg-[#705D56] text-white rounded-lg hover:bg-gray-700 uppercase"
+                        >
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // DELETE
+    document.querySelectorAll(".delete-review").forEach((button) => {
+        button.addEventListener("click", function () {
+            const reviewId = this.getAttribute("data-review-id");
+
+            fetch(`/reviews/delete/${reviewId}/`, {
+                method: "DELETE",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        return response.json().then((data) => {
+                            throw new Error(
+                                data.message ||
+                                    `HTTP error! status: ${response.status}`
+                            );
+                        });
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log("Server response:", data);
+                    if (data.success) {
+                        const reviewElement = document.querySelector(
+                            `.review-item[data-review-id="${reviewId}"]`
+                        );
+                        if (reviewElement) {
+                            reviewElement.remove();
+                        }
+                        location.reload();
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: data.message,
+                        });
+                    }
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Error deleting review: " + error.message,
+                    });
+                });
+        });
+    });
+
+    // Filter review berdasarkan rating
+    document
+        .getElementById("rating-filter")
+        .addEventListener("change", function () {
+            const selectedRating = this.value;
+            const reviews = document.querySelectorAll(".review-item");
+
+            reviews.forEach((review) => {
+                const reviewRating = review.getAttribute("data-rating");
+
+                if (
+                    selectedRating === "all" ||
+                    reviewRating === selectedRating
+                ) {
+                    review.style.display = "block";
+                } else {
+                    review.style.display = "none";
+                }
+            });
+        });
+
+    // EDIT GET
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".edit-review").forEach((button) => {
+            button.addEventListener("click", function () {
+                let editReviewId = this.getAttribute("data-review-id");
+                console.log("Review ID setelah klik:", editReviewId);
+
+                if (editReviewId) {
+                    fetch(`/reviews/edit/${editReviewId}/`, {
+                        method: "GET",
+                        headers: {
+                            "X-CSRFToken": "{{ csrf_token }}",
+                            "Content-Type": "application/json",
+                        },
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            if (data.success) {
+                                document.getElementById(
+                                    "edit-review-description"
+                                ).value = data.review.description;
+                                const ratingElement = document.querySelector(
+                                    `input[name="edit-rate"][id="edit-rate-${data.review.rating}"]`
+                                );
+                                if (ratingElement) {
+                                    ratingElement.checked = true;
+                                }
+                                document.getElementById("edit-review-id").value =
+                                    editReviewId;
+                                document.getElementById("edit-product-id").value =
+                                    data.review.product;
+
+                                // Tampilkan modal
+                                document
+                                    .getElementById("editReviewModal")
+                                    .classList.remove("hidden");
+                                document
+                                    .getElementById("editReviewModal")
+                                    .classList.add("flex");
+                            } else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error",
+                                    text: data.message,
+                                });
+                            }
+                        })
+                        .catch((error) => {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error",
+                                text: "Failed to fetch review data.",
+                            });
+                        });
+                } else {
+                    console.error("Review ID tidak ditemukan.");
+                }
+            });
+        });
+    });
+
+    // EDIT POST
+    document
+        .getElementById("edit-review-form")
+        .addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const editReviewId =
+                document.getElementById("edit-review-id").value; // Ambil ID dari hidden input
+            const description = document.getElementById(
+                "edit-review-description"
+            ).value;
+            const rating = document.querySelector(
+                'input[name="edit-rate"]:checked'
+            ).value;
+
+            if (!editReviewId || !description || !rating) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Please complete the form before submitting.",
+                });
+                return;
+            }
+
+            // Menyusun URL secara manual dengan UUID
+            fetch(`/reviews/edit/${editReviewId}/`, {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    rating: rating,
+                    description: description,
+                }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Review updated!",
+                            text: "Your review has been updated successfully.",
+                            showConfirmButton: false,
+                            timer: 1000,
+                        }).then(() => {
+                            document
+                                .getElementById("editReviewModal")
+                                .classList.add("hidden");
+                            location.reload(); // Reload halaman setelah submit berhasil
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: data.message,
+                        });
+                    }
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Something went wrong. Please try again.",
+                    });
+                });
+        });
+</script>
+{% endblock content %}

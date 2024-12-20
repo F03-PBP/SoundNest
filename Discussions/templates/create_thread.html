@@ -1,33 +1,58 @@
+<!-- Discussions/templates/create_thread.html -->
+
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container mx-auto p-6">
-        <h1 class="text-4xl font-bold mb-6">Create a New Discussion Thread</h1>
-        <form id="create-thread-form" method="post" class="bg-white shadow-lg rounded-lg p-8">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition">Create Thread</button>
-        </form>
-        <a href="{% url 'view_threads' %}" class="text-blue-500 hover:underline mt-4 inline-block">View Discussion Threads</a>
-    </div>
+<div class="container mx-auto p-6 h-screen">
+    <h1 class="text-4xl font-bold mb-6">Create a New Discussion Thread</h1>
+    <form id="create-thread-form" method="post" class="bg-white shadow-lg rounded-lg p-8">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="mb-4">
+            <label for="product_id" class="block text-gray-700 font-bold mb-2">Product ID (Optional):</label>
+            <input type="number" id="product_id" name="product_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter Product ID (optional)">
+        </div>
+        <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700 transition">
+            Create Thread
+        </button>
+    </form>
+    <a href="{% url 'Discussions:view_threads' %}" class="text-blue-500 hover:underline mt-4 inline-block">
+        View Discussion Threads
+    </a>
+</div>
 
-    <script>
-        document.getElementById('create-thread-form').addEventListener('submit', function(event) {
-            event.preventDefault(); 
-            const formData = new FormData(this);
-            fetch("{% url 'create_thread' %}", {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                window.location.href = "{% url 'view_threads' %}"; 
-            })
-            .catch(error => console.error('Error:', error));
+<script>
+    document.getElementById('create-thread-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+
+        // Include CSRF token
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        formData.append('csrfmiddlewaretoken', csrfToken);
+
+        fetch("{% url 'Discussions:create_thread' %}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to create thread");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Thread created:", data);
+
+            // Redirect to view_threads after success
+            window.location.href = "{% url 'Discussions:view_threads' %}";
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Error creating thread: " + error.message);
         });
-    </script>
+    });
+</script>
 {% endblock content %}

@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Best Deals</title>
+
+{% endblock %}
+{% block framework %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<div class="relative h-[316px] relative z-[-10] w-full bg-cover bg-center" style="background-image: url('{% static 'images/header-image.webp' %}');">
+    <div class="absolute inset-0 bg-white opacity-20"></div>
+    <div class="absolute inset-0 backdrop-blur-sm"></div>
+    <div class="relative flex flex-col items-center justify-center h-full text-white">
+        <h1 class="text-[48px] font-semibold text-black">BestDeals</h1>
+        
+    </div>
+</div>
+
+<body data-is-staff="{% if user.is_staff %}true{% else %}false{% endif %}"></body>
+<div class="container mx-auto px-4">
+    <h1 id="bestDealsHeader" class="text-4xl font-extrabold text-left text-gray-800 mb-6 font-sans opacity-0 translate-x-[-50px] transition-opacity duration-500 ease-in-out">
+        Best Deals
+    </h1>
+
+   
+    {% if user.is_authenticated and  user.is_staff%}
+    <button id="addToDealsBtn" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" type="button">
+        Add to Deals
+    </button>
+    {% endif %}
+    <div class="filter-container mb-4">
+        <label for="discountFilter" class="text-gray-700 font-semibold">Filter By Discount:</label>
+        <select id="discountFilter" class="border p-2 rounded">
+            <option value="all">All</option>
+            <option value="lt25">Less than 25%</option>
+            <option value="25-50">25% - 50%</option>
+            <option value="50-75">50% - 75%</option>
+            <option value="gt75">Greater than 75%</option>
+        </select>
+    </div>
+    
+    <!-- add to deals modal -->
+    <!-- Add to Deals Modal -->
+    <div id="addToDealsModal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-[calc(100%-1rem)] max-h-full overflow-y-auto">
+        <div class="relative p-4 w-full max-w-lg">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                        Choose a product to be added
+                    </h3>
+                    <button id="closeAddModalBtn" type="button" class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-2 dark:hover:bg-gray-600 dark:hover:text-white">
+                        <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" aria-hidden="true">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1l6 6m0 0l6 6M7 7L1 13m6-6L13 1"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Product Cards Container -->
+                <div id="productList" class="p-4 space-y-4 overflow-y-auto max-h-60">
+                    
+                </div>
+
+                <!-- Form for Selected Product -->
+                <div class="p-4 border-t dark:border-gray-600">
+                    <form id="addProductForm" class="space-y-4" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" id="productId" name="product_id">
+
+                        <!-- Discount Percentage -->
+                        <div>
+                            <label for="discount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discount (%)</label>
+                            <input type="number" id="discount" name="discount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-600 dark:border-gray-500" required>
+                        </div>
+
+                        
+
+                        <!-- Sale End Date -->
+                        <div>
+                            <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End Date</label>
+                            <input type="datetime-local" id="end_date" name="end_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-600 dark:border-gray-500" required>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="w-full bg-blue-600 text-white font-medium rounded-lg text-sm px-5 py-2.5 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800">Add Product to Deals</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="editDealsModal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-[calc(100%-1rem)] max-h-full overflow-y-auto">
+        <div class="relative p-4 w-full max-w-lg">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal Header -->
+                <div class="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                        Edit Sales
+                    </h3>
+                    <button id="closeEditModalBtn" type="button" class="text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-2 dark:hover:bg-gray-600 dark:hover:text-white">
+                        <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14" aria-hidden="true">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1l6 6m0 0l6 6M7 7L1 13m6-6L13 1"/>
+                        </svg>
+                    </button>
+                </div>
+
+                
+
+                <!-- Form for Selected Product -->
+                <div class="p-4 border-t dark:border-gray-600">
+                    <form id="editDealsForm" class="space-y-4" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" id="productId" name="product_id">
+
+                        <!-- Discount Percentage -->
+                        <div>
+                            <label for="discount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discount (%)</label>
+                            <input type="number" id="editDiscount" name="editDiscount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-600 dark:border-gray-500" required>
+                        </div>
+
+                        
+
+                        <!-- Sale End Date -->
+                        <div>
+                            <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End Date</label>
+                            <input type="datetime-local" id="editEndDate" name="editEndDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-600 dark:border-gray-500" required>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="w-full bg-blue-600 text-white font-medium rounded-lg text-sm px-5 py-2.5 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800">Edit Deals</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+
+   
+    
+    <!-- Display Top Picks (sorted by highest rated) -->
+    <h2 class="text-2xl font-semibold mb-4">Top Picks(sorted by rating)</h2>
+    <div class="product-fade-container mb-10">
+        <div id="topPicksContainer" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        </div>
+        
+        {% if not user.is_authenticated %}
+        <div class="login-overlay"></div>
+        <div class="login-message">
+            <h3>Want to see more deals?</h3>
+            <p>Log in to view all available products and deals!</p>
+            <a href="{% url 'authentication:login_page' %}" class="login-button">Log in now</a>
+        </div>
+        {% endif %}
+    </div>
+     
+    <!-- Display Latest Deals -->
+    <h2 class="text-2xl font-semibold mt-8 mb-4 ">Latest Deals(sorted by time remaining)</h2>
+    <div class="product-fade-container mb-10">
+        <div id="latestDealsContainer" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        </div>
+        
+        {% if not user.is_authenticated %}
+        <div class="login-overlay"></div>
+        <div class="login-message">
+            <h3>Want to see more deals?</h3>
+            <p>Log in to view all available products and deals!</p>
+            <a href="{% url 'authentication:login_page' %}" class="login-button">Log in now</a>
+        </div>
+        {% endif %}
+    </div>
+    
+
+</div>
+
+    
+       
+    </div>
+
+    <div id="quickViewModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg max-w-2xl w-full mx-4 relative">
+            <button class="absolute top-4 right-4 text-gray-500 hover:text-gray-700" id="closeQuickViewBtn">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <div class="p-6" id="quickViewContent">
+                <!-- Content will be dynamically loaded -->
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full bg-[#FAF3EA] py-16 flex flex-col md:flex-row justify-center items-center px-4 md:space-x-24 max-md:space-y-16">
+        <!-- High Quality -->
+        <div class="flex justify-center space-x-4">
+            <img src="{% static 'images/pic1.webp' %}" alt="High Quality" class="h-12">
+            <div class="text-center">
+                <p class="font-semibold text-lg">High Quality</p>
+                <p class="text-gray-500">crafted from top materials</p>
+            </div>
+        </div>
+        
+        <!-- Warranty Protection -->
+        <div class="flex justify-center space-x-4">
+            <img src="{% static 'images/pic2.webp' %}" alt="Warranty Protection" class="h-12">
+            <div class="text-center">
+                <p class="font-semibold text-lg">Warranty Protection</p>
+                <p class="text-gray-500">Over 2 years</p>
+            </div>
+        </div>
+    
+        <!-- 24/7 Support -->
+        <div class="flex justify-center space-x-4">
+            <img src="{% static 'images/pic3.webp' %}" alt="24/7 Support" class="h-12">
+            <div class="text-center">
+                <p class="font-semibold text-lg">24/7 Support</p>
+                <p class="text-gray-500">Dedicated support</p>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const imageUrl = "{% static 'images/templateimage.webp' %}";
+    document.body.classList.toggle('user-authenticated', {% if user.is_authenticated %}true{% else %}false{% endif %});
+</script>
+<script src="{% static 'js/index.js' %}"></script>
+{% endblock %}
