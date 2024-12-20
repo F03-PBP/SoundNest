@@ -16,7 +16,7 @@ def best_deals(request):
     # Add context data to make products visible in template
     context = {
         'is_staff': request.user.is_staff,
-        # Add initial data for non-AJAX loading
+        # Add initial data for non-AJAX loadin
         'initial_data': get_deals_data()
     }
     return render(request, "bestdeals.html", context)

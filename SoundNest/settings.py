@@ -45,10 +45,19 @@ INSTALLED_APPS = [
     'Discussions',
     'BestDeals',
     'WishList',
-    
+    'corsheaders',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -141,3 +150,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'authentication:login_page'
 LOGIN_REDIRECT_URL = 'products:home'
 LOGOUT_REDIRECT_URL = 'authentication:login_page'
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'None'
+
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+
+# Production di Safari
+# CSRF_COOKIE_SECURE = False
+# CSRF_COOKIE_SAMESITE = 'Lax'
+
+# SESSION_COOKIE_SECURE = False
+# SESSION_COOKIE_SAMESITE = 'Lax'
+
+# CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_CREDENTIALS = True
