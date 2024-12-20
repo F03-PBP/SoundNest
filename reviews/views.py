@@ -3,42 +3,24 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from reviews.models import Review
 from reviews.forms import ReviewForm
-from django.core import serializers
 import json
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.authtoken.models import Token
-
-from products.models import Product
+from django.utils.timezone import localtime
 
 def show_reviews(request, product_id):
-    reviews = Review.objects.filter(product_id=product_id)
+    reviews_response = review_list(request)
+    all_reviews = json.loads(reviews_response.content)  # Parsing JSON response menjadi list
 
-    reviews_data = []
-    for review in reviews:
-        stars = range(review.rating)  # Bintang penuh
-        empty_stars = range(10 - review.rating)  # Bintang kosong
-
-        if review.created_at == review.last_update:
-            update_time = review.created_at
-        else:
-            update_time = review.last_update
-
-        reviews_data.append({ # Ambil dari user
-            'user_name': review.user.username,
-            'user_initials': review.user.username[:2].upper(),
-            'updated_at': update_time,
-            'product_price': review.product.price,
-            'rating': review.rating,
-            'stars': stars,
-            'empty_stars': empty_stars,
-            'description': review.description,
-            'id': review.id,
-            'user_id': review.user.id,
-        })
-
-    return reviews_data
+    # Filter berdasarkan product_id
+    filtered_reviews = []
+    for review in all_reviews:
+        if str(review['product_id']) == str(product_id):
+            filtered_reviews.append(review)
+ 
+    return filtered_reviews
 
 @csrf_exempt
 def add_review(request):
@@ -189,32 +171,66 @@ def delete_review(request, review_id):
     }, status=200)
 
 def review_list(request):
-    reviews = Review.objects.all()
-    data = serializers.serialize('json', reviews)
-    return JsonResponse(data, safe=False)
-
-@csrf_exempt
-def show_reviews_flutter(request, product_id):
-    reviews = Review.objects.filter(product_id=product_id)
-
+    reviews = Review.objects.all()  # Optimalkan query
     reviews_data = []
+
     for review in reviews:
         stars = list(range(review.rating))  # Bintang penuh
         empty_stars = list(range(10 - review.rating))  # Bintang kosong
+
+        # Tentukan waktu update
+        if review.created_at == review.last_update:
+            update_time = localtime(review.created_at)
+        else:
+            update_time = localtime(review.last_update)
+
         reviews_data.append({
+            'id': str(review.id),
+            'user_id': review.user.id,
             'user_name': review.user.username,
             'user_initials': review.user.username[:2].upper(),
-            'date': review.created_at,
+            'product_id': review.product.id,
+            'product_name': review.product.product_name,
             'product_price': review.product.price,
             'rating': review.rating,
             'stars': stars,
             'empty_stars': empty_stars,
-            'text': review.description,
-            'id': review.id,
-            'user_id': review.user.id,
+            'description': review.description,
+            'updated_at': update_time.strftime('%Y-%m-%d %H:%M'),
         })
 
     return JsonResponse(reviews_data, safe=False)
+
+@csrf_exempt
+def show_reviews_flutter(request):
+    # Ambil parameter query
+    product_id = request.GET.get('product_id')
+    by_user = request.GET.get('by_user', 'false').lower() == 'true'
+
+    reviews_response = review_list(request)
+    all_reviews = json.loads(reviews_response.content)
+
+    if by_user:
+        try:
+            user = authenticate_user(request)
+        except AuthenticationFailed as e:
+            return JsonResponse({
+                'success': False,
+                'message': str(e)
+            }, status=401)
+
+        filtered_reviews = [review for review in all_reviews if review['user_name'] == user.username]
+
+    elif product_id:
+        filtered_reviews = [review for review in all_reviews if str(review['product_id']) == str(product_id)]
+
+    else:  # Tidak ada parameter valid
+        return JsonResponse({
+            'success': False,
+            'message': 'Please provide either product_id or by_user=true.'
+        }, status=400)
+    
+    return JsonResponse(filtered_reviews, safe=False)
 
 def authenticate_user(request):
     if 'Authorization' in request.headers:
