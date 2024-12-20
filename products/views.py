@@ -14,9 +14,19 @@ from reviews.views import show_reviews
 
 
 def get_products(request):
-    data = Product.objects.all()
+    sort_option = request.GET.get('sort', 'latest')  # Default to 'latest'
 
-    return HttpResponse(serializers.serialize("json", data), content_type = "application/json")
+    if sort_option == 'latest':
+        products = Product.objects.all().order_by('-created_at')
+    elif sort_option == 'price_asc':
+        products = Product.objects.all().order_by('price')
+    elif sort_option == 'price_desc':
+        products = Product.objects.all().order_by('-price')
+    else:
+        products = Product.objects.all()  # Default case if sort option is invalid
+
+    return HttpResponse(serializers.serialize("json", products), content_type="application/json")
+
 
 def show_product(request):
     # Get all the products from the data base
