@@ -142,3 +142,21 @@ def product_details_json(request, product_id):
         "reviews": product.reviews,
     })
 
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+        new_product = Product.objects.create(
+            user=request.user,
+            product_name=data["product_name"],
+            price=int(data["price"]),
+            rating=data["rating"],
+            reviews=data["reviews"],
+        )
+
+        new_product.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)

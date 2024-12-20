@@ -11,4 +11,5 @@ urlpatterns = [
     path('delete_product/', delete_product, name='delete_product'), 
     path('details/json/<uuid:product_id>/', product_details_json, name='product_details_json'),
     path('edit_product', edit_product, name='edit_product'),
+    path('create-flutter/', create_product_flutter, name='create_product_flutter'),
 ]
