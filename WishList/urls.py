@@ -12,6 +12,7 @@ urlpatterns = [
     path('json/<str:id>/', get_product_json_by_id, name='get_product_json_by_id'),
     path('add-product-entry-ajax', add_product_entry_ajax, name='add_product_entry_ajax'),
     path('delete/<int:id>/', delete_wish, name='delete_wish'),
+    path('create-wishlist-flutter/', create_wishlist_flutter, name='create_wishlist_flutter'),
     #path('home/', home, name='home'),
     #path('login/', login_user, name='login'),
     #path('register/', register_user, name='register'),

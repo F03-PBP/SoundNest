@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 import datetime
 from django.http import JsonResponse
@@ -78,3 +79,40 @@ def add_product_entry_ajax(request):
         return JsonResponse({'status': 'success'})
     else:
         return JsonResponse({'status': 'failed'}, status=400)
+    
+@csrf_exempt
+def create_wishlist_flutter(request):
+    if request.method == 'POST':
+        try:
+            # Parsing JSON dari request body
+            data = json.loads(request.body)
+            product_id = data.get('product_id')  # Mengambil ID produk dari JSON
+            quantity = data.get('jumlah')  # Mengambil quantity dari JSON
+            
+            # Ambil user dari request dan produk berdasarkan ID
+            user = request.user
+            new_product = Product.objects.get(id=product_id)
+            
+            # Data tambahan
+            date = str(datetime.datetime.now())
+            harga = new_product.price
+            product_name = new_product.product_name
+
+            # Membuat item wishlist baru
+            new_wishlist = WishlistItem(
+                user=user,
+                produk=new_product,
+                jumlah=quantity,
+                date_added=date,
+                price=harga,
+                nama_produk=product_name
+            )
+            new_wishlist.save()  # Simpan ke database
+
+            return JsonResponse({"status": "success"}, status=200)
+        except Product.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "Product not found"}, status=404)
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)}, status=500)
+    else:
+        return JsonResponse({"status": "error", "message": "Invalid request method"}, status=401)
