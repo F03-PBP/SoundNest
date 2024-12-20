@@ -50,19 +50,18 @@ def user_logout(request):
 # FLUTTER API
 @csrf_exempt
 def flutter_login(request: HttpRequest):
-    print(request.body)
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(username=username, password=password)
     if user is not None:
         if user.is_active:
             login(request, user)
-            # Status login sukses.
+            # Tambahkan atribut is_superuser ke dalam respons
             return JsonResponse({
                 "username": user.username,
+                "is_superuser": user.is_superuser,  # Status superuser
                 "status": True,
                 "message": "Login sukses!"
-                # Tambahkan data lainnya jika ingin mengirim data ke Flutter.
             }, status=200)
         else:
             return JsonResponse({
@@ -75,6 +74,7 @@ def flutter_login(request: HttpRequest):
             "status": False,
             "message": "Login gagal, periksa kembali email atau kata sandi."
         }, status=401)
+
     
 @csrf_exempt
 def flutter_register(request):
