@@ -8,15 +8,25 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST, require_http_methods
 import json
-
+from django.utils.timezone import now
 from reviews.models import Review
 from reviews.views import show_reviews
 
 
 def get_products(request):
-    data = Product.objects.all()
+    sort_option = request.GET.get('sort', 'latest')  # Default to 'latest'
 
-    return HttpResponse(serializers.serialize("json", data), content_type = "application/json")
+    if sort_option == 'latest':
+        products = Product.objects.all().order_by('-created_at')
+    elif sort_option == 'price_asc':
+        products = Product.objects.all().order_by('price')
+    elif sort_option == 'price_desc':
+        products = Product.objects.all().order_by('-price')
+    else:
+        products = Product.objects.all()  # Default case if sort option is invalid
+
+    return HttpResponse(serializers.serialize("json", products), content_type="application/json")
+
 
 def show_product(request):
     # Get all the products from the data base
@@ -141,4 +151,68 @@ def product_details_json(request, product_id):
         "rating": product.rating,
         "reviews": product.reviews,
     })
+
+@csrf_exempt
+def create_product_flutter(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            new_product = Product.objects.create(
+                product_name=data["name"],
+                price=int(data["price"]),
+                rating=float(data["rating"]),
+                reviews=int(data["reviews"]),
+                created_at=now()  # Set current timestamp
+            )
+            new_product.save()
+            return JsonResponse({"status": "success", "product_id": new_product.id}, status=200)
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+    return JsonResponse({"status": "error", "message": "Invalid method"}, status=401)
+
+@csrf_exempt
+def edit_product_flutter(request, product_id):
+    # print(f"Request method: {request.method}")  # Log the request method
+    # print(f"Request body: {request.body}")  # Log the request body
+
+    if request.method == 'POST':
+        try:
+            # print(f"Received request for product_id: {product_id}")  # Log the product ID
+            data = json.loads(request.body)
+
+            # Check if product exists
+            product = get_object_or_404(Product, id=product_id)
+            # print(f"Product found: {product}")  # Log the product details
+
+            # Update product details
+            product.product_name = data.get("product_name", product.product_name)
+            product.price = int(data.get("price", product.price))
+            product.rating = float(data.get("rating", product.rating))
+            product.reviews = int(data.get("reviews", product.reviews))
+            product.save()
+
+            return JsonResponse({"status": "success"}, status=200)
+        except Product.DoesNotExist:
+            # print("Product not found")
+            return JsonResponse({"status": "error", "message": "Product not found"}, status=404)
+        except Exception as e:
+            # print(f"Error: {e}")
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+    else:
+        # print("Invalid method")
+        return JsonResponse({"status": "error", "message": "Invalid method"}, status=405)
+
+@csrf_exempt
+def delete_product_flutter(request, product_id):
+    if request.method == 'POST':
+        try:
+            product = get_object_or_404(Product, id=product_id)
+            product.delete()
+            return JsonResponse({"status": "success"}, status=200)
+        except Product.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "Product not found"}, status=404)
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+    return JsonResponse({"status": "error", "message": "Invalid method"}, status=405)
+
 
