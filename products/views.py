@@ -172,17 +172,17 @@ def create_product_flutter(request):
 
 @csrf_exempt
 def edit_product_flutter(request, product_id):
-    print(f"Request method: {request.method}")  # Log the request method
-    print(f"Request body: {request.body}")  # Log the request body
+    # print(f"Request method: {request.method}")  # Log the request method
+    # print(f"Request body: {request.body}")  # Log the request body
 
     if request.method == 'POST':
         try:
-            print(f"Received request for product_id: {product_id}")  # Log the product ID
+            # print(f"Received request for product_id: {product_id}")  # Log the product ID
             data = json.loads(request.body)
 
             # Check if product exists
             product = get_object_or_404(Product, id=product_id)
-            print(f"Product found: {product}")  # Log the product details
+            # print(f"Product found: {product}")  # Log the product details
 
             # Update product details
             product.product_name = data.get("product_name", product.product_name)
@@ -193,13 +193,13 @@ def edit_product_flutter(request, product_id):
 
             return JsonResponse({"status": "success"}, status=200)
         except Product.DoesNotExist:
-            print("Product not found")
+            # print("Product not found")
             return JsonResponse({"status": "error", "message": "Product not found"}, status=404)
         except Exception as e:
-            print(f"Error: {e}")
+            # print(f"Error: {e}")
             return JsonResponse({"status": "error", "message": str(e)}, status=400)
     else:
-        print("Invalid method")
+        # print("Invalid method")
         return JsonResponse({"status": "error", "message": "Invalid method"}, status=405)
 
 @csrf_exempt

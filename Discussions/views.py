@@ -8,12 +8,12 @@ from .forms import DiscussionThreadForm, DiscussionCommentForm
 def create_thread(request):
     if request.method == 'POST':
         form = DiscussionThreadForm(request.POST)
-        print("Received data:", request.POST)
+        # print("Received data:", request.POST)
         if form.is_valid():
             thread = form.save()
             return JsonResponse({'id': thread.id, 'title': thread.title, 'content': thread.content, 'created_at': thread.created_at.strftime('%Y-%m-%d %H:%M:%S')})
         else:
-            print("Form errors:", form.errors)
+            # print("Form errors:", form.errors)
             return JsonResponse({'errors': form.errors}, status=400)
     else:
         form = DiscussionThreadForm()

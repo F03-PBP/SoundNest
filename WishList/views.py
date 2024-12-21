@@ -155,7 +155,7 @@ def edit_quantity_flutter(request):
             wishlist_item = WishlistItem.objects.get(user= request.user, id=product_id)
             # Update jumlah (quantity) produk di wishlist
             wishlist_item.jumlah = new_quantity
-            print(wishlist_item.jumlah)
+            # print(wishlist_item.jumlah)
             wishlist_item.save()  # Simpan perubahan ke database
 
             return JsonResponse({"status": "success"}, status=200)

@@ -83,7 +83,7 @@ def flutter_login(request: HttpRequest):
     
 @csrf_exempt
 def flutter_register(request):
-    print(request.body)
+    # print(request.body)
     if request.method == 'POST':
         data = json.loads(request.body)
         username = data['username']
