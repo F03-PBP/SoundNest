@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'WishList',
     'corsheaders',
     'rest_framework',
-    'rest_framework.authtoken',
+    'rest_framework.authtoken',  
 ]
 
 REST_FRAMEWORK = {
