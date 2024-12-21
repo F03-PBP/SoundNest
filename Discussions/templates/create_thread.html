@@ -24,8 +24,13 @@
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
-                window.location.href = "{% url 'Discussions:view_threads' %}"; 
+                if (data.errors) {
+                    console.error('Form errors:', data.errors);
+                    alert('Error creating thread: ' + JSON.stringify(data.errors));
+                } else {
+                    console.log(data);
+                    window.location.href = "{% url 'Discussions:view_threads' %}"; 
+                }
             })
             .catch(error => console.error('Error:', error));
         });
