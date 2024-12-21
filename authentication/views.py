@@ -57,6 +57,7 @@ def flutter_login(request: HttpRequest):
     if user is not None:
         if user.is_active:
             login(request, user)
+
             token, created = Token.objects.get_or_create(user=user)
 
             return JsonResponse({
@@ -65,7 +66,7 @@ def flutter_login(request: HttpRequest):
                 "status": True,
                 "message": "Login sukses!",
                 "token": token.key,
-                "is_superuser": user.is_superuser,
+
             }, status=200)
         else:
             return JsonResponse({
@@ -78,6 +79,7 @@ def flutter_login(request: HttpRequest):
             "status": False,
             "message": "Login gagal, periksa kembali email atau kata sandi."
         }, status=401)
+
     
 @csrf_exempt
 def flutter_register(request):
