@@ -275,13 +275,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const deletePromises = data.least_countdown
                 .filter(product_sale => {
                     const saleEndTime = new Date(product_sale.sale_end_time); // Parse the sale_end_time
-                    console.log("hehehe")
+                    
                     return saleEndTime < currentTime; // Compare with current time
                     
                 })
                 .map(async product_sale => {
                     try {
-                        console.log("hooooooe")
+                        
                         const deleteResponse = await fetch(
                             `/best-deals/delete-deals/${product_sale.id}/`,
                             { method: "DELETE" }

@@ -26,13 +26,16 @@ class Sale(models.Model):
         days = remaining.days
         hours = remaining.seconds // 3600
         minutes = (remaining.seconds % 3600) // 60
+        seconds = remaining.seconds
         
         if days > 0:
             return f"{days}d {hours}h"
         elif hours > 0:
             return f"{hours}h {minutes}m"
-        else:
+        elif minutes > 0:
             return f"{minutes}m"
+        else:
+            return f"{seconds}s" #kalo sisa <1 menit, bakal muncul detik
 
     def is_sale_active(self):
         """
