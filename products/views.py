@@ -204,7 +204,7 @@ def edit_product_flutter(request, product_id):
 
 @csrf_exempt
 def delete_product_flutter(request, product_id):
-    if request.method == 'DELETE':
+    if request.method == 'POST':
         try:
             product = get_object_or_404(Product, id=product_id)
             product.delete()
