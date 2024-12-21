@@ -8,7 +8,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST, require_http_methods
 import json
-
+from django.utils.timezone import now
 from reviews.models import Review
 from reviews.views import show_reviews
 
@@ -155,18 +155,50 @@ def product_details_json(request, product_id):
 @csrf_exempt
 def create_product_flutter(request):
     if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            new_product = Product.objects.create(
+                user=request.user,  # Ensure authenticated user
+                name=data["name"],
+                price=int(data["price"]),
+                rating=data["rating"],
+                reviews=data["reviews"],
+                created_at=now()  # Set current timestamp
+            )
+            new_product.save()
+            return JsonResponse({"status": "success", "product_id": new_product.id}, status=200)
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+    return JsonResponse({"status": "error", "message": "Invalid method"}, status=401)
 
-        data = json.loads(request.body)
-        new_product = Product.objects.create(
-            user=request.user,
-            product_name=data["product_name"],
-            price=int(data["price"]),
-            rating=data["rating"],
-            reviews=data["reviews"],
-        )
+@csrf_exempt
+def edit_product_flutter(request, product_id):
+    if request.method == 'PUT':
+        try:
+            data = json.loads(request.body)
+            product = Product.objects.get(id=product_id, user=request.user)  # Check product ownership
+            product.name = data.get("name", product.name)
+            product.price = int(data.get("price", product.price))
+            product.rating = data.get("rating", product.rating)
+            product.reviews = data.get("reviews", product.reviews)
+            product.save()
+            return JsonResponse({"status": "success"}, status=200)
+        except Product.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "Product not found"}, status=404)
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+    return JsonResponse({"status": "error", "message": "Invalid method"}, status=401)
 
-        new_product.save()
+@csrf_exempt
+def delete_product_flutter(request, product_id):
+    if request.method == 'DELETE':
+        try:
+            product = Product.objects.get(id=product_id, user=request.user)  # Check product ownership
+            product.delete()
+            return JsonResponse({"status": "success"}, status=200)
+        except Product.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "Product not found"}, status=404)
+        except Exception as e:
+            return JsonResponse({"status": "error", "message": str(e)}, status=400)
+    return JsonResponse({"status": "error", "message": "Invalid method"}, status=401)
 
-        return JsonResponse({"status": "success"}, status=200)
-    else:
-        return JsonResponse({"status": "error"}, status=401)
