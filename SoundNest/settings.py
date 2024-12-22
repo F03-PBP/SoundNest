@@ -24,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-fhm1@hd9mggd#fn5))(4_gwo2ovgc%-cwp)z^$y7#r+5@$hzuu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-PRODUCTION = os.getenv("PRODUCTION", False)
-DEBUG = not PRODUCTION
+
+DEBUG = True
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "henry-aditya-soundnest.pbp.cs.ui.ac.id"]
 
@@ -155,11 +155,11 @@ LOGOUT_REDIRECT_URL = 'authentication:login_page'
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_SAMESITE = 'None'
+# SESSION_COOKIE_SECURE = True
+# SESSION_COOKIE_SAMESITE = 'None'
 
-CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_SAMESITE = 'None'
+# CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_SAMESITE = 'None'
 
 # Production di Safari
 CSRF_COOKIE_SECURE = False
