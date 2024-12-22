@@ -195,7 +195,7 @@
                     return response.json();
                 })
                 .then((data) => {
-                    console.log("Server response:", data);
+                    // console.log("Server response:", data);
                     if (data.success) {
                         const reviewElement = document.querySelector(
                             `.review-item[data-review-id="${reviewId}"]`
@@ -248,7 +248,7 @@
         document.querySelectorAll(".edit-review").forEach((button) => {
             button.addEventListener("click", function () {
                 let editReviewId = this.getAttribute("data-review-id");
-                console.log("Review ID setelah klik:", editReviewId);
+                // console.log("Review ID setelah klik:", editReviewId);
 
                 if (editReviewId) {
                     fetch(`/reviews/edit/${editReviewId}/`, {
@@ -298,7 +298,7 @@
                             });
                         });
                 } else {
-                    console.error("Review ID tidak ditemukan.");
+                    // console.error("Review ID tidak ditemukan.");
                 }
             });
         });

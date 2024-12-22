@@ -28,7 +28,7 @@
                     console.error('Form errors:', data.errors);
                     alert('Error creating thread: ' + JSON.stringify(data.errors));
                 } else {
-                    console.log(data);
+                    // console.log(data);
                     window.location.href = "{% url 'Discussions:view_threads' %}"; 
                 }
             })
