@@ -81,7 +81,7 @@ def flutter_login(request: HttpRequest):
         }, status=401)
 
     
-@csrf_exempt
+# @csrf_exempt
 def flutter_register(request):
     # print(request.body)
     if request.method == 'POST':
