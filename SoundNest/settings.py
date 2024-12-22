@@ -26,10 +26,10 @@ SECRET_KEY = 'django-insecure-fhm1@hd9mggd#fn5))(4_gwo2ovgc%-cwp)z^$y7#r+5@$hzuu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "khairul-bintang-soundnestdua.pbp.cs.ui.ac.id", "10.0.2.2"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "khairul-bintang-soundnestbaru.pbp.cs.ui.ac.id", "10.0.2.2"]
 
 
-# Application definition
+# Application definition yeyy
 
 INSTALLED_APPS = [
     'django.contrib.admin',
