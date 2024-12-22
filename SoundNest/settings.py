@@ -154,8 +154,9 @@ LOGOUT_REDIRECT_URL = 'authentication:login_page'
 
 CORS_ALLOWED_ORIGINS = [
     "https://henry-aditya-soundnest.pbp.cs.ui.ac.id",
+    "http://localhost","http://127.0.0.1",
 ]
-CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 SESSION_COOKIE_SECURE = True
