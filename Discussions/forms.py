@@ -5,6 +5,7 @@ class DiscussionThreadForm(forms.ModelForm):
     class Meta:
         model = DiscussionThread
         fields = ['title', 'content', 'product_id']
+        #dwadw
 
 class DiscussionCommentForm(forms.ModelForm):
     class Meta:

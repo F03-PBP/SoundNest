@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "khairul-bintang-soundnestbaru.pbp.cs.ui.ac.id", "10.0.2.2"]
 
 
-# Application definition yeyy
+# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
