@@ -3,7 +3,7 @@
 
 # WEBSITE URL🌐
 ### CHECK OUR WEBSITE!
-[SoundNest](https://khairul-bintang-soundnest.pbp.cs.ui.ac.id/)
+[SoundNest](https://henry-aditya-soundnest.pbp.cs.ui.ac.id/)
 
 # Anggota Kelompok👨‍💻👩‍💻
 <b>Kelompok FO3:</b>
