@@ -48,8 +48,8 @@ def user_logout(request):
     return redirect('products:home')
 
 
-# # FLUTTER API
-# @csrf_exempt
+# FLUTTER API
+@csrf_exempt
 def flutter_login(request: HttpRequest):
     username = request.POST['username']
     password = request.POST['password']
@@ -81,7 +81,7 @@ def flutter_login(request: HttpRequest):
         }, status=401)
 
     
-# @csrf_exempt
+@csrf_exempt
 def flutter_register(request):
     # print(request.body)
     if request.method == 'POST':
@@ -122,7 +122,7 @@ def flutter_register(request):
             "message": "Invalid request method."
         }, status=400)
     
-# @csrf_exempt
+@csrf_exempt
 def flutter_logout(request):
     if request.user.is_authenticated:
         username = request.user.username
