@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 def create_thread(request):
     if request.method == 'POST':
         form = DiscussionThreadForm(request.POST)
+        print("Received data:", request.POST)
         if form.is_valid():
             thread = form.save(commit=False)
             thread.product_id = request.POST.get('product_id', None)
@@ -21,6 +22,7 @@ def create_thread(request):
                 'created_at': thread.created_at.strftime('%Y-%m-%d %H:%M:%S'),
             }, status=201)
         else:
+            print("Form errors:", form.errors)
             return JsonResponse({'errors': form.errors}, status=400)
     else:
         form = DiscussionThreadForm()

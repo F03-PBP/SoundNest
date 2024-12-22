@@ -5,18 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Check if user is admin (staff)
     const isAdmin = document.querySelector('[data-is-staff="true"]') !== null;
 
-    fetch('/show_json/')
-    .then(response => {
-        console.log("Response status:", response.status);
-        return response.json();
-    })
-    .then(data => {
-        console.log("Received data:", data);
-    })
-    .catch(error => {
-        console.error("Error fetching data:", error);
-    });
-
     if (isLoaded) return;
     isLoaded = true;
 
@@ -278,35 +266,43 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             const response = await fetch("/best-deals/json");
             if (!response.ok) {
-                throw new Error('Failed to fetch deals data');
+                throw new Error("Failed to fetch deals data");
             }
-            
+    
             const data = await response.json();
-            
+            const currentTime = new Date(); // Get the current local time
+    
             const deletePromises = data.least_countdown
-                .filter(product_sale => product_sale.time_remaining === "Sale ended")
+                .filter(product_sale => {
+                    const saleEndTime = new Date(product_sale.sale_end_time); // Parse the sale_end_time
+                    
+                    return saleEndTime < currentTime; // Compare with current time
+                    
+                })
                 .map(async product_sale => {
                     try {
-                        const deleteResponse = await fetch(
-                            `/best-deals/delete-deals/${product_sale.product.id}/`, 
-                            { method: 'DELETE' }
-                        );
                         
+                        const deleteResponse = await fetch(
+                            `/best-deals/delete-deals/${product_sale.id}/`,
+                            { method: "DELETE" }
+                        );
+    
                         if (!deleteResponse.ok) {
                             console.error(
-                                `Failed to delete expired product with ID ${product_sale.product.id}`
+                                `Failed to delete expired product with ID ${product_sale.id}`
                             );
                         }
                     } catch (error) {
                         console.error("Error deleting expired deal:", error);
                     }
                 });
-            
+    
             await Promise.all(deletePromises);
         } catch (error) {
             console.error("Error in deleteExpiredDeals:", error);
         }
     }
+    
 
     function setupEventListeners() {
         // Delete buttons
@@ -414,7 +410,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       
     
-        // Product selection
+    // Product selection
     productList.addEventListener("click", function(e) {
         const card = e.target.closest(".product-card");
         if (!card || !productList.contains(card)) return;
@@ -491,4 +487,4 @@ document.addEventListener("DOMContentLoaded", function () {
     // Apply filter after fetching products
     document.addEventListener("DOMContentLoaded", fetchBestDeals);
 }, { once: true });
-// Add this right after your DOMContentLoaded event
+

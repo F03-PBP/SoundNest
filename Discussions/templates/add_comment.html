@@ -1,5 +1,3 @@
-<!-- Discussions/templates/add_comment.html -->
-
 {% extends 'base.html' %}
 
 {% block content %}
@@ -15,27 +13,23 @@
 
 <script>
     document.getElementById('add-comment-form').addEventListener('submit', function(event) {
-        event.preventDefault();
+        event.preventDefault(); 
         const formData = new FormData(this);
-
-        fetch("{% url 'Discussions:add_comment' thread.id %}", {
+        fetch("{% url 'add_comment' thread.id %}", {
             method: 'POST',
             body: formData,
             headers: {
-                'X-Requested-With': 'XMLHttpRequest'
+                'X-Requested-With': 'XMLHttpRequest' 
             }
         })
         .then(response => response.json())
         .then(data => {
-            if (data.errors) {
-                alert("Error adding comment: " + JSON.stringify(data.errors));
-            } else {
-                const commentsList = document.querySelector('.comments-list');
-                const newComment = document.createElement('li');
-                newComment.className = 'text-gray-600';
-                newComment.innerHTML = `${data.content} (${data.created_at})`;
-                commentsList.appendChild(newComment);
-            }
+            console.log(data);
+            const commentsList = document.querySelector('.comments-list');
+            const newComment = document.createElement('li');
+            newComment.className = 'text-gray-600';
+            newComment.innerHTML = `${data.content} (${data.created_at})`;
+            commentsList.appendChild(newComment);
         })
         .catch(error => console.error('Error:', error));
     });

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-fhm1@hd9mggd#fn5))(4_gwo2ovgc%-cwp)z^$y7#r+5@$hzuu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "khairul-bintang-soundnest.pbp.cs.ui.ac.id"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "khairul-bintang-soundnestdua.pbp.cs.ui.ac.id", "10.0.2.2"]
 
 
 # Application definition
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'Discussions',
     'WishList',
     'BestDeals',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -144,7 +145,19 @@ LOGOUT_REDIRECT_URL = 'authentication:login_page'
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
-CSRF_COOKIE_SECURE = True
+
 SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
+
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+
+# Production di Safari
+# CSRF_COOKIE_SECURE = False
+# CSRF_COOKIE_SAMESITE = 'Lax'
+
+# SESSION_COOKIE_SECURE = False
+# SESSION_COOKIE_SAMESITE = 'Lax'
+
+# CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_CREDENTIALS = True

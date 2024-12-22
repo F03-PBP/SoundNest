@@ -257,7 +257,7 @@ function deleteProduct(productId) {
     function addProductEntry() {
       const formData = new FormData(document.querySelector('#productEntryForm'));
       const formDataObject = Object.fromEntries(formData.entries());
-      console.log(formDataObject);
+      // console.log(formDataObject);
       fetch("{% url 'WishList:add_product_entry_ajax' %}", {
         method: "POST",
         body: formData,
@@ -273,7 +273,7 @@ function deleteProduct(productId) {
     document.getElementById("productEntryForm").addEventListener("submit", (e) => {
       event.preventDefault();
       let selectedpk = selectElement.value;
-      console.log("Produk yang dipilih:", selectedpk);
+      // console.log("Produk yang dipilih:", selectedpk);
       addProductEntry();
     })
     function sortAscending(){
@@ -290,15 +290,15 @@ function deleteProduct(productId) {
       wishlists = await getWishlistEntries();
       products = await getProductEntries();
       if(ascFlag===1){
-        console.log("GETS INNN");
+        // console.log("GETS INNN");
         wishlists.sort((a, b) => a.fields.price - b.fields.price);
-        console.log("fortunately");
-        console.log(wishlists);
-        console.log("unfortunately");
+        // console.log("fortunately");
+        // console.log(wishlists);
+        // console.log("unfortunately");
       }else if(ascQuantity===1){
         wishlists.sort((a, b) => a.fields.jumlah - b.fields.jumlah);
       }
-      console.log(wishlists.length);
+      // console.log(wishlists.length);
       product_length = products.length;
       productContainer.innerHTML = '';
       const start = (page - 1) * productsPerPage;
@@ -322,15 +322,15 @@ function deleteProduct(productId) {
         `
         totalHarga.innerHTML = productPrice;
       }else{
-        console.log(wishlists);
-        console.log(products);
+        // console.log(wishlists);
+        // console.log(products);
         wishlistsToDisplay.forEach(wishlist => {
           const key_product = wishlist.fields.produk;
           total_price += wishlist.fields.price*wishlist.fields.jumlah;
           let productName = wishlist.fields.nama_produk;
           const wishlist_product = getProductEntryById(key_product);
               const key_wishlist = wishlist.pk;
-              console.log(key_wishlist);
+              // console.log(key_wishlist);
               const rawDate = wishlist.fields.date_added;
               const dateObject = new Date(rawDate);
               const formattedDate = dateObject.toLocaleString('id-ID', {
@@ -343,7 +343,7 @@ function deleteProduct(productId) {
               });
               const productCard = `
                 <div class="bg-white p-4 rounded-lg shadow-lg flex flex-col items-center text-center">
-                  <img src="{% static 'image/tws.png' %}" alt="${wishlist.product}" class="mb-4" style="width:150px; height: 125px;">
+                  <img src="{% static 'image/earbuds.jpg' %}" alt="${wishlist.product}" class="mb-4" style="width:150px; height: 125px;">
                   <h2 class="text-1xl font-semibold" style="color: black;">Nama Produk: ${productName}</h2>
                   <br>
                   <h3 class="text-lg text-gray-800">Date Added: ${dateObject}</h3>
